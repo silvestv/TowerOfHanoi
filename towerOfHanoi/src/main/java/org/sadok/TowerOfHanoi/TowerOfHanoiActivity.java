@@ -26,9 +26,9 @@ import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
 public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private static int CAMERA_WIDTH = 800;
 	private static int CAMERA_HEIGHT = 480;
-	private ITextureRegion mBackgroundTextureRegion, mTowerTextureRegion, mRing1, mRing2, mRing3, mRing4;
+	private ITextureRegion mBackgroundTextureRegion, mTowerTextureRegion, mRing1, mRing2, mRing3, mRing4, mRing5, mRing6;
 	private Sprite mTower1, mTower2, mTower3;
-	private Stack mStack1, mStack2, mStack3, mStack4;
+	private Stack mStack1, mStack2, mStack3;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -52,30 +52,43 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
                     return getAssets().open("gfx/tower.png");
                 }
             });
-            ITexture ring1 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
-                @Override
-                public InputStream open() throws IOException {
-                    return getAssets().open("gfx/ring1.png");
-                }
-            });
-            ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
-                @Override
-                public InputStream open() throws IOException {
-                    return getAssets().open("gfx/ring2.png");
-                }
-            });
+			ITexture ring1 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
+				@Override
+				public InputStream open() throws IOException {
+					return getAssets().open("gfx/ring1.png");
+				}
+			});
+			ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
+				@Override
+				public InputStream open() throws IOException {
+					return getAssets().open("gfx/ring2.png");
+				}
+			});
             ITexture ring3 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
                     return getAssets().open("gfx/ring3.png");
                 }
             });
-			ITexture ring4 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
+            ITexture ring4 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
+                @Override
+                public InputStream open() throws IOException {
+                    return getAssets().open("gfx/ring4.png");
+                }
+            });
+            ITexture ring5 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
+                @Override
+                public InputStream open() throws IOException {
+                    return getAssets().open("gfx/ring5.png");
+                }
+            });
+			ITexture ring6 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					return getAssets().open("gfx/ring3.png");
+					return getAssets().open("gfx/ring6.png");
 				}
 			});
+
             // 2 - Load bitmap textures into VRAM
             backgroundTexture.load();
             towerTexture.load();
@@ -83,14 +96,21 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ring2.load();
             ring3.load();
 			ring4.load();
-            // 3 - Set up texture regions
+			ring5.load();
+			ring6.load();
+
+			// 3 - Set up texture regions
             this.mBackgroundTextureRegion = TextureRegionFactory.extractFromTexture(backgroundTexture);
             this.mTowerTextureRegion = TextureRegionFactory.extractFromTexture(towerTexture);
             this.mRing1 = TextureRegionFactory.extractFromTexture(ring1);
             this.mRing2 = TextureRegionFactory.extractFromTexture(ring2);
             this.mRing3 = TextureRegionFactory.extractFromTexture(ring3);
 			this.mRing4 = TextureRegionFactory.extractFromTexture(ring4);
-            // 4 - Create the stacks
+			this.mRing5 = TextureRegionFactory.extractFromTexture(ring5);
+			this.mRing6 = TextureRegionFactory.extractFromTexture(ring6);
+
+
+			// 4 - Create the stacks
             this.mStack1 = new Stack();
             this.mStack2 = new Stack();
             this.mStack3 = new Stack();
@@ -113,48 +133,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		scene.attachChild(mTower2);
 		scene.attachChild(mTower3);
 		// 3 - Create the rings
-		final Ring ring1 = new Ring(1, 139, 174, this.mRing1, getVertexBufferObjectManager()) {
-		    @Override
-		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
-		            return false;
-		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
-		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-		            checkForCollisionsWithTowers(this);
-					checkEnding(this);
-		        }
-		        return true;
-		    }
-		};
-		Ring ring2 = new Ring(2, 118, 212, this.mRing2, getVertexBufferObjectManager()) {
-		    @Override
-		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
-		            return false;
-		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
-		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-		            checkForCollisionsWithTowers(this);
-					checkEnding(this);
-		        }
-		        return true;
-		    }
-		};
-		Ring ring3 = new Ring(3, 97, 255, this.mRing3, getVertexBufferObjectManager()) {
-		    @Override
-		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
-		            return false;
-		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
-		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-		            checkForCollisionsWithTowers(this);
-					checkEnding(this);
-		        }
 
-				return true;
-		    }
-		};
-
-		Ring ring4 = new Ring(4, 97, 320, this.mRing4, getVertexBufferObjectManager()) {
+		Ring ring1 = new Ring(6, mTower1.getX() + mTower1.getWidth()/2 - mRing1.getWidth()/2, mTower1.getY() + mTower1.getHeight() - mRing1.getHeight(), this.mRing1, getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
@@ -168,36 +148,190 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				return true;
 			}
 		};
-		scene.attachChild(ring1);
-		scene.attachChild(ring2);
-		scene.attachChild(ring3);
-		if (selectedItem == "4"){
+		Ring ring2 = new Ring(5, mTower1.getX() + mTower1.getWidth()/2 - mRing2.getWidth()/2, ring1.getY() - mRing2.getHeight(), this.mRing2, getVertexBufferObjectManager()) {
+		    @Override
+		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
+		            return false;
+		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+		            checkForCollisionsWithTowers(this);
+					checkEnding(this);
+		        }
+		        return true;
+		    }
+		};
+		Ring ring3 = new Ring(4, mTower1.getX() + mTower1.getWidth()/2 - mRing3.getWidth()/2, ring2.getY() - mRing3.getHeight(), this.mRing3, getVertexBufferObjectManager()) {
+		    @Override
+		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
+		            return false;
+		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+		            checkForCollisionsWithTowers(this);
+					checkEnding(this);
+		        }
+		        return true;
+		    }
+		};
+		Ring ring4 = new Ring(3, mTower1.getX() + mTower1.getWidth()/2 - mRing4.getWidth()/2, ring3.getY() - mRing4.getHeight(), this.mRing4, getVertexBufferObjectManager()) {
+		    @Override
+		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
+		            return false;
+		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+		            checkForCollisionsWithTowers(this);
+					checkEnding(this);
+		        }
+
+				return true;
+		    }
+		};
+
+		Ring ring5 = new Ring(2, mTower1.getX() + mTower1.getWidth()/2 - mRing5.getWidth()/2, ring4.getY() - mRing5.getHeight(), this.mRing5, getVertexBufferObjectManager()) {
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
+					return false;
+				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+					checkForCollisionsWithTowers(this);
+					checkEnding(this);
+				}
+
+				return true;
+			}
+		};
+		final Ring ring6 = new Ring(1, mTower1.getX() + mTower1.getWidth()/2 - mRing6.getWidth()/2, ring5.getY() - mRing6.getHeight(), this.mRing6, getVertexBufferObjectManager()) {
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
+					return false;
+				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+					checkForCollisionsWithTowers(this);
+					checkEnding(this);
+				}
+				return true;
+			}
+		};
+
+		if (selectedItem.equals("3")){
+			scene.attachChild(ring1);
+			this.mStack1.add(ring1);
+			ring1.setmStack(mStack1);
+			ring1.setmTower(mTower1);
+			scene.registerTouchArea(ring1);
+
+			scene.attachChild(ring2);
+			this.mStack1.add(ring2);
+			ring2.setmStack(mStack1);
+			ring2.setmTower(mTower1);
+			scene.registerTouchArea(ring2);
+
+			scene.attachChild(ring3);
+			this.mStack1.add(ring3);
+			ring3.setmStack(mStack1);
+			ring3.setmTower(mTower1);
+			scene.registerTouchArea(ring3);
+		}
+
+		if (selectedItem.equals("4")){
+			scene.attachChild(ring1);
+			this.mStack1.add(ring1);
+			ring1.setmStack(mStack1);
+			ring1.setmTower(mTower1);
+			scene.registerTouchArea(ring1);
+
+			scene.attachChild(ring2);
+			this.mStack1.add(ring2);
+			ring2.setmStack(mStack1);
+			ring2.setmTower(mTower1);
+			scene.registerTouchArea(ring2);
+
+			scene.attachChild(ring3);
+			this.mStack1.add(ring3);
+			ring3.setmStack(mStack1);
+			ring3.setmTower(mTower1);
+			scene.registerTouchArea(ring3);
+
 			scene.attachChild(ring4);
 			this.mStack1.add(ring4);
 			ring4.setmStack(mStack1);
 			ring4.setmTower(mTower1);
 			scene.registerTouchArea(ring4);
 		}
+		if (selectedItem.equals("5")){
+			scene.attachChild(ring1);
+			this.mStack1.add(ring1);
+			ring1.setmStack(mStack1);
+			ring1.setmTower(mTower1);
+			scene.registerTouchArea(ring1);
 
-		// 4 - Add all rings to stack one
+			scene.attachChild(ring2);
+			this.mStack1.add(ring2);
+			ring2.setmStack(mStack1);
+			ring2.setmTower(mTower1);
+			scene.registerTouchArea(ring2);
 
-		this.mStack1.add(ring3);
-		this.mStack1.add(ring2);
-		this.mStack1.add(ring1);
-		// 5 - Initialize starting position for each ring
-		ring1.setmStack(mStack1);
-		ring2.setmStack(mStack1);
-		ring3.setmStack(mStack1);
+			scene.attachChild(ring3);
+			this.mStack1.add(ring3);
+			ring3.setmStack(mStack1);
+			ring3.setmTower(mTower1);
+			scene.registerTouchArea(ring3);
 
-		ring1.setmTower(mTower1);
-		ring2.setmTower(mTower1);
-		ring3.setmTower(mTower1);
+			scene.attachChild(ring4);
+			this.mStack1.add(ring4);
+			ring4.setmStack(mStack1);
+			ring4.setmTower(mTower1);
+			scene.registerTouchArea(ring4);
 
+			scene.attachChild(ring5);
+			this.mStack1.add(ring5);
+			ring5.setmStack(mStack1);
+			ring5.setmTower(mTower1);
+			scene.registerTouchArea(ring5);
+		}
+		if (selectedItem.equals("6")){
+			scene.attachChild(ring1);
+			this.mStack1.add(ring1);
+			ring1.setmStack(mStack1);
+			ring1.setmTower(mTower1);
+			scene.registerTouchArea(ring1);
 
-		// 6 - Add touch handlers
-		scene.registerTouchArea(ring1);
-		scene.registerTouchArea(ring2);
-		scene.registerTouchArea(ring3);
+			scene.attachChild(ring2);
+			this.mStack1.add(ring2);
+			ring2.setmStack(mStack1);
+			ring2.setmTower(mTower1);
+			scene.registerTouchArea(ring2);
+
+			scene.attachChild(ring3);
+			this.mStack1.add(ring3);
+			ring3.setmStack(mStack1);
+			ring3.setmTower(mTower1);
+			scene.registerTouchArea(ring3);
+
+			scene.attachChild(ring4);
+			this.mStack1.add(ring4);
+			ring4.setmStack(mStack1);
+			ring4.setmTower(mTower1);
+			scene.registerTouchArea(ring4);
+
+			scene.attachChild(ring5);
+			this.mStack1.add(ring5);
+			ring5.setmStack(mStack1);
+			ring5.setmTower(mTower1);
+			scene.registerTouchArea(ring5);
+
+			scene.attachChild(ring6);
+			this.mStack1.add(ring6);
+			ring6.setmStack(mStack1);
+			ring6.setmTower(mTower1);
+			scene.registerTouchArea(ring6);
+
+		}
+
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 
 		return scene;

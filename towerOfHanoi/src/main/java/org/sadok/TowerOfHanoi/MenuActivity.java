@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -25,13 +26,14 @@ public class MenuActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        Spinner spinner = (Spinner) findViewById(R.id.ringsNumber);
+        final Spinner spinner = (Spinner) findViewById(R.id.ringsNumber);
         final Button start = findViewById(R.id.button);
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MenuActivity.this,
                         TowerOfHanoiActivity.class);
                 startActivity(myIntent);
+
             }
         });
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -41,9 +43,22 @@ public class MenuActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedItem = spinner.getSelectedItem().toString();
 
-        selectedItem = spinner.getSelectedItem().toString();
+                System.out.println("Item selectionner "+selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
     }
+
 
 
 

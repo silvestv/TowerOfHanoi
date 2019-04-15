@@ -41,7 +41,7 @@ INJECTED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\Andr
 INJECTED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:2:1-29:12
 INJECTED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:2:1-29:12
 	package
-		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:4:5-38
+		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:4:5-37
 		INJECTED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml
 	android:versionName
@@ -78,22 +78,22 @@ MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\Nassim\.gr
 		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:11:9-48
 	android:icon
 		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:9:9-45
-activity#org.farook.towerofhanoi.TowerOfHanoiActivity
+activity#org.sadok.TowerOfHanoi.TowerOfHanoiActivity
 ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:12:9-17:20
 	android:label
 		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:14:13-45
 	android:configChanges
 		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:15:13-59
 	android:name
-		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:13:13-49
-activity#org.farook.towerofhanoi.MenuActivity
+		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:13:13-71
+activity#org.sadok.TowerOfHanoi.MenuActivity
 ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:18:9-26:20
 	android:label
 		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:20:13-56
 	android:theme
 		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:21:13-56
 	android:name
-		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:19:13-41
+		ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:19:13-63
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from C:\Users\Nassim\Documents\TowerOfHanoi1\towerOfHanoi\src\main\AndroidManifest.xml:22:13-25:29
 action#android.intent.action.MAIN
