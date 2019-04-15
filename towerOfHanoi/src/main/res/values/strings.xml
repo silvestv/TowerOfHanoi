@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, TowerOfHanoiActivity!</string>
+    <string name="app_name">TowerOfHanoi</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="start">Start</string>
+
+</resources>
