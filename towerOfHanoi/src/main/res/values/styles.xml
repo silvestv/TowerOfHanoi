@@ -19,4 +19,12 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+
+    <string-array name="ringsShape">
+        <item>
+            Rectangulaire
+        </item>
+        <item>Circulaire</item>
+        <item>Pyramidale</item>
+    </string-array>
 </resources>

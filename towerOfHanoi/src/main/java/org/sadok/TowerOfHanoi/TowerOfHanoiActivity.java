@@ -22,6 +22,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
+import static org.sadok.TowerOfHanoi.MenuActivity.selectedShapeItem;
 
 public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private static int CAMERA_WIDTH = 800;
@@ -29,17 +30,19 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private ITextureRegion mBackgroundTextureRegion, mTowerTextureRegion, mRing1, mRing2, mRing3, mRing4, mRing5, mRing6;
 	private Sprite mTower1, mTower2, mTower3;
 	private Stack mStack1, mStack2, mStack3;
-	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
     	final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     	return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
 	}
 
+
 	@Override
 	protected void onCreateResources() {
+
         try {
         	// 1 - Set up bitmap textures
+
             ITexture backgroundTexture = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
@@ -54,38 +57,81 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             });
 			ITexture ring1 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
+
 				public InputStream open() throws IOException {
-					return getAssets().open("gfx/ring1.png");
+					InputStream ringShape1 = getAssets().open("gfx/rectangle2.png");
+					if(selectedShapeItem.equals("Circulaire")){
+						ringShape1 = getAssets().open("gfx/ring1.png");
+					}
+					if(selectedShapeItem.equals("Pyramidale")){
+						ringShape1 = getAssets().open("gfx/pyramide1.png");
+					}
+					return ringShape1;
 				}
 			});
 			ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					return getAssets().open("gfx/ring2.png");
+					InputStream ringShape2 = getAssets().open("gfx/rectangle2-2.png");
+					if(selectedShapeItem.equals("Circulaire")){
+						ringShape2 = getAssets().open("gfx/ring2.png");
+					}
+					if(selectedShapeItem.equals("Pyramidale")){
+						ringShape2 = getAssets().open("gfx/pyramide2.png");
+					}
+					return ringShape2;
 				}
 			});
             ITexture ring3 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-                    return getAssets().open("gfx/ring3.png");
+					InputStream ringShape3 = getAssets().open("gfx/rectangle3.png");
+					if(selectedShapeItem.equals("Circulaire")){
+						ringShape3 = getAssets().open("gfx/ring3.png");
+					}
+					if(selectedShapeItem.equals("Pyramidale")){
+						ringShape3 = getAssets().open("gfx/pyramide3.png");
+					}
+					return ringShape3;
                 }
             });
             ITexture ring4 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-                    return getAssets().open("gfx/ring4.png");
-                }
+					InputStream ringShape4 = getAssets().open("gfx/rectangle4.png");
+					if(selectedShapeItem.equals("Circulaire")){
+						ringShape4 = getAssets().open("gfx/ring4.png");
+					}
+					if(selectedShapeItem.equals("Pyramidale")){
+						ringShape4 = getAssets().open("gfx/pyramide4.png");
+					}
+					return ringShape4;
+				}
             });
             ITexture ring5 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-                    return getAssets().open("gfx/ring5.png");
-                }
+					InputStream ringShape5 = getAssets().open("gfx/rectangle5.png");
+					if(selectedShapeItem.equals("Circulaire")){
+						ringShape5 = getAssets().open("gfx/ring5.png");
+					}
+					if(selectedShapeItem.equals("Pyramidale")){
+						ringShape5 = getAssets().open("gfx/pyramide5.png");
+					}
+					return ringShape5;
+				}
             });
 			ITexture ring6 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					return getAssets().open("gfx/ring6.png");
+					InputStream ringShape6 = getAssets().open("gfx/rectangle6.png");
+					if(selectedShapeItem.equals("Circulaire")){
+						ringShape6 = getAssets().open("gfx/ring6.png");
+					}
+					if(selectedShapeItem.equals("Pyramidale")){
+						ringShape6 = getAssets().open("gfx/pyramide6.png");
+					}
+					return ringShape6;
 				}
 			});
 
