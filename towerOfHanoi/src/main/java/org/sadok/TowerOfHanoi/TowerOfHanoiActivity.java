@@ -206,12 +206,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
-
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
+
 				//detecte une action
-				theChrono.clickAction();
-				System.out.println("Trigger Action déclenché à (ms/non null) : "+theChrono.getTriggerAction());
-				System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
 				return true;
 			}
 
@@ -227,11 +227,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
-		        }
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
+				}
+
 				//detecte une action
-				theChrono.clickAction();
-				System.out.println("Trigger Action déclenché à (ms/non null) : "+theChrono.getTriggerAction());
-				System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
 		        return true;
 		    }
 		};
@@ -245,11 +247,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
-		        }
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
+				}
+
 				//detecte une action
-				theChrono.clickAction();
-				System.out.println("Trigger Action déclenché à (ms/non null) : "+theChrono.getTriggerAction());
-				System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
 		        return true;
 
 		    }
@@ -263,11 +267,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 		        }
 				//detecte une action
-				theChrono.clickAction();
-				System.out.println("Trigger Action déclenché à (ms/non null) : "+theChrono.getTriggerAction());
-				System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
 				return true;
 		    }
 		};
@@ -281,11 +285,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
 				//detecte une action
-				theChrono.clickAction();
-				System.out.println("Trigger Action déclenché à (ms/non null) : "+theChrono.getTriggerAction());
-				System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
 				return true;
 			}
 		};
@@ -298,12 +302,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
 
 				//detecte une action
-				theChrono.clickAction();
-				System.out.println("Trigger Action déclenché à (ms/non null) : "+theChrono.getTriggerAction());
-				System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
 				return true;
 			}
 		};
@@ -438,7 +442,6 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			//a chaque succès un marqueur temporel est posé quelquesoit le feedBack, c'est la différence entre 2 marqueurs qui nous permettra
 			//de connaitre le temps entre 2 succès. Cela est traité dans la classe Timer.
 	    	this.theChrono.clickSuccess();
-			System.out.println("Trigger Success déclenché à (ms/non null) : "+theChrono.getTriggerSuccess());
 			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
 
 			stack = mStack1;
@@ -449,7 +452,6 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		} else if (ring.collidesWith(mTower2) && (mStack2.size() == 0 || ring.getmWeight() < ((Ring) mStack2.peek()).getmWeight())) {
 
 	    	this.theChrono.clickSuccess();
-			System.out.println("Trigger Success déclenché à (ms/non null) : "+theChrono.getTriggerSuccess());
 			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
 
 	        stack = mStack2;
@@ -461,7 +463,6 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		} else if (ring.collidesWith(mTower3) && (mStack3.size() == 0 || ring.getmWeight() < ((Ring) mStack3.peek()).getmWeight())) {
 
 			this.theChrono.clickSuccess();
-			System.out.println("Trigger Success déclenché à (ms/non null) : "+theChrono.getTriggerSuccess());
 			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
 
 	    	stack = mStack3;
@@ -477,8 +478,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			//a chaque erreur un marqueur temporel est posé quelquesoit le feedBack, c'est la diférence entre 2 marqueurs qui nous permettra
 			//de connaitre le temps entre 2 erreurs. Cela est traité dans la classe Timer.
 			this.theChrono.clickError();
-			System.out.println("Trigger Error déclenché à (ms/non null) : "+theChrono.getTriggerError());
-			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenError());
+			System.out.println("Time Between 2 erreur (ms/null possible au début) : "+theChrono.getTimeBetweenError());
 
 			System.out.println("INTERDIT");
 

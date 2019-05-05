@@ -5,27 +5,30 @@ import android.os.SystemClock;
 import java.util.*;
 
 public class Timer {
-    private float t_second_game_start;
-    private float t_second_game_stop;
-    private float t_second_game__total;
+    private long t_second_game_start;
+    private long t_second_game_stop;
+    private long t_second_game__total;
 
-    private float triggerSuccess;
-    private float triggerError;
-    private float triggerAction;
+    private long triggerSuccess;
+    private long triggerError;
+    private long triggerAction;
 
-    private float t_second_between_action;
-    private float t_second_between_error;
-    private float t_second_between_success;
+    private long t_second_between_action;
+    private long t_second_between_error;
+    private long t_second_between_success;
 
-    private ArrayList<Float> allBetweenSucess;
-    private ArrayList<Float> allBetweenError;
-    private ArrayList<Float> allBetweenAction;
+    private ArrayList<Long> allBetweenSucess;
+    private ArrayList<Long> allBetweenError;
+    private ArrayList<Long> allBetweenAction;
 
-    private float t_average_second_action;
-    private float t_average_second_error;
-    private float t_average_second_success;
+    private long t_average_second_action;
+    private long t_average_second_error;
+    private long t_average_second_success;
 
     public Timer(){
+        this.allBetweenSucess = new ArrayList<>();
+        this.allBetweenError = new ArrayList<>();
+        this.allBetweenAction = new ArrayList<>();
     }
 
     //permet de lancer le chrono
@@ -40,7 +43,7 @@ public class Timer {
     }
 
     //renvoie le temps total d'une partie
-    public float getTotalTimeGame(){
+    public long getTotalTimeGame(){
         return t_second_game_start - t_second_game_stop;
     }
 
@@ -73,7 +76,7 @@ public class Timer {
         if(triggerAction == 0){
             this.triggerAction = System.currentTimeMillis();
         } else {
-            this.t_second_between_action = System.currentTimeMillis() - this.triggerSuccess;
+            this.t_second_between_action = System.currentTimeMillis() - this.triggerAction;
             this.triggerAction = System.currentTimeMillis();
             this.allBetweenAction.add(t_second_between_action);
         }
@@ -82,7 +85,7 @@ public class Timer {
     //en fin de game, on récupère le vecteur indiquant tout les lapses-time entre les actions et on en retire la moyenne
     public void calculAverageTimeAction(){
 
-        float sum = 0;
+        long sum = 0;
         for(int i = 0; i <= allBetweenAction.size(); i++){
             sum = sum + allBetweenAction.get(i);
         }
@@ -91,7 +94,7 @@ public class Timer {
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeSucess(){
-        float sum = 0;
+        long sum = 0;
         for(int i = 0; i <= allBetweenSucess.size(); i++){
             sum = sum + allBetweenSucess.get(i);
         }
@@ -100,7 +103,7 @@ public class Timer {
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeError(){
-        float sum = 0;
+        long sum = 0;
         for(int i = 0; i <= allBetweenError.size(); i++){
             sum = sum + allBetweenError.get(i);
         }
@@ -108,56 +111,56 @@ public class Timer {
     }
 
     //Les getteurs
-    public ArrayList<Float> getAllBetweenAction(){
+    public ArrayList<Long> getAllBetweenAction(){
         return this.allBetweenAction;
     }
 
-    public ArrayList<Float> getAllBetweenSucess(){
+    public ArrayList<Long> getAllBetweenSucess(){
         return this.allBetweenSucess;
     }
 
-    public ArrayList<Float> getAllBetweenError(){
+    public ArrayList<Long> getAllBetweenError(){
         return this.allBetweenError;
     }
 
-    public float getAverageTimeAction(){
+    public long getAverageTimeAction(){
         return this.t_average_second_action;
     }
 
-    public float getAverageTimeSucess(){
+    public long getAverageTimeSucess(){
         return this.t_average_second_success;
     }
-    public float getAverageTimeError(){
+    public long getAverageTimeError(){
         return this.t_average_second_error;
     }
 
-    public float getTimeBetweenAction(){
+    public long getTimeBetweenAction(){
         return this.t_second_between_action;
     }
 
-    public float getTimeBetweenSuccess(){
-        return this.t_average_second_success;
+    public long getTimeBetweenSuccess(){
+        return this.t_second_between_success;
     }
-    public float getTimeBetweenError(){
+    public long getTimeBetweenError(){
         return this.t_second_between_error;
     }
 
-    public float getTriggerSuccess(){
+    public long getTriggerSuccess(){
         return this.triggerSuccess;
     }
 
-    public float getTriggerError(){
+    public long getTriggerError(){
         return this.triggerError;
     }
-    public float getTriggerAction(){
+    public long getTriggerAction(){
         return this.triggerAction;
     }
 
-    public float getT_second_game_start(){
+    public long getT_second_game_start(){
         return t_second_game_start;
     }
 
-    public float getT_second_game_stop(){
+    public long getT_second_game_stop(){
         return t_second_game_stop;
     }
 
