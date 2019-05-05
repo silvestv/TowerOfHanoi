@@ -2,6 +2,10 @@ package org.sadok.TowerOfHanoi;
 
 
 
+import android.content.Context;
+import android.view.Gravity;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Stack;
@@ -21,6 +25,7 @@ import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 
+import static org.sadok.TowerOfHanoi.MenuActivity.selectedFeedBackItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedShapeItem;
 
@@ -184,22 +189,30 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
-					return false;
+
+
+				return false;
+
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
+
 				}
 
 				return true;
 			}
+
+
 		};
 		Ring ring2 = new Ring(5, mTower1.getX() + mTower1.getWidth()/2 - mRing2.getWidth()/2, ring1.getY() - mRing2.getHeight(), this.mRing2, getVertexBufferObjectManager()) {
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 		            return false;
-		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+
+				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
@@ -213,11 +226,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 		            return false;
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
 		        }
 		        return true;
+
 		    }
 		};
 		Ring ring4 = new Ring(3, mTower1.getX() + mTower1.getWidth()/2 - mRing4.getWidth()/2, ring3.getY() - mRing4.getHeight(), this.mRing4, getVertexBufferObjectManager()) {
@@ -386,19 +401,76 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private void checkForCollisionsWithTowers(Ring ring) {
 	    Stack stack = null;
 	    Sprite tower = null;
+	    int[] towerRings= {};
 	    if (ring.collidesWith(mTower1) && (mStack1.size() == 0 || ring.getmWeight() < ((Ring) mStack1.peek()).getmWeight())) {
 	        stack = mStack1;
 	        tower = mTower1;
-	    } else if (ring.collidesWith(mTower2) && (mStack2.size() == 0 || ring.getmWeight() < ((Ring) mStack2.peek()).getmWeight())) {
+			System.out.println("AUTORISER1");
+			System.out.println("Anneaux:"+ring.getmStack());
+
+		} else if (ring.collidesWith(mTower2) && (mStack2.size() == 0 || ring.getmWeight() < ((Ring) mStack2.peek()).getmWeight())) {
 	        stack = mStack2;
 	        tower = mTower2;
-	    } else if (ring.collidesWith(mTower3) && (mStack3.size() == 0 || ring.getmWeight() < ((Ring) mStack3.peek()).getmWeight())) {
+			System.out.println("AUTORISER2");
+			System.out.println("Anneaux:"+ring.getmStack());
+
+
+		} else if (ring.collidesWith(mTower3) && (mStack3.size() == 0 || ring.getmWeight() < ((Ring) mStack3.peek()).getmWeight())) {
 	        stack = mStack3;
 	        tower = mTower3;
-	    }
+			System.out.println("AUTORISER3");
+
+			System.out.println("Anneaux:"+mTower3);
+
+		}
+		//Cas ou l'utilisateur n'a pas le droit d'effectuer ce mouvement
 	    else {
-	        stack = ring.getmStack();
-	        tower = ring.getmTower();
+			System.out.println("INTERDIT");
+
+			if (selectedFeedBackItem.equals("Totale")) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						Context context = getApplicationContext();
+						final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit" ,Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER,0,0);
+						toast.show();
+					}
+				});
+				stack = ring.getmStack();
+				tower = ring.getmTower();
+			}
+			if (selectedFeedBackItem.equals("Semi")) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						Context context = getApplicationContext();
+						final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit" ,Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER,0,0);
+						toast.show();
+					}
+				});
+				if (ring.collidesWith(mTower1)) {
+					stack = mStack1;
+					tower = mTower1;
+				} else if (ring.collidesWith(mTower2)) {
+					stack = mStack2;
+					tower = mTower2;
+				} else if (ring.collidesWith(mTower3)) {
+					stack = mStack3;
+					tower = mTower3;
+				}
+			}
+			if (selectedFeedBackItem.equals("Sans")) {
+				if (ring.collidesWith(mTower1)) {
+					stack = mStack1;
+					tower = mTower1;
+				} else if (ring.collidesWith(mTower2)) {
+					stack = mStack2;
+					tower = mTower2;
+				} else if (ring.collidesWith(mTower3)) {
+					stack = mStack3;
+					tower = mTower3;
+				}
+			}
 	    }
 	    ring.getmStack().remove(ring);
 	    if (stack != null && tower !=null && stack.size() == 0) {
@@ -407,7 +479,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	        ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - ring.getHeight());
 	    }
 
-		System.out.println("Item selectionner "+selectedItem);
+
 
 		stack.add(ring);
 	    ring.setmStack(stack);
@@ -415,12 +487,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	}
 	private void checkEnding(Ring ring){
 		Stack stack = ring.getmStack();
-		if (stack.size() > 2 && ring.getmTower() == mTower3){
+		if (stack.size() > 4 && ring.getmTower() == mTower3){
 			System.out.println("nice");
 			finish();
 			startActivity(getIntent());
 		}
-		System.out.println(stack.size());
-		System.out.println(ring.getmTower());
 	}
 }
