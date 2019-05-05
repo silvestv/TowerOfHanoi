@@ -128,10 +128,38 @@ public class Timer {
         return this.t_average_second_success;
     }
     public float getAverageTimeError(){
+        return this.t_average_second_error;
+    }
+
+    public float getTimeBetweenAction(){
+        return this.t_second_between_action;
+    }
+
+    public float getTimeBetweenSuccess(){
+        return this.t_average_second_success;
+    }
+    public float getTimeBetweenError(){
         return this.t_second_between_error;
     }
 
+    public float getTriggerSuccess(){
+        return this.triggerSuccess;
+    }
 
+    public float getTriggerError(){
+        return this.triggerError;
+    }
+    public float getTriggerAction(){
+        return this.triggerAction;
+    }
+
+    public float getT_second_game_start(){
+        return t_second_game_start;
+    }
+
+    public float getT_second_game_stop(){
+        return t_second_game_stop;
+    }
 
 
 
