@@ -36,6 +36,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private Sprite mTower1, mTower2, mTower3;
 	private Stack mStack1, mStack2, mStack3;
 	private Timer theChrono;
+	private Report theReport;
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -548,8 +549,24 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			this.theChrono.stop();
 			System.out.println("Time Stop (ms) : "+theChrono.getT_second_game_stop());
 			System.out.println("Total Duration (ms) : "+theChrono.getTotalTimeGame());
+			//report édité puis affiché
+			theReport = new Report(theChrono, this);
+			theReport.afficheReport();
 			finish();
 			startActivity(getIntent());
 		}
+	}
+
+
+	public static String getSelectedFeedBackItem() {
+		return selectedFeedBackItem;
+	}
+
+	public static String getSelectedItem() {
+		return selectedItem;
+	}
+
+	public static String getSelectedShapeItem() {
+		return selectedShapeItem;
 	}
 }

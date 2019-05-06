@@ -168,7 +168,9 @@ public class Timer {
     /////LES ACCESSEURS
 
     //Les getteurs
-
+    public int getNbClick(){
+        return allBetweenAction.size();
+    }
     public ArrayList<Long> getAllBetweenAction(){
         return this.allBetweenAction;
     }
