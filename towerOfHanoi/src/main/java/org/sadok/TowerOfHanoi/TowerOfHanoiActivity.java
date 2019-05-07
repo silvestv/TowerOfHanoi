@@ -43,6 +43,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private Sprite mTower1, mTower2, mTower3;
 	private Stack mStack1, mStack2, mStack3;
 	private List<Integer> poids = new ArrayList<Integer>() ;
+	private Timer theChrono;
+	private Report theReport;
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -181,6 +183,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 	@Override
 	protected Scene onCreateScene() {
+		// 0 - Timer créé et lancé lors de la création de l'activité, cela nous permettra de calculer la durée totale d'une partie
+		this.theChrono = new Timer();
+		this.theChrono.start();
+		System.out.println("Time Start (ms): "+theChrono.getT_second_game_start());
+
+
 		// 1 - Create new scene
 		final Scene scene = new Scene();
 		Sprite backgroundSprite = new Sprite(0, 0, this.mBackgroundTextureRegion, getVertexBufferObjectManager());
@@ -207,8 +215,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
-
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
+
+				//detecte une action
 
 				return true;
 			}
@@ -225,7 +236,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
-		        }
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
+				}
+
+				//detecte une action
+
 		        return true;
 		    }
 		};
@@ -239,7 +256,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
-		        }
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+
+				}
+
+				//detecte une action
+
 		        return true;
 
 		    }
@@ -253,7 +276,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 		        }
+				//detecte une action
 
 				return true;
 		    }
@@ -268,7 +294,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
+				//detecte une action
 
 				return true;
 			}
@@ -282,7 +311,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
+					theChrono.clickAction();
+					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
+
+				//detecte une action
+
 				return true;
 			}
 		};
@@ -412,7 +446,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	    Sprite tower = null;
 		int indexPoids = poids.indexOf(ring.getmWeight());
 	    if (ring.collidesWith(mTower1) && (mStack1.size() == 0 || ring.getmWeight() < ((Ring) mStack1.peek()).getmWeight())) {
-	        stack = mStack1;
+
+	    	//code executer en cas de succès déclenchement chrono succès
+			//a chaque succès un marqueur temporel est posé quelquesoit le feedBack, c'est la différence entre 2 marqueurs qui nous permettra
+			//de connaitre le temps entre 2 succès. Cela est traité dans la classe Timer.
+	    	this.theChrono.clickSuccess();
+			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
+
+			stack = mStack1;
 	        tower = mTower1;
 			System.out.println("AUTORISER1");
 			System.out.println("Anneaux:"+ring.getmStack());
@@ -421,6 +462,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			}
 
 		} else if (ring.collidesWith(mTower2) && (mStack2.size() == 0 || ring.getmWeight() < ((Ring) mStack2.peek()).getmWeight())) {
+
+	    	this.theChrono.clickSuccess();
+			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
+
 	        stack = mStack2;
 	        tower = mTower2;
 			System.out.println("AUTORISER2");
@@ -430,7 +475,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			}
 
 		} else if (ring.collidesWith(mTower3) && (mStack3.size() == 0 || ring.getmWeight() < ((Ring) mStack3.peek()).getmWeight())) {
-	        stack = mStack3;
+
+			this.theChrono.clickSuccess();
+			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
+
+	    	stack = mStack3;
 	        tower = mTower3;
 			System.out.println("AUTORISER3");
 			if (indexPoids == -1) {
@@ -445,6 +494,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		}
 		//Cas ou l'utilisateur n'a pas le droit d'effectuer ce mouvement
 	    else {
+	    	//code executer en cas d'erreur déclenchement chrono erreur
+			//a chaque erreur un marqueur temporel est posé quelquesoit le feedBack, c'est la diférence entre 2 marqueurs qui nous permettra
+			//de connaitre le temps entre 2 erreurs. Cela est traité dans la classe Timer.
+			this.theChrono.clickError();
+			System.out.println("Time Between 2 erreur (ms/null possible au début) : "+theChrono.getTimeBetweenError());
+
 			System.out.println("INTERDIT");
 
 			if (selectedFeedBackItem.equals("Totale")) {
@@ -542,29 +597,26 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Boolean isOrdered = Ordering.natural().reverse().isOrdered(poids);
 		if (stack.size() > verifSelectedItem && ring.getmTower() == mTower3 && isOrdered == true){
 			System.out.println("nice");
+			//timer stoppé en fin de partie
+			this.theChrono.stop();
+			System.out.println("Time Stop (ms) : "+theChrono.getT_second_game_stop());
+			System.out.println("Total Duration (ms) : "+theChrono.getTotalTimeGame());
+			//report édité puis affiché
+			theReport = new Report(theChrono, this);
+			theReport.afficheReport();
 			finish();
 			startActivity(getIntent());
 		}
 	}
-/*	public class isSorted {
-		public static void main(String[] args) {
+	public static String getSelectedFeedBackItem() {
+		return selectedFeedBackItem;
+	}
 
-			// initializing unsorted int array
-			int iArr[] = {2, 1, 9, 6, 4};
+	public static String getSelectedItem() {
+		return selectedItem;
+	}
 
-			// let us print all the elements available in list
-			for (int number : iArr) {
-				System.out.println("Number = " + number);
-			}
-
-			// sorting array
-			Arrays.sort(iArr);
-
-			// let us print all the elements available in list
-			System.out.println("The sorted int array is:");
-			for (int number : iArr) {
-				System.out.println("Number = " + number);
-			}
-		}
-	}*/
+	public static String getSelectedShapeItem() {
+		return selectedShapeItem;
+	}
 }

@@ -14,8 +14,7 @@ public class MenuActivity extends AppCompatActivity {
     public static String selectedShapeItem;
     public static String selectedFeedBackItem;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {       super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
         final Spinner spinner = (Spinner) findViewById(R.id.ringsNumber);
