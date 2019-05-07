@@ -6,8 +6,15 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.google.common.collect.Ordering;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Stack;
 
 import org.andengine.ui.activity.SimpleBaseGameActivity;
@@ -35,6 +42,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private ITextureRegion mBackgroundTextureRegion, mTowerTextureRegion, mRing1, mRing2, mRing3, mRing4, mRing5, mRing6;
 	private Sprite mTower1, mTower2, mTower3;
 	private Stack mStack1, mStack2, mStack3;
+	private List<Integer> poids = new ArrayList<Integer>() ;
 	private Timer theChrono;
 	private Report theReport;
 
@@ -436,7 +444,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private void checkForCollisionsWithTowers(Ring ring) {
 	    Stack stack = null;
 	    Sprite tower = null;
-	    int[] towerRings= {};
+		int indexPoids = poids.indexOf(ring.getmWeight());
 	    if (ring.collidesWith(mTower1) && (mStack1.size() == 0 || ring.getmWeight() < ((Ring) mStack1.peek()).getmWeight())) {
 
 	    	//code executer en cas de succès déclenchement chrono succès
@@ -449,6 +457,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	        tower = mTower1;
 			System.out.println("AUTORISER1");
 			System.out.println("Anneaux:"+ring.getmStack());
+			if (indexPoids != -1) {
+				poids.remove(indexPoids);
+			}
 
 		} else if (ring.collidesWith(mTower2) && (mStack2.size() == 0 || ring.getmWeight() < ((Ring) mStack2.peek()).getmWeight())) {
 
@@ -459,7 +470,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	        tower = mTower2;
 			System.out.println("AUTORISER2");
 			System.out.println("Anneaux:"+ring.getmStack());
-
+			if (indexPoids != -1) {
+				poids.remove(indexPoids);
+			}
 
 		} else if (ring.collidesWith(mTower3) && (mStack3.size() == 0 || ring.getmWeight() < ((Ring) mStack3.peek()).getmWeight())) {
 
@@ -469,8 +482,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	    	stack = mStack3;
 	        tower = mTower3;
 			System.out.println("AUTORISER3");
+			if (indexPoids == -1) {
+				poids.add(ring.getmWeight());
+			}
+			System.out.println("Ringooo: "+poids.toString());
 
-			System.out.println("Anneaux:"+mTower3);
+			System.out.println("Autorisé? "+ Ordering.natural().reverse().isOrdered(poids));
+
+
 
 		}
 		//Cas ou l'utilisateur n'a pas le droit d'effectuer ce mouvement
@@ -494,6 +513,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				});
 				stack = ring.getmStack();
 				tower = ring.getmTower();
+
 			}
 			if (selectedFeedBackItem.equals("Semi")) {
 				runOnUiThread(new Runnable() {
@@ -507,27 +527,54 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				if (ring.collidesWith(mTower1)) {
 					stack = mStack1;
 					tower = mTower1;
+					if (indexPoids != -1) {
+						poids.remove(indexPoids);
+					}
 				} else if (ring.collidesWith(mTower2)) {
 					stack = mStack2;
 					tower = mTower2;
+					if (indexPoids != -1) {
+						poids.remove(indexPoids);
+					}
 				} else if (ring.collidesWith(mTower3)) {
 					stack = mStack3;
 					tower = mTower3;
+					if (indexPoids == -1) {
+						poids.add(ring.getmWeight());
+						System.out.println("Ringooo: "+poids.toString());
+
+						System.out.println("Autorisé? "+ Ordering.natural().reverse().isOrdered(poids));
+					}
 				}
 			}
 			if (selectedFeedBackItem.equals("Sans")) {
 				if (ring.collidesWith(mTower1)) {
+					if (indexPoids != -1) {
+						poids.remove(indexPoids);
+					}
 					stack = mStack1;
 					tower = mTower1;
 				} else if (ring.collidesWith(mTower2)) {
+					if (indexPoids != -1) {
+						poids.remove(indexPoids);
+					}
 					stack = mStack2;
 					tower = mTower2;
 				} else if (ring.collidesWith(mTower3)) {
+					if (indexPoids == -1) {
+						poids.add(ring.getmWeight());
+					}
+
+					System.out.println("Ringooo: "+poids.toString());
+
+					System.out.println("Autorisé? "+ Ordering.natural().reverse().isOrdered(poids));
+
 					stack = mStack3;
 					tower = mTower3;
 				}
 			}
 	    }
+
 	    ring.getmStack().remove(ring);
 	    if (stack != null && tower !=null && stack.size() == 0) {
 	        ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - ring.getHeight());
@@ -543,7 +590,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	}
 	private void checkEnding(Ring ring){
 		Stack stack = ring.getmStack();
-		if (stack.size() > 4 && ring.getmTower() == mTower3){
+
+		int selectedItemParsed = Integer.parseInt(selectedItem);
+		int verifSelectedItem = selectedItemParsed-1;
+		System.out.println("Nb d'anneau de merde: "+ selectedItem);
+		Boolean isOrdered = Ordering.natural().reverse().isOrdered(poids);
+		if (stack.size() > verifSelectedItem && ring.getmTower() == mTower3 && isOrdered == true){
 			System.out.println("nice");
 			//timer stoppé en fin de partie
 			this.theChrono.stop();
@@ -556,8 +608,6 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			startActivity(getIntent());
 		}
 	}
-
-
 	public static String getSelectedFeedBackItem() {
 		return selectedFeedBackItem;
 	}
