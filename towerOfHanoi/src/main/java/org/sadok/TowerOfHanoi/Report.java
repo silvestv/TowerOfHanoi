@@ -12,17 +12,25 @@ public class Report {
     private static int nb_Reports;
     private String textReport;
 
+    private String nb_ring_choosen;
+    private String shape_ring_choosen;
+    private String feedback_choosen;
+
     private static Map<Integer, Report> allReports = new HashMap<>();
 
     public Report(Timer reportTimer, TowerOfHanoiActivity menuChoices){
+        //initialise les variables de classe
         this.reportTimer = reportTimer;
         this.menuChoices = menuChoices;
+        this.nb_ring_choosen = menuChoices.getSelectedItem();
+        this.shape_ring_choosen = menuChoices.getSelectedShapeItem();
+        this.feedback_choosen = menuChoices.getSelectedFeedBackItem();
 
         //créer l'ID du report
         this.IDReport = this.nb_Reports;
         //créer le textReport
         this.createReport();
-        //range l'instance courante dans une Map
+        //range l'instance courante dans une Map static
         this.allReports.put(this.IDReport, this);
         //incrémente le nombre de rapports
         this.nb_Reports++;
@@ -31,7 +39,7 @@ public class Report {
     }
 
     //Retourne le Timer d'une partie
-    public Timer getReportTimer() {
+    public Timer getReportTimer(){
         return this.reportTimer;
     }
 
@@ -69,29 +77,29 @@ public class Report {
         s = s+"Prénom joueur : "+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"OPTIONS CHOISIES\n";
-        s = s+"FeedBack choisi : "+getMenuChoices().getSelectedFeedBackItem()+"\n";
-        s = s+"Forme des palets choisis"+getMenuChoices().getSelectedShapeItem()+"\n";
-        s = s+"Nombre de palets choisis"+getMenuChoices().getSelectedItem()+"\n";
+        s = s+"FeedBack choisi : "+this.feedback_choosen+"\n";
+        s = s+"Forme des palets choisis"+this.shape_ring_choosen+"\n";
+        s = s+"Nombre de palets choisis"+this.nb_ring_choosen+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"PERFORMANCES TEMPS/COUPS\n";
-        s = s+"Nombre de coups avant réussite : "+getReportTimer().getNbClick()+"\n";
-        s = s+"Temps total partie : "+getReportTimer().getTotalTimeGame()/1000+" s\n";
-        s = s+"Temps moyen entre 2 actions : "+getReportTimer().getAverageTimeAction()/1000+" s\n";
-        s = s+"Temps moyen entre 2 succès : "+getReportTimer().getAverageTimeSucess()/1000+" s\n";
-        s = s+"Temps moyen entre 2 échecs : "+getReportTimer().getAverageTimeError()/1000+" s\n";
+        s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbClick()+"\n";
+        s = s+"Temps total partie : "+this.reportTimer.getTotalTimeGame()/1000+" s\n";
+        s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()/1000+" s\n";
+        s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()/1000+" s\n";
+        s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()/1000+" s\n";
         s = s+"------------------------------------------------------\n";
         s = s+"DETAILS PERFORMANCES TEMPS/COUPS (TABLEAU)\n";
         s = s+"Temps entre chaque action --->  intervalle entre l'action : \n";
-        for(int i = 1; i<getReportTimer().getAllBetweenAction().size(); i++){
-                s = s+""+(i-1)+" - "+i+" : "+getReportTimer().getAllBetweenAction().get(i)/1000+" s\n";
+        for(int i = 1; i<this.reportTimer.getAllBetweenAction().size(); i++){
+                s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenAction().get(i)/1000+" s\n";
         }
         s = s+"Temps entre 2 succès --->  intervalle entre le succès : \n";
-        for(int i = 1; i<getReportTimer().getAllBetweenSucess().size(); i++){
-            s = s+""+(i-1)+" - "+i+" : "+getReportTimer().getAllBetweenSucess().get(i)/1000+" s\n";
+        for(int i = 1; i<this.reportTimer.getAllBetweenSucess().size(); i++){
+            s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenSucess().get(i)/1000+" s\n";
         }
         s = s+"Temps entre chaque action --->  intervalle entre l'échec : \n";
-        for(int i = 1; i<getReportTimer().getAllBetweenError().size(); i++){
-            s = s+""+(i-1)+" - "+i+" : "+getReportTimer().getAllBetweenError().get(i)/1000+" s\n";
+        for(int i = 1; i<this.reportTimer.getAllBetweenError().size(); i++){
+            s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenError().get(i)/1000+" s\n";
         }
 
         this.textReport = s;
