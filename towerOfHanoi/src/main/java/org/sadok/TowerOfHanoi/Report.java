@@ -83,23 +83,26 @@ public class Report {
         s = s+"------------------------------------------------------\n";
         s = s+"PERFORMANCES TEMPS/COUPS\n";
         s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbClick()+"\n";
-        s = s+"Temps total partie : "+this.reportTimer.getTotalTimeGame()/1000+" s\n";
-        s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()/1000+" s\n";
-        s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()/1000+" s\n";
-        s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()/1000+" s\n";
+        s = s+"Temps total partie : "+this.reportTimer.getTotalTimeGame()+" s\n";
+        s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()+" s\n";
+        s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()+" s\n";
+        s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()+" s\n";
+        s = s+"Nombre d'echec : \n"+this.reportTimer.getAllBetweenError().size();
         s = s+"------------------------------------------------------\n";
         s = s+"DETAILS PERFORMANCES TEMPS/COUPS (TABLEAU)\n";
         s = s+"Temps entre chaque action --->  intervalle entre l'action : \n";
-        for(int i = 1; i<this.reportTimer.getAllBetweenAction().size(); i++){
-                s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenAction().get(i)/1000+" s\n";
+
+
+        for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
+                s = s+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenAction().get(i)+" s\n";
         }
         s = s+"Temps entre 2 succès --->  intervalle entre le succès : \n";
-        for(int i = 1; i<this.reportTimer.getAllBetweenSucess().size(); i++){
-            s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenSucess().get(i)/1000+" s\n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
+            s = s+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenSucess().get(i)+" s\n";
         }
         s = s+"Temps entre chaque action --->  intervalle entre l'échec : \n";
-        for(int i = 1; i<this.reportTimer.getAllBetweenError().size(); i++){
-            s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenError().get(i)/1000+" s\n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            s = s+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenError().get(i)+" s\n";
         }
 
         this.textReport = s;

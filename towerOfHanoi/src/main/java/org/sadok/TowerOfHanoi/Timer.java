@@ -124,44 +124,54 @@ public class Timer {
     public void calculAverageTimeAction(){
 
         long sum = 0;
-        for(int i = 0; i <= allBetweenAction.size(); i++){
+        for(int i = 0; i < allBetweenAction.size(); i++){
             sum = sum + allBetweenAction.get(i);
         }
-        this.t_average_second_action = sum/allBetweenAction.size();
+        if (allBetweenAction.size() != 0) {
+            this.t_average_second_action = sum / allBetweenAction.size();
+        }
     }
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeSucess(){
         long sum = 0;
-        for(int i = 0; i <= allBetweenSucess.size(); i++){
+        for(int i = 0; i < allBetweenSucess.size(); i++){
             sum = sum + allBetweenSucess.get(i);
         }
-        this.t_average_second_success = sum/allBetweenSucess.size();
+        if (allBetweenSucess.size() != 0) {
+            this.t_average_second_success = sum / allBetweenSucess.size();
+        }
     }
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeError(){
         long sum = 0;
-        for(int i = 0; i <= allBetweenError.size(); i++){
+        for(int i = 0; i < allBetweenError.size(); i++){
             sum = sum + allBetweenError.get(i);
         }
-        this.t_average_second_error = sum/allBetweenError.size();
+        if (allBetweenError.size() != 0) {
+            this.t_average_second_error = sum / allBetweenError.size();
+        }
     }
 
     public void calculAverageTimeSucessThenError(){
         long sum = 0;
-        for(int i = 0; i <= allBetweenSuccessThenError.size(); i++){
+        for(int i = 0; i < allBetweenSuccessThenError.size(); i++){
             sum = sum + allBetweenSuccessThenError.get(i);
         }
-        this.t_average_second_sucess_then_error = sum/allBetweenSuccessThenError.size();
+        if (allBetweenSuccessThenError.size() != 0) {
+            this.t_average_second_sucess_then_error = sum / allBetweenSuccessThenError.size();
+        }
     }
 
     public void calculAverageTimeErrorThenSucess(){
         long sum = 0;
-        for(int i = 0; i <= allBetweenErrorThenSucess.size(); i++){
+        for(int i = 0; i < allBetweenErrorThenSucess.size(); i++){
             sum = sum + allBetweenErrorThenSucess.get(i);
         }
-        this.t_average_second_error = sum/allBetweenErrorThenSucess.size();
+        if (allBetweenErrorThenSucess.size() != 0) {
+            this.t_average_second_error = sum / allBetweenErrorThenSucess.size();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,17 +182,14 @@ public class Timer {
         return allBetweenAction.size();
     }
     public ArrayList<Long> getAllBetweenAction(){
-        calculAverageTimeAction();
         return this.allBetweenAction;
     }
 
     public ArrayList<Long> getAllBetweenSucess(){
-        calculAverageTimeSucess();
         return this.allBetweenSucess;
     }
 
     public ArrayList<Long> getAllBetweenError(){
-        calculAverageTimeError();
         return this.allBetweenError;
     }
 
@@ -199,13 +206,16 @@ public class Timer {
 
 
     public long getAverageTimeAction(){
+        calculAverageTimeAction();
         return this.t_average_second_action;
     }
 
     public long getAverageTimeSucess(){
+        calculAverageTimeSucess();
         return this.t_average_second_success;
     }
     public long getAverageTimeError(){
+        calculAverageTimeError();
         return this.t_average_second_error;
     }
 
