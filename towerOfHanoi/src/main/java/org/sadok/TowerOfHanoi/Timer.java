@@ -55,7 +55,7 @@ public class Timer {
 
     //renvoie le temps total d'une partie
     public long getTotalTimeGame(){
-        return t_second_game_start - t_second_game_stop;
+        return  t_second_game_stop - t_second_game_start;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,22 +172,27 @@ public class Timer {
         return allBetweenAction.size();
     }
     public ArrayList<Long> getAllBetweenAction(){
+        calculAverageTimeAction();
         return this.allBetweenAction;
     }
 
     public ArrayList<Long> getAllBetweenSucess(){
+        calculAverageTimeSucess();
         return this.allBetweenSucess;
     }
 
     public ArrayList<Long> getAllBetweenError(){
+        calculAverageTimeError();
         return this.allBetweenError;
     }
 
     public ArrayList<Long> getAllBetweenSucessThenError(){
+        calculAverageTimeSucessThenError();
         return this.allBetweenSuccessThenError;
     }
 
     public ArrayList<Long> getAllBetweenErrorThenSucess(){
+        calculAverageTimeErrorThenSucess();
         return this.allBetweenErrorThenSucess;
     }
 
