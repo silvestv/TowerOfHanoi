@@ -18,12 +18,15 @@ public class Report {
         this.reportTimer = reportTimer;
         this.menuChoices = menuChoices;
 
+        //créer l'ID du report
         this.IDReport = this.nb_Reports;
-        this.nb_Reports++;
-        this.allReports.put(this.IDReport, this);
-
         //créer le textReport
         this.createReport();
+        //range l'instance courante dans une Map
+        this.allReports.put(this.IDReport, this);
+        //incrémente le nombre de rapports
+        this.nb_Reports++;
+
 
     }
 
