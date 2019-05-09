@@ -5,31 +5,31 @@ import android.os.SystemClock;
 import java.util.*;
 
 public class Timer {
-    private long t_second_game_start;
-    private long t_second_game_stop;
-    private long t_second_game_total;
+    private double t_second_game_start;
+    private double t_second_game_stop;
+    private double t_second_game_total;
 
-    private long triggerSuccess;
-    private long triggerError;
-    private long triggerAction;
+    private double triggerSuccess;
+    private double triggerError;
+    private double triggerAction;
 
-    private long t_second_between_action;
-    private long t_second_between_error;
-    private long t_second_between_success;
-    private long t_second_between_success_then_error;
-    private long t_second_between_error_then_sucess;
+    private double t_second_between_action;
+    private double t_second_between_error;
+    private double t_second_between_success;
+    private double t_second_between_success_then_error;
+    private double t_second_between_error_then_sucess;
 
-    private ArrayList<Long> allBetweenSucess;
-    private ArrayList<Long> allBetweenError;
-    private ArrayList<Long> allBetweenAction;
-    private ArrayList<Long> allBetweenSuccessThenError;
-    private ArrayList<Long> allBetweenErrorThenSucess;
+    private ArrayList<Double> allBetweenSucess;
+    private ArrayList<Double> allBetweenError;
+    private ArrayList<Double> allBetweenAction;
+    private ArrayList<Double> allBetweenSuccessThenError;
+    private ArrayList<Double> allBetweenErrorThenSucess;
 
-    private long t_average_second_action;
-    private long t_average_second_error;
-    private long t_average_second_success;
-    private long t_average_second_sucess_then_error;
-    private long t_average_second_error_then_sucess;
+    private double t_average_second_action;
+    private double t_average_second_error;
+    private double t_average_second_success;
+    private double t_average_second_sucess_then_error;
+    private double t_average_second_error_then_sucess;
 
     ///////////CONSTRUCT
     public Timer(){
@@ -54,7 +54,7 @@ public class Timer {
     }
 
     //renvoie le temps total d'une partie
-    public long getTotalTimeGame(){
+    public double getTotalTimeGame(){
         return  t_second_game_stop - t_second_game_start;
     }
 
@@ -123,7 +123,7 @@ public class Timer {
     //en fin de game, on récupère le vecteur indiquant tout les lapses-time entre les actions et on en retire la moyenne
     public void calculAverageTimeAction(){
 
-        long sum = 0;
+        double sum = 0;
         for(int i = 0; i < allBetweenAction.size(); i++){
             sum = sum + allBetweenAction.get(i);
         }
@@ -134,7 +134,7 @@ public class Timer {
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeSucess(){
-        long sum = 0;
+        double sum = 0;
         for(int i = 0; i < allBetweenSucess.size(); i++){
             sum = sum + allBetweenSucess.get(i);
         }
@@ -145,7 +145,7 @@ public class Timer {
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeError(){
-        long sum = 0;
+        double sum = 0;
         for(int i = 0; i < allBetweenError.size(); i++){
             sum = sum + allBetweenError.get(i);
         }
@@ -155,7 +155,7 @@ public class Timer {
     }
 
     public void calculAverageTimeSucessThenError(){
-        long sum = 0;
+        double sum = 0;
         for(int i = 0; i < allBetweenSuccessThenError.size(); i++){
             sum = sum + allBetweenSuccessThenError.get(i);
         }
@@ -165,7 +165,7 @@ public class Timer {
     }
 
     public void calculAverageTimeErrorThenSucess(){
-        long sum = 0;
+        double sum = 0;
         for(int i = 0; i < allBetweenErrorThenSucess.size(); i++){
             sum = sum + allBetweenErrorThenSucess.get(i);
         }
@@ -181,91 +181,91 @@ public class Timer {
     public int getNbClick(){
         return allBetweenAction.size();
     }
-    public ArrayList<Long> getAllBetweenAction(){
+    public ArrayList<Double> getAllBetweenAction(){
         return this.allBetweenAction;
     }
 
-    public ArrayList<Long> getAllBetweenSucess(){
+    public ArrayList<Double> getAllBetweenSucess(){
         return this.allBetweenSucess;
     }
 
-    public ArrayList<Long> getAllBetweenError(){
+    public ArrayList<Double> getAllBetweenError(){
         return this.allBetweenError;
     }
 
-    public ArrayList<Long> getAllBetweenSucessThenError(){
+    public ArrayList<Double> getAllBetweenSucessThenError(){
         return this.allBetweenSuccessThenError;
     }
 
-    public ArrayList<Long> getAllBetweenErrorThenSucess(){
+    public ArrayList<Double> getAllBetweenErrorThenSucess(){
         return this.allBetweenErrorThenSucess;
     }
 
 
 
-    public long getAverageTimeAction(){
+    public double getAverageTimeAction(){
         calculAverageTimeAction();
         return this.t_average_second_action;
     }
 
-    public long getAverageTimeSucess(){
+    public double getAverageTimeSucess(){
         calculAverageTimeSucess();
         return this.t_average_second_success;
     }
-    public long getAverageTimeError(){
+    public double getAverageTimeError(){
         calculAverageTimeError();
         return this.t_average_second_error;
     }
 
-    public long getAverageTimeSucessThenError(){
+    public double getAverageTimeSucessThenError(){
         calculAverageTimeSucessThenError();
         return this.t_average_second_sucess_then_error;
     }
-    public long getAverageTimeErrorThenSucess(){
+    public double getAverageTimeErrorThenSucess(){
         calculAverageTimeErrorThenSucess();
         return this.t_average_second_error_then_sucess;
     }
 
 
 
-    public long getTimeBetweenAction(){
+    public double getTimeBetweenAction(){
         return this.t_second_between_action;
     }
 
-    public long getTimeBetweenSuccess(){
+    public double getTimeBetweenSuccess(){
         return this.t_second_between_success;
     }
-    public long getTimeBetweenError(){
+    public double getTimeBetweenError(){
         return this.t_second_between_error;
     }
 
-    public long getTimeBetweenSuccessThenError(){
+    public double getTimeBetweenSuccessThenError(){
         return this.t_second_between_success_then_error;
     }
-    public long getTimeBetweenErrorThenSucess(){
+    public double getTimeBetweenErrorThenSucess(){
         return this.t_second_between_error_then_sucess;
     }
 
 
 
-    public long getTriggerSuccess(){
+    public double getTriggerSuccess(){
         return this.triggerSuccess;
     }
 
-    public long getTriggerError(){
+    public double getTriggerError(){
         return this.triggerError;
     }
-    public long getTriggerAction(){
+    public double getTriggerAction(){
         return this.triggerAction;
     }
 
 
 
-    public long getT_second_game_start(){
+    public double getT_second_game_start(){
         return t_second_game_start;
     }
 
-    public long getT_second_game_stop(){
+    public double getT_second_game_stop(){
         return t_second_game_stop;
     }
 

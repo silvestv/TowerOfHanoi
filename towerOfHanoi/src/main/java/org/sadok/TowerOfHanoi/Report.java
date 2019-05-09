@@ -104,12 +104,12 @@ public class Report {
         s = s+"------------------------------------------------------\n";
         s = s+"PERFORMANCES TEMPS/COUPS\n";
         s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbClick()+"\n";
-        s = s+"Temps total partie : "+this.reportTimer.getTotalTimeGame()+" s\n";
-        s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()+" s\n";
-        s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()+" s\n";
-        s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()+" s\n";
-        s = s+"tems moyen entre succes erreur : \n"+reportTimer.getAverageTimeSucessThenError()+" s\n";
-        s = s+"tems moyen entre erreur succes : \n"+this.reportTimer.getAverageTimeErrorThenSucess()+" s\n";
+        s = s+"Temps total partie : "+(this.reportTimer.getTotalTimeGame()/1000)+" s\n";
+        s = s+"Temps moyen entre 2 actions : "+(this.reportTimer.getAverageTimeAction()/1000)+" s\n";
+        s = s+"Temps moyen entre 2 succès : "+(this.reportTimer.getAverageTimeSucess()/1000)+" s\n";
+        s = s+"Temps moyen entre 2 échecs : "+(this.reportTimer.getAverageTimeError()/1000)+" s\n";
+        s = s+"tems moyen entre succes erreur : \n"+(reportTimer.getAverageTimeSucessThenError()/1000)+" s\n";
+        s = s+"tems moyen entre erreur succes : \n"+(this.reportTimer.getAverageTimeErrorThenSucess()/1000)+" s\n";
 
         s = s+"------------------------------------------------------\n";
         s = s+"DETAILS PERFORMANCES TEMPS/COUPS (TABLEAU)\n";
@@ -142,27 +142,27 @@ public class Report {
 
         //Temps entre Action
         for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
-            tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenAction().get(i)+" s\n";
+            tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
         }
 
         //Temps entre Succes
         for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
-            tempsEntreSucces = tempsEntreSucces+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenSucess().get(i)+" s\n";
+            tempsEntreSucces = tempsEntreSucces+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucess().get(i)/1000)+" s\n";
         }
 
         //Temps entre Erreur
         for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
-            tempsEntreErreur = tempsEntreErreur+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenError().get(i)+" s\n";
+            tempsEntreErreur = tempsEntreErreur+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenError().get(i)/1000)+" s\n";
         }
 
         //Temps entre succes puis erreur
         for(int i = 0; i<this.reportTimer.getAllBetweenSucessThenError().size(); i++){
-            tempsEntreSuccesErreur = tempsEntreSuccesErreur+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenSucessThenError().get(i)+" s\n";
+            tempsEntreSuccesErreur = tempsEntreSuccesErreur+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucessThenError().get(i)/1000)+" s\n";
         }
         //Temps entre erreur puis succes
 
         for(int i = 0; i<this.reportTimer.getAllBetweenErrorThenSucess().size(); i++){
-            tempsEntreErreurSucces = tempsEntreErreurSucces+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenErrorThenSucess().get(i)+" s\n";
+            tempsEntreErreurSucces = tempsEntreErreurSucces+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenErrorThenSucess().get(i)/1000)+" s\n";
         }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbyr_Fv9QbiCXHeoEEfi9cyI063XH4ohj430joFEZwJVlrhrxyC_/exec",
@@ -192,23 +192,21 @@ public class Report {
                 parmas.put("feedback",feedback_choosen);
                 parmas.put("formePalets",shape_ring_choosen);
                 parmas.put("nbPalets",nb_ring_choosen);
-                parmas.put("tempsTotal",Long.toString(reportTimer.getTotalTimeGame()));
-                parmas.put("tempsMoyenAction",Long.toString(reportTimer.getAverageTimeAction()));
-                parmas.put("tempsMoyenSucces",Long.toString(reportTimer.getAverageTimeSucess()));
-                parmas.put("tempsMoyenEchecs",Long.toString(reportTimer.getAverageTimeError()));
+                parmas.put("tempsTotal",Double.toString(reportTimer.getTotalTimeGame()/1000));
+                parmas.put("tempsMoyenAction",Double.toString(reportTimer.getAverageTimeAction()/1000));
+                parmas.put("tempsMoyenSucces",Double.toString(reportTimer.getAverageTimeSucess()/1000));
+                parmas.put("tempsMoyenEchecs",Double.toString(reportTimer.getAverageTimeError()/1000));
                 parmas.put("tempsEntreAction", tempsEntreAction);
                 parmas.put("tempsEntreSucces", tempsEntreSucces);
                 parmas.put("tempsEntreErreur", tempsEntreErreur);
                 parmas.put("tempsEntreSuccesErreur", tempsEntreSuccesErreur);
                 parmas.put("tempsEntreErreurSucces", tempsEntreErreurSucces);
-                parmas.put("tempsMoyenEntreSuccesErreur", Long.toString(reportTimer.getAverageTimeSucessThenError()));
-                parmas.put("tempsMoyenEntreErreurSucces", Long.toString(reportTimer.getAverageTimeErrorThenSucess()));
-                tempsEntreAction = "";
-                tempsEntreSucces = "";
+                parmas.put("tempsMoyenEntreSuccesErreur", Double.toString(reportTimer.getAverageTimeSucessThenError()/1000));
+                parmas.put("tempsMoyenEntreErreurSucces", Double.toString(reportTimer.getAverageTimeErrorThenSucess()/1000));
+
                 return parmas;
             }
         };
-
         int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
 
         RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
