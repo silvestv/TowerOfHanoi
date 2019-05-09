@@ -2,10 +2,20 @@ package org.sadok.TowerOfHanoi;
 
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.common.collect.Ordering;
 
 import java.io.IOException;
@@ -13,8 +23,10 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Stack;
 
 import org.andengine.ui.activity.SimpleBaseGameActivity;
@@ -590,7 +602,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	}
 	private void checkEnding(Ring ring){
 		Stack stack = ring.getmStack();
-
+		Context context = getApplicationContext();
 		int selectedItemParsed = Integer.parseInt(selectedItem);
 		int verifSelectedItem = selectedItemParsed-1;
 		System.out.println("Nb d'anneau de merde: "+ selectedItem);
@@ -604,6 +616,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			//report édité puis affiché
 			theReport = new Report(theChrono, this);
 			theReport.afficheReport();
+			theReport.addItemToSheet(context);
 			finish();
 			startActivity(getIntent());
 		}
@@ -619,4 +632,5 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	public static String getSelectedShapeItem() {
 		return selectedShapeItem;
 	}
+
 }

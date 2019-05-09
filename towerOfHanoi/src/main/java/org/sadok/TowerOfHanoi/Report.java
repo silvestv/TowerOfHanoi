@@ -1,6 +1,21 @@
 package org.sadok.TowerOfHanoi;
 
+import android.content.Context;
+import android.provider.Settings;
+import android.view.Gravity;
+import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +30,12 @@ public class Report {
     private String nb_ring_choosen;
     private String shape_ring_choosen;
     private String feedback_choosen;
+    public String tempsEntreAction = "";
+    public String tempsEntreSucces = "";
+    public String tempsEntreErreur = "";
+    public String tempsEntreSuccesErreur = "";
+    public String tempsEntreErreurSucces = "";
+
 
     private static Map<Integer, Report> allReports = new HashMap<>();
 
@@ -87,7 +108,9 @@ public class Report {
         s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()+" s\n";
         s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()+" s\n";
         s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()+" s\n";
-        s = s+"Nombre d'echec : \n"+this.reportTimer.getAllBetweenError().size();
+        s = s+"tems moyen entre succes erreur : \n"+reportTimer.getAverageTimeSucessThenError()+" s\n";
+        s = s+"tems moyen entre erreur succes : \n"+this.reportTimer.getAverageTimeErrorThenSucess()+" s\n";
+
         s = s+"------------------------------------------------------\n";
         s = s+"DETAILS PERFORMANCES TEMPS/COUPS (TABLEAU)\n";
         s = s+"Temps entre chaque action --->  intervalle entre l'action : \n";
@@ -113,6 +136,89 @@ public class Report {
     public void afficheReport(){
 
         System.out.println(textReport);
+    }
+
+    public void addItemToSheet(final Context context) {
+
+        //Temps entre Action
+        for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
+            tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenAction().get(i)+" s\n";
+        }
+
+        //Temps entre Succes
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
+            tempsEntreSucces = tempsEntreSucces+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenSucess().get(i)+" s\n";
+        }
+
+        //Temps entre Erreur
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            tempsEntreErreur = tempsEntreErreur+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenError().get(i)+" s\n";
+        }
+
+        //Temps entre succes puis erreur
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucessThenError().size(); i++){
+            tempsEntreSuccesErreur = tempsEntreSuccesErreur+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenSucessThenError().get(i)+" s\n";
+        }
+        //Temps entre erreur puis succes
+
+        for(int i = 0; i<this.reportTimer.getAllBetweenErrorThenSucess().size(); i++){
+            tempsEntreErreurSucces = tempsEntreErreurSucces+""+(i)+" - "+(i+1)+" : "+this.reportTimer.getAllBetweenErrorThenSucess().get(i)+" s\n";
+        }
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbyr_Fv9QbiCXHeoEEfi9cyI063XH4ohj430joFEZwJVlrhrxyC_/exec",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+
+                        final Toast toast = Toast.makeText(context,response,Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parmas = new HashMap<>();
+                //here we pass params
+                parmas.put("action","addItem");
+                parmas.put("feedback",feedback_choosen);
+                parmas.put("formePalets",shape_ring_choosen);
+                parmas.put("nbPalets",nb_ring_choosen);
+                parmas.put("tempsTotal",Long.toString(reportTimer.getTotalTimeGame()));
+                parmas.put("tempsMoyenAction",Long.toString(reportTimer.getAverageTimeAction()));
+                parmas.put("tempsMoyenSucces",Long.toString(reportTimer.getAverageTimeSucess()));
+                parmas.put("tempsMoyenEchecs",Long.toString(reportTimer.getAverageTimeError()));
+                parmas.put("tempsEntreAction", tempsEntreAction);
+                parmas.put("tempsEntreSucces", tempsEntreSucces);
+                parmas.put("tempsEntreErreur", tempsEntreErreur);
+                parmas.put("tempsEntreSuccesErreur", tempsEntreSuccesErreur);
+                parmas.put("tempsEntreErreurSucces", tempsEntreErreurSucces);
+                parmas.put("tempsMoyenEntreSuccesErreur", Long.toString(reportTimer.getAverageTimeSucessThenError()));
+                parmas.put("tempsMoyenEntreErreurSucces", Long.toString(reportTimer.getAverageTimeErrorThenSucess()));
+                tempsEntreAction = "";
+                tempsEntreSucces = "";
+                return parmas;
+            }
+        };
+
+        int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
+
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(retryPolicy);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        queue.add(stringRequest);
+
+
     }
 }
 

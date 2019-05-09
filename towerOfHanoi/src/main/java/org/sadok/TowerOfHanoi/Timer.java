@@ -170,7 +170,7 @@ public class Timer {
             sum = sum + allBetweenErrorThenSucess.get(i);
         }
         if (allBetweenErrorThenSucess.size() != 0) {
-            this.t_average_second_error = sum / allBetweenErrorThenSucess.size();
+            this.t_average_second_error_then_sucess = sum / allBetweenErrorThenSucess.size();
         }
     }
 
@@ -194,12 +194,10 @@ public class Timer {
     }
 
     public ArrayList<Long> getAllBetweenSucessThenError(){
-        calculAverageTimeSucessThenError();
         return this.allBetweenSuccessThenError;
     }
 
     public ArrayList<Long> getAllBetweenErrorThenSucess(){
-        calculAverageTimeErrorThenSucess();
         return this.allBetweenErrorThenSucess;
     }
 
@@ -220,9 +218,11 @@ public class Timer {
     }
 
     public long getAverageTimeSucessThenError(){
+        calculAverageTimeSucessThenError();
         return this.t_average_second_sucess_then_error;
     }
     public long getAverageTimeErrorThenSucess(){
+        calculAverageTimeErrorThenSucess();
         return this.t_average_second_error_then_sucess;
     }
 
