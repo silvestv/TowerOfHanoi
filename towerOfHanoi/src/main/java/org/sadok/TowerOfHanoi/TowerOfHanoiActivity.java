@@ -44,13 +44,15 @@ import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 
+import static org.sadok.TowerOfHanoi.MenuActivity.checkbox;
+import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrue;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedFeedBackItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedShapeItem;
 
 public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
-	private static int CAMERA_WIDTH = 800;
-	private static int CAMERA_HEIGHT = 480;
+	private static int CAMERA_WIDTH = 960;
+	private static int CAMERA_HEIGHT = 600;
 	private ITextureRegion mBackgroundTextureRegion, mTowerTextureRegion, mRing1, mRing2, mRing3, mRing4, mRing5, mRing6;
 	private Sprite mTower1, mTower2, mTower3;
 	private Stack mStack1, mStack2, mStack3;
@@ -70,11 +72,16 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
         try {
         	// 1 - Set up bitmap textures
+			System.out.println("Checkbox: "+checkboxTrue);
 
             ITexture backgroundTexture = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-                    return getAssets().open("gfx/background1.png");
+					if(checkboxTrue) {
+						return getAssets().open("gfx/background3d.png");
+					}else{
+						return getAssets().open("gfx/background2v1.png");
+					}
                 }
             });
             ITexture towerTexture = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
@@ -94,18 +101,25 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					if(selectedShapeItem.equals("Pyramidale")){
 						ringShape1 = getAssets().open("gfx/pyramide1.png");
 					}
+					if(checkboxTrue && selectedShapeItem.equals("Rectangulaire")){
+						ringShape1 = getAssets().open("gfx/rectangle2-3D.png");
+					}
 					return ringShape1;
 				}
 			});
 			ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape2 = getAssets().open("gfx/rectangle2-2.png");
+					InputStream ringShape2 = getAssets().open("gfx/rectangle3.png");
 					if(selectedShapeItem.equals("Circulaire")){
 						ringShape2 = getAssets().open("gfx/ring2.png");
 					}
+
 					if(selectedShapeItem.equals("Pyramidale")){
 						ringShape2 = getAssets().open("gfx/pyramide2.png");
+					}
+					if(checkboxTrue && selectedShapeItem.equals("Rectangulaire")){
+						ringShape2 = getAssets().open("gfx/rectangle3-3D.png");
 					}
 					return ringShape2;
 				}
@@ -113,12 +127,15 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring3 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape3 = getAssets().open("gfx/rectangle3.png");
+					InputStream ringShape3 = getAssets().open("gfx/rectangle4.png");
 					if(selectedShapeItem.equals("Circulaire")){
 						ringShape3 = getAssets().open("gfx/ring3.png");
 					}
 					if(selectedShapeItem.equals("Pyramidale")){
 						ringShape3 = getAssets().open("gfx/pyramide3.png");
+					}
+					if(checkboxTrue && selectedShapeItem.equals("Rectangulaire")){
+						ringShape3 = getAssets().open("gfx/rectangle4-3D.png");
 					}
 					return ringShape3;
                 }
@@ -206,9 +223,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Sprite backgroundSprite = new Sprite(0, 0, this.mBackgroundTextureRegion, getVertexBufferObjectManager());
 		scene.attachChild(backgroundSprite);
 		// 2 - Add the towers
-		mTower1 = new Sprite(192, 150, this.mTowerTextureRegion, getVertexBufferObjectManager());
-		mTower2 = new Sprite(400, 150, this.mTowerTextureRegion, getVertexBufferObjectManager());
-		mTower3 = new Sprite(604, 150, this.mTowerTextureRegion, getVertexBufferObjectManager());
+		mTower1 = new Sprite(180, 309, this.mTowerTextureRegion, getVertexBufferObjectManager());
+		mTower2 = new Sprite(480, 309, this.mTowerTextureRegion, getVertexBufferObjectManager());
+		mTower3 = new Sprite(780, 309, this.mTowerTextureRegion, getVertexBufferObjectManager());
 		scene.attachChild(mTower1);
 		scene.attachChild(mTower2);
 		scene.attachChild(mTower3);
@@ -238,7 +255,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 
 		};
-		Ring ring2 = new Ring(5, mTower1.getX() + mTower1.getWidth()/2 - mRing2.getWidth()/2, ring1.getY() - mRing2.getHeight(), this.mRing2, getVertexBufferObjectManager()) {
+		float DmRing2;
+		if(checkboxTrue) {
+			DmRing2 = mRing2.getHeight() - 10;
+
+		}else {
+			DmRing2 = mRing2.getHeight();
+		}
+		Ring ring2 = new Ring(5, mTower1.getX() + mTower1.getWidth()/2 - mRing2.getWidth()/2, ring1.getY() - (DmRing2), this.mRing2, getVertexBufferObjectManager()) {
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
@@ -258,7 +282,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        return true;
 		    }
 		};
-		Ring ring3 = new Ring(4, mTower1.getX() + mTower1.getWidth()/2 - mRing3.getWidth()/2, ring2.getY() - mRing3.getHeight(), this.mRing3, getVertexBufferObjectManager()) {
+		float DmRing3;
+		if(checkboxTrue) {
+			DmRing3 = mRing3.getHeight() - 7;
+
+		}else {
+			DmRing3 = mRing3.getHeight();
+		}
+		Ring ring3 = new Ring(4, mTower1.getX() + mTower1.getWidth()/2 - mRing3.getWidth()/2, ring2.getY() - (DmRing3), this.mRing3, getVertexBufferObjectManager()) {
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
@@ -504,6 +535,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 
 		}
+
 		//Cas ou l'utilisateur n'a pas le droit d'effectuer ce mouvement
 	    else {
 	    	//code executer en cas d'erreur déclenchement chrono erreur
@@ -557,46 +589,60 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 						System.out.println("Autorisé? "+ Ordering.natural().reverse().isOrdered(poids));
 					}
+				}else if(!ring.collidesWith(ring.getmTower())){
+					stack =  ring.getmStack();
+					tower = ring.getmTower();
 				}
 			}
 			if (selectedFeedBackItem.equals("Sans")) {
-				if (ring.collidesWith(mTower1)) {
-					if (indexPoids != -1) {
-						poids.remove(indexPoids);
-					}
-					stack = mStack1;
-					tower = mTower1;
-				} else if (ring.collidesWith(mTower2)) {
-					if (indexPoids != -1) {
-						poids.remove(indexPoids);
-					}
-					stack = mStack2;
-					tower = mTower2;
-				} else if (ring.collidesWith(mTower3)) {
-					if (indexPoids == -1) {
-						poids.add(ring.getmWeight());
-					}
+					if (ring.collidesWith(mTower1)) {
+						if (indexPoids != -1) {
+							poids.remove(indexPoids);
+						}
+						stack = mStack1;
+						tower = mTower1;
+					} else if (ring.collidesWith(mTower2)) {
+						if (indexPoids != -1) {
+							poids.remove(indexPoids);
+						}
+						stack = mStack2;
+						tower = mTower2;
+					} else if (ring.collidesWith(mTower3)) {
+						if (indexPoids == -1) {
+							poids.add(ring.getmWeight());
+						}
 
-					System.out.println("Ringooo: "+poids.toString());
+						System.out.println("Ringooo: " + poids.toString());
 
-					System.out.println("Autorisé? "+ Ordering.natural().reverse().isOrdered(poids));
+						System.out.println("Autorisé? " + Ordering.natural().reverse().isOrdered(poids));
 
-					stack = mStack3;
-					tower = mTower3;
+						stack = mStack3;
+						tower = mTower3;
+					}else if(!ring.collidesWith(ring.getmTower())){
+						stack =  ring.getmStack();
+						tower = ring.getmTower();
 				}
+
 			}
 	    }
 
 	    ring.getmStack().remove(ring);
-	    if (stack != null && tower !=null && stack.size() == 0) {
-	        ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - ring.getHeight());
-	    } else if (stack != null && tower !=null && stack.size() > 0) {
-	        ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - ring.getHeight());
-	    }
+		if(checkboxTrue) {
+			if (stack != null && tower !=null && stack.size() == 0) {
+				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - (ring.getHeight()-8));
+			} else if (stack != null && tower !=null && stack.size() > 0) {
+				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - (ring.getHeight()-8));
+			}
+		}else {
+			if (stack != null && tower !=null && stack.size() == 0) {
+				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - ring.getHeight());
+			} else if (stack != null && tower !=null && stack.size() > 0) {
+				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - ring.getHeight());
+			}
+		}
 
 
-
-		stack.add(ring);
+	stack.add(ring);
 	    ring.setmStack(stack);
 	    ring.setmTower(tower);
 	}
