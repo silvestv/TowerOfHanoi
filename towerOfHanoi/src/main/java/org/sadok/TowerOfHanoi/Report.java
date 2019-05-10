@@ -1,5 +1,6 @@
 package org.sadok.TowerOfHanoi;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,25 +82,47 @@ public class Report {
         s = s+"Forme des palets choisis"+this.shape_ring_choosen+"\n";
         s = s+"Nombre de palets choisis"+this.nb_ring_choosen+"\n";
         s = s+"------------------------------------------------------\n";
+        s = s+"VUE D'ENSEMBLE DE LA PARTIE\n";
+        for(int i : this.reportTimer.getChronologicActionMap().keySet()){
+            s = s+i+" -> "+reportTimer.getChronologicActionMap().get(i)+" || ";
+        }
+        s = s+"\n";
+        s = s+"------------------------------------------------------\n";
         s = s+"PERFORMANCES TEMPS/COUPS\n";
-        s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbClick()+"\n";
-        s = s+"Temps total partie : "+this.reportTimer.getTotalTimeGame()/1000+" s\n";
-        s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()/1000+" s\n";
-        s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()/1000+" s\n";
-        s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()/1000+" s\n";
+        s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbAction()+"\n";
+        s = s+"Nombre de succès : "+this.reportTimer.getNbSucess()+"\n";
+        s = s+"Nombre d'echec : "+this.reportTimer.getNbError()+"\n\n";
+        s = s+"Temps total partie : "+this.reportTimer.getTotalTimeGame()+" s\n";
+        s = s+"Temps moyen entre 2 actions : "+this.reportTimer.getAverageTimeAction()+" ms\n";
+        s = s+"Temps moyen entre 2 succès : "+this.reportTimer.getAverageTimeSucess()+" ms\n";
+        s = s+"Temps moyen entre 2 échecs : "+this.reportTimer.getAverageTimeError()+" ms\n";
         s = s+"------------------------------------------------------\n";
         s = s+"DETAILS PERFORMANCES TEMPS/COUPS (TABLEAU)\n";
         s = s+"Temps entre chaque action --->  intervalle entre l'action : \n";
-        for(int i = 1; i<this.reportTimer.getAllBetweenAction().size(); i++){
-                s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenAction().get(i)/1000+" s\n";
+
+
+        for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
+                s = s+""+(i)+" - "+(i+1)+" : "+(double)(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
         }
+
         s = s+"Temps entre 2 succès --->  intervalle entre le succès : \n";
-        for(int i = 1; i<this.reportTimer.getAllBetweenSucess().size(); i++){
-            s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenSucess().get(i)/1000+" s\n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
+            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenSucess().get(i)/1000)+" s\n";
         }
-        s = s+"Temps entre chaque action --->  intervalle entre l'échec : \n";
-        for(int i = 1; i<this.reportTimer.getAllBetweenError().size(); i++){
-            s = s+""+(i-1)+" - "+i+" : "+this.reportTimer.getAllBetweenError().get(i)/1000+" s\n";
+
+        s = s+"Temps entre 2 échecs --->  intervalle entre l'échec : \n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenError().get(i)/1000)+" s\n";
+        }
+
+        s = s+"Temps entre les succès puis échecs --->  intervalle entre le succès-échec : \n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenSucessThenError().get(i)/1000)+" s\n";
+        }
+
+        s = s+"Temps entre les échecs puis succès --->  intervalle entre l'échec-succès : \n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenErrorThenSucess().get(i)/1000)+" s\n";
         }
 
         this.textReport = s;
