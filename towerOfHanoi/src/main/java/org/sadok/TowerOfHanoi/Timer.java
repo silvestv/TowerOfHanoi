@@ -5,34 +5,49 @@ import android.os.SystemClock;
 import java.util.*;
 
 public class Timer {
-    private double t_second_game_start;
-    private double t_second_game_stop;
-    private double t_second_game_total;
 
-    private double triggerSuccess;
-    private double triggerError;
-    private double triggerAction;
 
-    private double t_second_between_action;
-    private double t_second_between_error;
-    private double t_second_between_success;
-    private double t_second_between_success_then_error;
-    private double t_second_between_error_then_sucess;
+    private long t_second_game_start;
+    private long t_second_game_stop;
+    private long t_second_game_total;
 
-    private ArrayList<Double> allBetweenSucess;
-    private ArrayList<Double> allBetweenError;
-    private ArrayList<Double> allBetweenAction;
-    private ArrayList<Double> allBetweenSuccessThenError;
-    private ArrayList<Double> allBetweenErrorThenSucess;
+    private int nb_action;
+    private int nb_sucess;
+    private int nb_error;
 
-    private double t_average_second_action;
-    private double t_average_second_error;
-    private double t_average_second_success;
-    private double t_average_second_sucess_then_error;
-    private double t_average_second_error_then_sucess;
+    private long triggerSuccess;
+    private long triggerError;
+    private long triggerAction;
+
+    private long t_second_between_action;
+    private long t_second_between_error;
+    private long t_second_between_success;
+    private long t_second_between_success_then_error;
+    private long t_second_between_error_then_sucess;
+
+    private ArrayList<Long> allBetweenSucess;
+    private ArrayList<Long> allBetweenError;
+    private ArrayList<Long> allBetweenAction;
+    private ArrayList<Long> allBetweenSuccessThenError;
+    private ArrayList<Long> allBetweenErrorThenSucess;
+
+    private long t_average_second_action;
+    private long t_average_second_error;
+    private long t_average_second_success;
+    private long t_average_second_sucess_then_error;
+    private long t_average_second_error_then_sucess;
+
+    private Map<Integer, Character> chronologicActionMap;
 
     ///////////CONSTRUCT
     public Timer(){
+        this.nb_action = 0;
+        this.nb_sucess = 0;
+        this.nb_error = 0;
+        this.chronologicActionMap = new LinkedHashMap<Integer, Character>();
+        //'D' pour début, en effet l'action de rang 0 n'est ni un succès ni un échec
+        this.addToChronologicActionMap('D');
+
         this.allBetweenSucess = new ArrayList<>();
         this.allBetweenError = new ArrayList<>();
         this.allBetweenAction = new ArrayList<>();
@@ -53,18 +68,41 @@ public class Timer {
         this.t_second_game_stop = System.currentTimeMillis();
     }
 
-    //renvoie le temps total d'une partie
-    public double getTotalTimeGame(){
-        return  t_second_game_stop - t_second_game_start;
+
+    //ajoute une map donnant l'indice de l'action jouée en clé et la nature de l'action en valeur (D,S,E pour Debut, Sucess, Error)
+    public void addToChronologicActionMap(Character kindOfAction){
+            this.chronologicActionMap.put(this.nb_action, kindOfAction);
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //LES TRIGGERS (calcul des différences entre action, succès, erreurs, succès-erreur, erreur-succès
+
+
+    //même fonctionnement entre chaque action du joueur
+    public void clickAction(){
+        //le click action est déclencher quelquesoit la nature de l'action
+        //nb_action est incrémenter quelquesoit le type de l'action (sucess ou error)
+        this.nb_action++;
+        if(triggerAction == 0){
+            //entre la permière action et le debut de la partie
+            this.t_second_between_action = System.currentTimeMillis() - this.t_second_game_start;
+            this.allBetweenAction.add(t_second_between_action);
+            this.triggerAction = System.currentTimeMillis();
+        } else {
+            this.t_second_between_action = System.currentTimeMillis() - this.triggerAction;
+            this.triggerAction = System.currentTimeMillis();
+            this.allBetweenAction.add(t_second_between_action);
+        }
+    }
 
     //déclenche en cas d'action de succès
     //déclenche le timer entre 2 succès ou 1 erreur puis succès--> si aucun trigger n'a été initialiser, on l'initialise, sinon,
     //on prend en compte le temps entre le 1er et le 2nd succès et on range ce temps dans un vecteur AllBetweenSucess ou allBetweenErrorThenSucess
     public void clickSuccess(){
+        this.nb_sucess++;
+        //une action est soit un succès soit une erreur
+        this.addToChronologicActionMap('S');
         //init
         if(triggerSuccess == 0){
             this.triggerSuccess = System.currentTimeMillis();
@@ -75,6 +113,7 @@ public class Timer {
             this.allBetweenSucess.add(t_second_between_success);
 
             //entre echec puis succès
+            //if(this.chronologicActionMap.get(this.nb_action-1) == 'E')
             if(triggerError != 0){
                 this.t_second_between_error_then_sucess = System.currentTimeMillis() - this.triggerError;
                 this.allBetweenErrorThenSucess.add(t_second_between_error_then_sucess);
@@ -86,6 +125,8 @@ public class Timer {
     //déclenche en cas d'action d'erreurs
     //même fonctionnement pour les erreurs
     public void clickError(){
+        this.nb_error++;
+        this.addToChronologicActionMap('E');
         //init
         if(triggerError == 0){
             this.triggerError = System.currentTimeMillis();
@@ -96,6 +137,7 @@ public class Timer {
             this.allBetweenError.add(t_second_between_error);
 
             //entre succès puis erreur
+            //if(this.chronologicActionMap.get(this.nb_action-1) == 'S')
             if(triggerSuccess != 0){
                 this.t_second_between_success_then_error = System.currentTimeMillis() - this.triggerSuccess;
                 this.allBetweenSuccessThenError.add(t_second_between_success_then_error);
@@ -104,18 +146,6 @@ public class Timer {
         }
     }
 
-    //même fonctionnement entre chaque action du joueur
-    public void clickAction(){
-        if(triggerAction == 0){
-            //entre la permière action et le debut de la partie
-            this.t_second_between_action = System.currentTimeMillis() - this.t_second_game_start;
-            this.triggerAction = System.currentTimeMillis();
-        } else {
-            this.t_second_between_action = System.currentTimeMillis() - this.triggerAction;
-            this.triggerAction = System.currentTimeMillis();
-            this.allBetweenAction.add(t_second_between_action);
-        }
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////CALCUL DES TEMPS MOYENS AU COURS D'UNE PARTIE
@@ -178,10 +208,28 @@ public class Timer {
     /////LES ACCESSEURS
 
     //Les getteurs
-    public int getNbClick(){
-        return allBetweenAction.size();
+
+    //renvoie le temps total d'une partie
+    public long getTotalTimeGame(){
+        return  t_second_game_stop - t_second_game_start;
     }
-    public ArrayList<Double> getAllBetweenAction(){
+
+    public int getNbAction(){
+        return this.nb_action;
+    }
+
+    public int getNbSucess(){
+        return this.nb_sucess;
+    }
+    public int getNbError(){
+        return this.nb_error;
+    }
+
+    public Map<Integer, Character> getChronologicActionMap(){
+        return this.chronologicActionMap;
+    }
+
+    public ArrayList<Long> getAllBetweenAction(){
         return this.allBetweenAction;
     }
 

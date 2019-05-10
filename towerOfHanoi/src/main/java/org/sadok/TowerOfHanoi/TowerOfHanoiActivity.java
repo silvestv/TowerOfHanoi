@@ -242,13 +242,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+					//detecte une action
+					theChrono.clickAction();
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
-					theChrono.clickAction();
-					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
-				}
 
-				//detecte une action
+				}
 
 				return true;
 			}
@@ -270,14 +269,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-		            checkForCollisionsWithTowers(this);
-					checkEnding(this);
+					//detecte une action
 					theChrono.clickAction();
-					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
-
+		        	checkForCollisionsWithTowers(this);
+					checkEnding(this);
 				}
-
-				//detecte une action
 
 		        return true;
 		    }
@@ -297,11 +293,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+					//detecte une action
+					theChrono.clickAction();
 		            checkForCollisionsWithTowers(this);
 					checkEnding(this);
-					theChrono.clickAction();
-					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
-
 				}
 
 				//detecte une action
@@ -317,10 +312,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		            return false;
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-		            checkForCollisionsWithTowers(this);
-					checkEnding(this);
+					//detecte une action
 					theChrono.clickAction();
-					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
+		        	checkForCollisionsWithTowers(this);
+					checkEnding(this);
 		        }
 				//detecte une action
 
@@ -335,10 +330,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					return false;
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+					//detecte une action
+					theChrono.clickAction();
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
-					theChrono.clickAction();
-					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
 				//detecte une action
 
@@ -352,10 +347,10 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					return false;
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+					//detecte une action
+					theChrono.clickAction();
 					checkForCollisionsWithTowers(this);
 					checkEnding(this);
-					theChrono.clickAction();
-					System.out.println("Time Between 2 actions (ms/null possible au début) : "+theChrono.getTimeBetweenAction());
 				}
 
 				//detecte une action
@@ -657,14 +652,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			System.out.println("nice");
 			//timer stoppé en fin de partie
 			this.theChrono.stop();
-			System.out.println("Time Stop (ms) : "+theChrono.getT_second_game_stop());
-			System.out.println("Total Duration (ms) : "+theChrono.getTotalTimeGame());
+
 			//report édité puis affiché
 			theReport = new Report(theChrono, this);
 			theReport.afficheReport();
 			theReport.addItemToSheet(context);
 			finish();
-			startActivity(getIntent());
+			//startActivity(getIntent());
 		}
 	}
 	public static String getSelectedFeedBackItem() {
