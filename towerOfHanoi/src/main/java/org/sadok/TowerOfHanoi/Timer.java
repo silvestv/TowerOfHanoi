@@ -153,7 +153,7 @@ public class Timer {
     //en fin de game, on récupère le vecteur indiquant tout les lapses-time entre les actions et on en retire la moyenne
     public void calculAverageTimeAction(){
 
-        double sum = 0;
+        long sum = 0;
         for(int i = 0; i < allBetweenAction.size(); i++){
             sum = sum + allBetweenAction.get(i);
         }
@@ -164,7 +164,7 @@ public class Timer {
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeSucess(){
-        double sum = 0;
+        long sum = 0;
         for(int i = 0; i < allBetweenSucess.size(); i++){
             sum = sum + allBetweenSucess.get(i);
         }
@@ -175,7 +175,7 @@ public class Timer {
 
     //fin de game, même fonctionnement que pour le AverageTimeAction()
     public void calculAverageTimeError(){
-        double sum = 0;
+        long sum = 0;
         for(int i = 0; i < allBetweenError.size(); i++){
             sum = sum + allBetweenError.get(i);
         }
@@ -185,7 +185,7 @@ public class Timer {
     }
 
     public void calculAverageTimeSucessThenError(){
-        double sum = 0;
+        long sum = 0;
         for(int i = 0; i < allBetweenSuccessThenError.size(); i++){
             sum = sum + allBetweenSuccessThenError.get(i);
         }
@@ -195,7 +195,7 @@ public class Timer {
     }
 
     public void calculAverageTimeErrorThenSucess(){
-        double sum = 0;
+        long sum = 0;
         for(int i = 0; i < allBetweenErrorThenSucess.size(); i++){
             sum = sum + allBetweenErrorThenSucess.get(i);
         }
@@ -233,87 +233,87 @@ public class Timer {
         return this.allBetweenAction;
     }
 
-    public ArrayList<Double> getAllBetweenSucess(){
+    public ArrayList<Long> getAllBetweenSucess(){
         return this.allBetweenSucess;
     }
 
-    public ArrayList<Double> getAllBetweenError(){
+    public ArrayList<Long> getAllBetweenError(){
         return this.allBetweenError;
     }
 
-    public ArrayList<Double> getAllBetweenSucessThenError(){
+    public ArrayList<Long> getAllBetweenSucessThenError(){
         return this.allBetweenSuccessThenError;
     }
 
-    public ArrayList<Double> getAllBetweenErrorThenSucess(){
+    public ArrayList<Long> getAllBetweenErrorThenSucess(){
         return this.allBetweenErrorThenSucess;
     }
 
 
 
-    public double getAverageTimeAction(){
+    public long getAverageTimeAction(){
         calculAverageTimeAction();
         return this.t_average_second_action;
     }
 
-    public double getAverageTimeSucess(){
+    public long getAverageTimeSucess(){
         calculAverageTimeSucess();
         return this.t_average_second_success;
     }
-    public double getAverageTimeError(){
+    public long getAverageTimeError(){
         calculAverageTimeError();
         return this.t_average_second_error;
     }
 
-    public double getAverageTimeSucessThenError(){
+    public long getAverageTimeSucessThenError(){
         calculAverageTimeSucessThenError();
         return this.t_average_second_sucess_then_error;
     }
-    public double getAverageTimeErrorThenSucess(){
+    public long getAverageTimeErrorThenSucess(){
         calculAverageTimeErrorThenSucess();
         return this.t_average_second_error_then_sucess;
     }
 
 
 
-    public double getTimeBetweenAction(){
+    public long getTimeBetweenAction(){
         return this.t_second_between_action;
     }
 
-    public double getTimeBetweenSuccess(){
+    public long getTimeBetweenSuccess(){
         return this.t_second_between_success;
     }
-    public double getTimeBetweenError(){
+    public long getTimeBetweenError(){
         return this.t_second_between_error;
     }
 
-    public double getTimeBetweenSuccessThenError(){
+    public long getTimeBetweenSuccessThenError(){
         return this.t_second_between_success_then_error;
     }
-    public double getTimeBetweenErrorThenSucess(){
+    public long getTimeBetweenErrorThenSucess(){
         return this.t_second_between_error_then_sucess;
     }
 
 
 
-    public double getTriggerSuccess(){
+    public long getTriggerSuccess(){
         return this.triggerSuccess;
     }
 
-    public double getTriggerError(){
+    public long getTriggerError(){
         return this.triggerError;
     }
-    public double getTriggerAction(){
+    public long getTriggerAction(){
         return this.triggerAction;
     }
 
 
 
-    public double getT_second_game_start(){
+    public long getT_second_game_start(){
         return t_second_game_start;
     }
 
-    public double getT_second_game_stop(){
+    public long getT_second_game_stop(){
         return t_second_game_stop;
     }
 
