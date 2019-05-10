@@ -9,12 +9,18 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="315dp"
+        android:layout_height="311dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView8"
@@ -27,15 +33,6 @@
             android:id="@+id/feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="78dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@+id/include">
 
         <TextView
             android:id="@+id/textView7"
@@ -50,17 +47,6 @@
             android:layout_height="wrap_content"
             android:gravity="center" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        tools:layout_editor_absoluteX="0dp">
-
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
@@ -72,6 +58,15 @@
             android:id="@+id/ringsShape"
             android:layout_width="match_parent"
             android:layout_height="40dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="44dp"
+            android:text="Vue en 3 dimensions" />
     </LinearLayout>
 
     <LinearLayout
@@ -97,13 +92,5 @@
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="603dp" />
     </LinearLayout>
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
 
 </android.support.constraint.ConstraintLayout>
