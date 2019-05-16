@@ -1,15 +1,14 @@
 package org.sadok.TowerOfHanoi;
-import android.os.CountDownTimer;
-import android.os.SystemClock;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Timer {
 
 
     private double t_second_game_start;
+    private double t_second_game_playerTouchStart;
     private double t_second_game_stop;
-    private double t_second_game_total;
 
     private int nb_action;
     private int nb_sucess;
@@ -57,12 +56,17 @@ public class Timer {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //CHRONO GENERAL
-    //permet de lancer le chrono
+    //permet de lancer le chrono en début de partie
     public void start(){
         this.t_second_game_start = System.currentTimeMillis();
 
     }
 
+    //permet de lancer le chrono depuis le premier touché de l'écran par le joueur
+    // la différence trueStart - start équivaut au temps de réflection initial du joueur
+    public void playerTouchStart(){
+        this.t_second_game_playerTouchStart = System.currentTimeMillis();
+    }
     //permet de stoper le chrono à declencher lorsque la partie est finie
     public void stop(){
         this.t_second_game_stop = System.currentTimeMillis();
@@ -113,12 +117,19 @@ public class Timer {
             this.allBetweenSucess.add(t_second_between_success);
 
             //entre echec puis succès
-            //if(this.chronologicActionMap.get(this.nb_action-1) == 'E')
-            if(triggerError != 0){
-                this.t_second_between_error_then_sucess = System.currentTimeMillis() - this.triggerError;
-                this.allBetweenErrorThenSucess.add(t_second_between_error_then_sucess);
+           //if(triggerError != 0){
+            if(nb_action != 0){
+                //vérifie l'action précédente effectuée, si cette dernière est un échec alors comptabiliser
+                //une erreur puis un succès
+                if(this.chronologicActionMap.get(this.nb_action-1) == 'E'){
+
+                    this.t_second_between_error_then_sucess = System.currentTimeMillis() - this.triggerError;
+                    this.allBetweenErrorThenSucess.add(t_second_between_error_then_sucess);
+                }
+                this.triggerSuccess = System.currentTimeMillis();
+            } else {
+                System.out.println("ATTENTION PROBLEME DANS LE DECOMPTE DU NB D'ACTIONS !");
             }
-            this.triggerSuccess = System.currentTimeMillis();
         }
     }
 
@@ -137,12 +148,20 @@ public class Timer {
             this.allBetweenError.add(t_second_between_error);
 
             //entre succès puis erreur
-            //if(this.chronologicActionMap.get(this.nb_action-1) == 'S')
-            if(triggerSuccess != 0){
-                this.t_second_between_success_then_error = System.currentTimeMillis() - this.triggerSuccess;
-                this.allBetweenSuccessThenError.add(t_second_between_success_then_error);
+            //if(triggerSuccess != 0){
+
+            if(this.nb_action != 0){
+                //vérifie l'action précédente effectuée, si cette dernière et un succès alors comptabiliser
+                //un succès puis une erreur
+                if(this.chronologicActionMap.get(this.nb_action-1) == 'S'){
+                    this.t_second_between_success_then_error = System.currentTimeMillis() - this.triggerSuccess;
+                    this.allBetweenSuccessThenError.add(t_second_between_success_then_error);
+                }
+                this.triggerError = System.currentTimeMillis();
+            } else {
+                System.out.println("ATTENTION PROBLEME DANS LE DECOMPTE DU NB D'ACTIONS !");
             }
-            this.triggerError = System.currentTimeMillis();
+
         }
     }
 
@@ -212,6 +231,19 @@ public class Timer {
     //renvoie le temps total d'une partie
     public double getTotalTimeGame(){
         return  t_second_game_stop - t_second_game_start;
+    }
+
+    public double getTotalTimeGameSinceFirstTouch(){
+        return t_second_game_stop - t_second_game_playerTouchStart;
+    }
+    
+    //retourne le temps entre le lancement de la partie (system) et le premier touché screen de l'écran
+    public double getInitialPlayerThinkingTime(){
+        return t_second_game_playerTouchStart - t_second_game_start;
+    }
+
+    public double getT_second_game_playerTouchStart(){
+        return t_second_game_playerTouchStart;
     }
 
     public int getNbAction(){
