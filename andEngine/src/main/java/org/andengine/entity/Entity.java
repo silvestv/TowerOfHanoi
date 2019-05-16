@@ -727,7 +727,6 @@ public class Entity implements IEntity {
 			this.allocateChildren();
 		}
 		this.mChildren.add(pEntity);
-		pEntity.setParent(this);
 		pEntity.onAttached();
 	}
 
