@@ -44,15 +44,14 @@ import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 
-import static org.sadok.TowerOfHanoi.MenuActivity.checkbox;
 import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrue;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedFeedBackItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedShapeItem;
 
 public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
-	private static int CAMERA_WIDTH = 960;
-	private static int CAMERA_HEIGHT = 600;
+	private static int CAMERA_WIDTH = 1280;
+	private static int CAMERA_HEIGHT = 748;
 	private ITextureRegion mBackgroundTextureRegion, mTowerTextureRegion, mRing1, mRing2, mRing3, mRing4, mRing5, mRing6;
 	private Sprite mTower1, mTower2, mTower3;
 	private Stack mStack1, mStack2, mStack3;
@@ -78,31 +77,39 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
                 @Override
                 public InputStream open() throws IOException {
 					if(checkboxTrue) {
-						return getAssets().open("gfx/background3d.png");
+						return getAssets().open("gfx/background2.png");
 					}else{
-						return getAssets().open("gfx/background2v1.png");
+						return getAssets().open("gfx/background2.png");
 					}
                 }
             });
             ITexture towerTexture = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-                    return getAssets().open("gfx/tower.png");
+                    return getAssets().open("gfx/tower5.png");
                 }
             });
 			ITexture ring1 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 
 				public InputStream open() throws IOException {
-					InputStream ringShape1 = getAssets().open("gfx/rectangle2.png");
-					if(selectedShapeItem.equals("Circulaire")){
-						ringShape1 = getAssets().open("gfx/ring1.png");
-					}
-					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape1 = getAssets().open("gfx/pyramide1.png");
-					}
-					if(checkboxTrue && selectedShapeItem.equals("Rectangulaire")){
-						ringShape1 = getAssets().open("gfx/rectangle2-3D.png");
+					InputStream ringShape1 = getAssets().open("gfx/RectangleFinal/rect1.png");
+
+					if (!checkboxTrue) {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape1 = getAssets().open("gfx/RingFinal/ring1.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape1 = getAssets().open("gfx/PyramideFinal/Pyram1.png");
+						}
+
+					}else {
+						if (selectedShapeItem.equals("Rectangulaire")) {
+							ringShape1 = getAssets().open("gfx/rectFinal3d/rect1.png");
+						}
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape1 = getAssets().open("gfx/ringFinal3d/ring1.png");
+						}
 					}
 					return ringShape1;
 				}
@@ -110,16 +117,22 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape2 = getAssets().open("gfx/rectangle3.png");
+					InputStream ringShape2 = getAssets().open("gfx/RectangleFinal/rect2.png");
+					if (!checkboxTrue) {
 					if(selectedShapeItem.equals("Circulaire")){
-						ringShape2 = getAssets().open("gfx/ring2.png");
+						ringShape2 = getAssets().open("gfx/RingFinal/ring2.png");
 					}
 
 					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape2 = getAssets().open("gfx/pyramide2.png");
+						ringShape2 = getAssets().open("gfx/PyramideFinal/Pyram2.png");
 					}
-					if(checkboxTrue && selectedShapeItem.equals("Rectangulaire")){
-						ringShape2 = getAssets().open("gfx/rectangle3-3D.png");
+					}else {
+						if (selectedShapeItem.equals("Rectangulaire")) {
+							ringShape2 = getAssets().open("gfx/rectFinal3d/rect2.png");
+						}
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape2 = getAssets().open("gfx/ringFinal3d/ring2.png");
+						}
 					}
 					return ringShape2;
 				}
@@ -127,15 +140,21 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring3 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape3 = getAssets().open("gfx/rectangle4.png");
-					if(selectedShapeItem.equals("Circulaire")){
-						ringShape3 = getAssets().open("gfx/ring3.png");
-					}
-					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape3 = getAssets().open("gfx/pyramide3.png");
-					}
-					if(checkboxTrue && selectedShapeItem.equals("Rectangulaire")){
-						ringShape3 = getAssets().open("gfx/rectangle4-3D.png");
+					InputStream ringShape3 = getAssets().open("gfx/RectangleFinal/rect3.png");
+					if (!checkboxTrue) {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape3 = getAssets().open("gfx/RingFinal/ring3.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape3 = getAssets().open("gfx/PyramideFinal/Pyram3.png");
+						}
+					}else {
+						if (selectedShapeItem.equals("Rectangulaire")) {
+							ringShape3 = getAssets().open("gfx/rectFinal3d/rect3.png");
+						}
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape3 = getAssets().open("gfx/ringFinal3d/ring3.png");
+						}
 					}
 					return ringShape3;
                 }
@@ -143,25 +162,49 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring4 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape4 = getAssets().open("gfx/rectangle4.png");
-					if(selectedShapeItem.equals("Circulaire")){
-						ringShape4 = getAssets().open("gfx/ring4.png");
-					}
-					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape4 = getAssets().open("gfx/pyramide4.png");
-					}
+					InputStream ringShape4 = getAssets().open("gfx/RectangleFinal/rect4.png");
+					if (!checkboxTrue) {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape4 = getAssets().open("gfx/RingFinal/ring4.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape4 = getAssets().open("gfx/PyramideFinal/Pyram4.png");
+						}
+					} else {
+							if (selectedShapeItem.equals("Circulaire")) {
+								ringShape4 = getAssets().open("gfx/ringFinal3d/ring4.png");
+							}
+							if (selectedShapeItem.equals("Rectangulaire")) {
+							ringShape4 = getAssets().open("gfx/rectFinal3d/rect4.png");
+						}
+							if (selectedShapeItem.equals("Pyramidale")) {
+								ringShape4 = getAssets().open("gfx/pyramide4.png");
+							}
+						}
 					return ringShape4;
 				}
             });
             ITexture ring5 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape5 = getAssets().open("gfx/rectangle5.png");
-					if(selectedShapeItem.equals("Circulaire")){
-						ringShape5 = getAssets().open("gfx/ring5.png");
-					}
-					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape5 = getAssets().open("gfx/pyramide5.png");
+					InputStream ringShape5 = getAssets().open("gfx/RectangleFinal/rect5.png");
+					if (!checkboxTrue) {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape5 = getAssets().open("gfx/RingFinal/ring5.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape5 = getAssets().open("gfx/PyramideFinal/Pyram5.png");
+						}
+					}else {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape5 = getAssets().open("gfx/ringFinal3d/ring5.png");
+						}
+						if (selectedShapeItem.equals("Rectangulaire")) {
+							ringShape5 = getAssets().open("gfx/rectFinal3d/rect5.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape5 = getAssets().open("gfx/pyramide5.png");
+						}
 					}
 					return ringShape5;
 				}
@@ -169,12 +212,24 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			ITexture ring6 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape6 = getAssets().open("gfx/rectangle6.png");
-					if(selectedShapeItem.equals("Circulaire")){
-						ringShape6 = getAssets().open("gfx/ring6.png");
-					}
-					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape6 = getAssets().open("gfx/pyramide6.png");
+					InputStream ringShape6 = getAssets().open("gfx/RectangleFinal/rect6.png");
+					if (!checkboxTrue) {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape6 = getAssets().open("gfx/RingFinal/ring6.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape6 = getAssets().open("gfx/PyramideFinal/Pyram6.png");
+						}
+					}else {
+						if (selectedShapeItem.equals("Circulaire")) {
+							ringShape6 = getAssets().open("gfx/ringFinal3d/ring6.png");
+						}
+						if (selectedShapeItem.equals("Rectangulaire")) {
+							ringShape6 = getAssets().open("gfx/rectFinal3d/rect6.png");
+						}
+						if (selectedShapeItem.equals("Pyramidale")) {
+							ringShape6 = getAssets().open("gfx/pyramide6.png");
+						}
 					}
 					return ringShape6;
 				}
@@ -193,8 +248,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			// 3 - Set up texture regions
             this.mBackgroundTextureRegion = TextureRegionFactory.extractFromTexture(backgroundTexture);
             this.mTowerTextureRegion = TextureRegionFactory.extractFromTexture(towerTexture);
+			this.mRing2 = TextureRegionFactory.extractFromTexture(ring2);
             this.mRing1 = TextureRegionFactory.extractFromTexture(ring1);
-            this.mRing2 = TextureRegionFactory.extractFromTexture(ring2);
             this.mRing3 = TextureRegionFactory.extractFromTexture(ring3);
 			this.mRing4 = TextureRegionFactory.extractFromTexture(ring4);
 			this.mRing5 = TextureRegionFactory.extractFromTexture(ring5);
@@ -223,9 +278,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Sprite backgroundSprite = new Sprite(0, 0, this.mBackgroundTextureRegion, getVertexBufferObjectManager());
 		scene.attachChild(backgroundSprite);
 		// 2 - Add the towers
-		mTower1 = new Sprite(180, 309, this.mTowerTextureRegion, getVertexBufferObjectManager());
-		mTower2 = new Sprite(480, 309, this.mTowerTextureRegion, getVertexBufferObjectManager());
-		mTower3 = new Sprite(780, 309, this.mTowerTextureRegion, getVertexBufferObjectManager());
+		mTower1 = new Sprite(214, 177, this.mTowerTextureRegion, getVertexBufferObjectManager());
+		mTower2 = new Sprite(640, 177, this.mTowerTextureRegion, getVertexBufferObjectManager());
+		mTower3 = new Sprite(1066, 177, this.mTowerTextureRegion, getVertexBufferObjectManager());
 		scene.attachChild(mTower1);
 		scene.attachChild(mTower2);
 		scene.attachChild(mTower3);
@@ -245,6 +300,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					//detecte une action
 					theChrono.clickAction();
 					checkForCollisionsWithTowers(this);
+					scene.attachChild(this);
+
 					checkEnding(this);
 
 				}
@@ -256,7 +313,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing2;
 		if(checkboxTrue) {
-			DmRing2 = mRing2.getHeight() - 10;
+			DmRing2 = mRing2.getHeight() - 20;
 
 		}else {
 			DmRing2 = mRing2.getHeight();
@@ -272,6 +329,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					//detecte une action
 					theChrono.clickAction();
 		        	checkForCollisionsWithTowers(this);
+					scene.attachChild(this);
+
 					checkEnding(this);
 				}
 
@@ -280,7 +339,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing3;
 		if(checkboxTrue) {
-			DmRing3 = mRing3.getHeight() - 7;
+			DmRing3 = mRing3.getHeight() - 15;
 
 		}else {
 			DmRing3 = mRing3.getHeight();
@@ -293,9 +352,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+
 					//detecte une action
 					theChrono.clickAction();
 		            checkForCollisionsWithTowers(this);
+					scene.attachChild(this);
+
 					checkEnding(this);
 				}
 
@@ -305,7 +367,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 		    }
 		};
-		Ring ring4 = new Ring(3, mTower1.getX() + mTower1.getWidth()/2 - mRing4.getWidth()/2, ring3.getY() - mRing4.getHeight(), this.mRing4, getVertexBufferObjectManager()) {
+		float DmRing4;
+		if(checkboxTrue) {
+			DmRing4 = mRing4.getHeight() - 10;
+
+		}else {
+			DmRing4 = mRing4.getHeight();
+		}
+		Ring ring4 = new Ring(3, mTower1.getX() + mTower1.getWidth()/2 - mRing4.getWidth()/2, ring3.getY() - (DmRing4), this.mRing4, getVertexBufferObjectManager()) {
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
@@ -315,6 +384,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					//detecte une action
 					theChrono.clickAction();
 		        	checkForCollisionsWithTowers(this);
+					scene.attachChild(this);
 					checkEnding(this);
 		        }
 				//detecte une action
@@ -322,8 +392,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				return true;
 		    }
 		};
+		float DmRing5;
+		if(checkboxTrue) {
+			DmRing5 = mRing5.getHeight()-10;
 
-		Ring ring5 = new Ring(2, mTower1.getX() + mTower1.getWidth()/2 - mRing5.getWidth()/2, ring4.getY() - mRing5.getHeight(), this.mRing5, getVertexBufferObjectManager()) {
+		}else {
+			DmRing5 = mRing5.getHeight();
+		}
+		Ring ring5 = new Ring(2, mTower1.getX() + mTower1.getWidth()/2 - mRing5.getWidth()/2, ring4.getY() - (DmRing5), this.mRing5, getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
@@ -333,6 +409,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					//detecte une action
 					theChrono.clickAction();
 					checkForCollisionsWithTowers(this);
+					scene.attachChild(this);
 					checkEnding(this);
 				}
 				//detecte une action
@@ -340,7 +417,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				return true;
 			}
 		};
-		final Ring ring6 = new Ring(1, mTower1.getX() + mTower1.getWidth()/2 - mRing6.getWidth()/2, ring5.getY() - mRing6.getHeight(), this.mRing6, getVertexBufferObjectManager()) {
+		float DmRing6;
+		if(checkboxTrue) {
+			DmRing6= mRing6.getHeight()-10;
+
+		}else {
+			DmRing6 = mRing6.getHeight();
+		}
+		final Ring ring6 = new Ring(1, mTower1.getX() + mTower1.getWidth()/2 - mRing6.getWidth()/2, ring5.getY() - (DmRing6), this.mRing6, getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
@@ -350,6 +434,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					//detecte une action
 					theChrono.clickAction();
 					checkForCollisionsWithTowers(this);
+					scene.attachChild(this);
 					checkEnding(this);
 				}
 
@@ -360,19 +445,23 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 
 		if (selectedItem.equals("3")){
+
 			scene.attachChild(ring1);
+
 			this.mStack1.add(ring1);
 			ring1.setmStack(mStack1);
 			ring1.setmTower(mTower1);
 			scene.registerTouchArea(ring1);
 
 			scene.attachChild(ring2);
+
 			this.mStack1.add(ring2);
 			ring2.setmStack(mStack1);
 			ring2.setmTower(mTower1);
 			scene.registerTouchArea(ring2);
 
 			scene.attachChild(ring3);
+
 			this.mStack1.add(ring3);
 			ring3.setmStack(mStack1);
 			ring3.setmTower(mTower1);
@@ -623,10 +712,19 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 	    ring.getmStack().remove(ring);
 		if(checkboxTrue) {
+			if (selectedShapeItem.equals("Rectangulaire")) {
+
 			if (stack != null && tower !=null && stack.size() == 0) {
-				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - (ring.getHeight()-8));
+				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - (ring.getHeight()/1.2f));
 			} else if (stack != null && tower !=null && stack.size() > 0) {
-				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - (ring.getHeight()-8));
+				ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - (ring.getHeight()/1.2f));
+			}
+			}else if(selectedShapeItem.equals("Circulaire")){
+				if (stack != null && tower !=null && stack.size() == 0) {
+					ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - (ring.getHeight()/1.3f));
+				} else if (stack != null && tower !=null && stack.size() > 0) {
+					ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - (ring.getHeight()/1.3f));
+				}
 			}
 		}else {
 			if (stack != null && tower !=null && stack.size() == 0) {
@@ -646,9 +744,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Context context = getApplicationContext();
 		int selectedItemParsed = Integer.parseInt(selectedItem);
 		int verifSelectedItem = selectedItemParsed-1;
-		System.out.println("Nb d'anneau de merde: "+ selectedItem);
 		Boolean isOrdered = Ordering.natural().reverse().isOrdered(poids);
-		if (stack.size() > verifSelectedItem && ring.getmTower() == mTower3 && isOrdered == true){
+		if (stack.size() > verifSelectedItem && ring.getmTower() == mTower3 && isOrdered){
 			System.out.println("nice");
 			//timer stoppé en fin de partie
 			this.theChrono.stop();

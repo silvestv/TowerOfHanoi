@@ -126,27 +126,27 @@ public class Report {
 
 
         for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
-                s = s+""+(i)+" - "+(i+1)+" : "+(double)(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
+                s = s+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
         }
 
         s = s+"Temps entre 2 succès --->  intervalle entre le succès : \n";
         for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
-            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenSucess().get(i)/1000)+" s\n";
+            s = s+""+(i+1)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucess().get(i)/1000)+" s\n";
         }
 
         s = s+"Temps entre 2 échecs --->  intervalle entre l'échec : \n";
         for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
-            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenError().get(i)/1000)+" s\n";
+            s = s+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenError().get(i)/1000)+" s\n";
         }
 
         s = s+"Temps entre les succès puis échecs --->  intervalle entre le succès-échec : \n";
-        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
-            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenSucessThenError().get(i)/1000)+" s\n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucessThenError().size(); i++){
+            s = s+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucessThenError().get(i)/1000)+" s\n";
         }
 
         s = s+"Temps entre les échecs puis succès --->  intervalle entre l'échec-succès : \n";
-        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
-            s = s+""+(i+1)+" - "+(i+2)+" : "+(double)(this.reportTimer.getAllBetweenErrorThenSucess().get(i)/1000)+" s\n";
+        for(int i = 0; i<this.reportTimer.getAllBetweenErrorThenSucess().size(); i++){
+            s = s+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenErrorThenSucess().get(i)/1000)+" s\n";
         }
 
         this.textReport = s;
