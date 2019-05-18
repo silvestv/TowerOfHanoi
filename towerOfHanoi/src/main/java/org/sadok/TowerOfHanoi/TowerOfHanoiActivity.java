@@ -92,9 +92,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						if (selectedShapeItem.equals("Rectangulaire")) {
 							ringShape1 = getAssets().open("gfx/rectFinal3d/rect1.png");
 						}
+						if(selectedShapeItem.equals("Pyramidale")){
+							ringShape1 = getAssets().open("gfx/PyramideFinal3d/pyram1.png");
+						}
 						if (selectedShapeItem.equals("Circulaire")) {
 							ringShape1 = getAssets().open("gfx/ringFinal3d/ring1.png");
 						}
+
 					}
 					return ringShape1;
 				}
@@ -115,8 +119,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						if (selectedShapeItem.equals("Rectangulaire")) {
 							ringShape2 = getAssets().open("gfx/rectFinal3d/rect2.png");
 						}
-						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape2 = getAssets().open("gfx/ringFinal3d/ring2.png");
+						if(selectedShapeItem.equals("Pyramidale")){
+							ringShape2 = getAssets().open("gfx/PyramideFinal3d/pyram2.png");
 						}
 					}
 					return ringShape2;
@@ -139,6 +143,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						}
 						if (selectedShapeItem.equals("Circulaire")) {
 							ringShape3 = getAssets().open("gfx/ringFinal3d/ring3.png");
+						}
+						if(selectedShapeItem.equals("Pyramidale")){
+							ringShape3 = getAssets().open("gfx/PyramideFinal3d/pyram3.png");
 						}
 					}
 					return ringShape3;
@@ -163,7 +170,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 							ringShape4 = getAssets().open("gfx/rectFinal3d/rect4.png");
 						}
 							if (selectedShapeItem.equals("Pyramidale")) {
-								ringShape4 = getAssets().open("gfx/pyramide4.png");
+								ringShape4 = getAssets().open("gfx/PyramideFinal3d/pyram4.png");
 							}
 						}
 					return ringShape4;
@@ -188,7 +195,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 							ringShape5 = getAssets().open("gfx/rectFinal3d/rect5.png");
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape5 = getAssets().open("gfx/pyramide5.png");
+							ringShape5 = getAssets().open("gfx/PyramideFinal3d/pyram5.png");
 						}
 					}
 					return ringShape5;
@@ -213,7 +220,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 							ringShape6 = getAssets().open("gfx/rectFinal3d/rect6.png");
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape6 = getAssets().open("gfx/pyramide6.png");
+							ringShape6 = getAssets().open("gfx/PyramideFinal3d/pyram6.png");
 						}
 					}
 					return ringShape6;
@@ -298,7 +305,12 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing2;
 		if(checkboxTrue) {
-			DmRing2 = mRing2.getHeight() - 20;
+			if(selectedShapeItem.equals("Pyramidale")){
+				DmRing2 = mRing2.getHeight() - 5;
+			}
+			else{
+				DmRing2 = mRing2.getHeight() - 20;
+			}
 
 		}else {
 			DmRing2 = mRing2.getHeight();
@@ -325,8 +337,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing3;
 		if(checkboxTrue) {
-			DmRing3 = mRing3.getHeight() - 15;
-
+			if(selectedShapeItem.equals("Pyramidale")){
+				DmRing3 = mRing3.getHeight() - 5;
+			}else {
+				DmRing3 = mRing3.getHeight() - 15;
+			}
 		}else {
 			DmRing3 = mRing3.getHeight();
 		}
@@ -361,8 +376,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing4;
 		if(checkboxTrue) {
-			DmRing4 = mRing4.getHeight() - 10;
-
+			if(selectedShapeItem.equals("Pyramidale")){
+				DmRing4 = mRing4.getHeight() - 5;
+			}else {
+				DmRing4 = mRing4.getHeight() - 10;
+			}
 		}else {
 			DmRing4 = mRing4.getHeight();
 		}
@@ -391,8 +409,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing5;
 		if(checkboxTrue) {
-			DmRing5 = mRing5.getHeight()-10;
-
+			if(selectedShapeItem.equals("Pyramidale")){
+				DmRing5 = mRing5.getHeight() - 5;
+			}else {
+				DmRing5 = mRing5.getHeight() - 10;
+			}
 		}else {
 			DmRing5 = mRing5.getHeight();
 		}
@@ -421,8 +442,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		};
 		float DmRing6;
 		if(checkboxTrue) {
-			DmRing6= mRing6.getHeight()-10;
-
+			if(selectedShapeItem.equals("Pyramidale")){
+				DmRing6 = mRing6.getHeight() -2;
+			}else {
+				DmRing6 = mRing6.getHeight() - 10;
+			}
 		}else {
 			DmRing6 = mRing6.getHeight();
 		}
@@ -574,7 +598,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 		return scene;
 	}
-	
+
 	private void checkForCollisionsWithTowers(Ring ring) {
 	    Stack stack = null;
 	    Sprite tower = null;
@@ -629,63 +653,75 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 		//Cas ou l'utilisateur n'a pas le droit d'effectuer ce mouvement
 	    else {
-	    	//code executer en cas d'erreur déclenchement chrono erreur
+			//code executer en cas d'erreur déclenchement chrono erreur
 			//a chaque erreur un marqueur temporel est posé quelquesoit le feedBack, c'est la diférence entre 2 marqueurs qui nous permettra
 			//de connaitre le temps entre 2 erreurs. Cela est traité dans la classe Timer.
-			this.theChrono.clickError();
-			System.out.println("Time Between 2 erreur (ms/null possible au début) : "+theChrono.getTimeBetweenError());
 
-			System.out.println("INTERDIT");
+				System.out.println("Time Between 2 erreur (ms/null possible au début) : " + theChrono.getTimeBetweenError());
 
-			if (selectedFeedBackItem.equals("Totale")) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						Context context = getApplicationContext();
-						final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit" ,Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.CENTER,0,0);
-						toast.show();
-					}
-				});
-				stack = ring.getmStack();
-				tower = ring.getmTower();
+				System.out.println("INTERDIT");
 
-			}
-			if (selectedFeedBackItem.equals("Semi")) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						Context context = getApplicationContext();
-						final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit" ,Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.CENTER,0,0);
-						toast.show();
-					}
-				});
-				if (ring.collidesWith(mTower1)) {
-					stack = mStack1;
-					tower = mTower1;
-					if (indexPoids != -1) {
-						poids.remove(indexPoids);
-					}
-				} else if (ring.collidesWith(mTower2)) {
-					stack = mStack2;
-					tower = mTower2;
-					if (indexPoids != -1) {
-						poids.remove(indexPoids);
-					}
-				} else if (ring.collidesWith(mTower3)) {
-					stack = mStack3;
-					tower = mTower3;
-					if (indexPoids == -1) {
-						poids.add(ring.getmWeight());
-						System.out.println("Ringooo: "+poids.toString());
+				if (selectedFeedBackItem.equals("Totale")) {
+					if (!ring.getmTower().collidesWith(ring)) {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								Context context = getApplicationContext();
+								final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit", Toast.LENGTH_LONG);
+								toast.setGravity(Gravity.CENTER, 0, 0);
+								toast.show();
 
-						System.out.println("Autorisé? "+ Ordering.natural().reverse().isOrdered(poids));
+							}
+						});
+						this.theChrono.clickError();
+
 					}
-				}else if(!ring.collidesWith(ring.getmTower())){
-					stack =  ring.getmStack();
+
+						System.out.println("TOWER " + ring.getmTower().collidesWith(ring));
+					stack = ring.getmStack();
 					tower = ring.getmTower();
+
 				}
-			}
-			if (selectedFeedBackItem.equals("Sans")) {
+				if (selectedFeedBackItem.equals("Semi")) {
+					if (!ring.getmTower().collidesWith(ring)) {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								Context context = getApplicationContext();
+								final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit", Toast.LENGTH_LONG);
+								toast.setGravity(Gravity.CENTER, 0, 0);
+								toast.show();
+
+							}
+						});
+						this.theChrono.clickError();
+
+					}
+					if (ring.collidesWith(mTower1)) {
+						stack = mStack1;
+						tower = mTower1;
+						if (indexPoids != -1) {
+							poids.remove(indexPoids);
+						}
+					} else if (ring.collidesWith(mTower2)) {
+						stack = mStack2;
+						tower = mTower2;
+						if (indexPoids != -1) {
+							poids.remove(indexPoids);
+						}
+					} else if (ring.collidesWith(mTower3)) {
+						stack = mStack3;
+						tower = mTower3;
+						if (indexPoids == -1) {
+							poids.add(ring.getmWeight());
+							System.out.println("Ringooo: " + poids.toString());
+
+							System.out.println("Autorisé? " + Ordering.natural().reverse().isOrdered(poids));
+						}
+					} else if (!ring.collidesWith(ring.getmTower())) {
+						stack = ring.getmStack();
+						tower = ring.getmTower();
+					}
+				}
+				if (selectedFeedBackItem.equals("Sans")) {
 					if (ring.collidesWith(mTower1)) {
 						if (indexPoids != -1) {
 							poids.remove(indexPoids);
@@ -709,12 +745,13 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 						stack = mStack3;
 						tower = mTower3;
-					}else if(!ring.collidesWith(ring.getmTower())){
-						stack =  ring.getmStack();
+					} else if (!ring.collidesWith(ring.getmTower())) {
+						stack = ring.getmStack();
 						tower = ring.getmTower();
+					}
+
 				}
 
-			}
 	    }
 
 	    ring.getmStack().remove(ring);
@@ -732,6 +769,17 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				} else if (stack != null && tower !=null && stack.size() > 0) {
 					ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - (ring.getHeight()/1.3f));
 				}
+
+				
+			}
+			else if(selectedShapeItem.equals("Pyramidale")){
+				if (stack != null && tower !=null && stack.size() == 0) {
+					ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, tower.getY() + tower.getHeight() - (ring.getHeight()/1.06f));
+				} else if (stack != null && tower !=null && stack.size() > 0) {
+					ring.setPosition(tower.getX() + tower.getWidth()/2 - ring.getWidth()/2, ((Ring) stack.peek()).getY() - (ring.getHeight()/1.06f));
+				}
+
+
 			}
 		}else {
 			if (stack != null && tower !=null && stack.size() == 0) {
