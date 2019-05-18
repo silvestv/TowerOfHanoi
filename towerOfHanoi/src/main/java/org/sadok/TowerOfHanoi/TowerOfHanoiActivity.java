@@ -2,36 +2,12 @@ package org.sadok.TowerOfHanoi;
 
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.common.collect.Ordering;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Stack;
-
-import org.andengine.ui.activity.SimpleBaseGameActivity;
-import org.andengine.util.adt.io.in.IInputStreamOpener;
-import org.andengine.util.debug.Debug;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -43,6 +19,15 @@ import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.bitmap.BitmapTexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
+import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.util.adt.io.in.IInputStreamOpener;
+import org.andengine.util.debug.Debug;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrue;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedFeedBackItem;
@@ -321,6 +306,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Ring ring2 = new Ring(5, mTower1.getX() + mTower1.getWidth()/2 - mRing2.getWidth()/2, ring1.getY() - (DmRing2), this.mRing2, getVertexBufferObjectManager()) {
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 		            return false;
 
@@ -345,8 +331,14 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			DmRing3 = mRing3.getHeight();
 		}
 		Ring ring3 = new Ring(4, mTower1.getX() + mTower1.getWidth()/2 - mRing3.getWidth()/2, ring2.getY() - (DmRing3), this.mRing3, getVertexBufferObjectManager()) {
+
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if(getSelectedItem().equals("3") && theChrono.getT_second_game_playerTouchStart() == 0){
+					//lance le départ depuis le premier touché de l'écran sur l'anneau 3 (le plus petit si la partie selcetionnée est de 3 anneaux);
+					//Et que le starter n'a jamais été initialiser
+					theChrono.playerTouchStart();
+				}
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 		            return false;
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
@@ -377,6 +369,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Ring ring4 = new Ring(3, mTower1.getX() + mTower1.getWidth()/2 - mRing4.getWidth()/2, ring3.getY() - (DmRing4), this.mRing4, getVertexBufferObjectManager()) {
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if(getSelectedItem().equals("4") && theChrono.getT_second_game_playerTouchStart() == 0){
+					//lance le départ depuis le premier touché de l'écran sur l'anneau 4 (le plus petit si la partie selcetionnée est de 4 anneaux);
+					//Et que le starter n'a jamais été initialiser
+					theChrono.playerTouchStart();
+				}
 		        if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 		            return false;
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
@@ -402,6 +399,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		Ring ring5 = new Ring(2, mTower1.getX() + mTower1.getWidth()/2 - mRing5.getWidth()/2, ring4.getY() - (DmRing5), this.mRing5, getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if(getSelectedItem().equals("5") && theChrono.getT_second_game_playerTouchStart() == 0){
+					//lance le départ depuis le premier touché de l'écran sur l'anneau 5 (le plus petit si la partie selcetionnée est de 5 anneaux);
+					//Et que le starter n'a jamais été initialiser
+					theChrono.playerTouchStart();
+				}
 				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 					return false;
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
@@ -427,6 +429,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		final Ring ring6 = new Ring(1, mTower1.getX() + mTower1.getWidth()/2 - mRing6.getWidth()/2, ring5.getY() - (DmRing6), this.mRing6, getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if(getSelectedItem().equals("6") && theChrono.getT_second_game_playerTouchStart() == 0){
+					//lance le départ depuis le premier touché de l'écran sur l'anneau 6 (le plus petit si la partie selcetionnée est de 6 anneaux);
+					//Et que le starter n'a jamais été initialiser
+					theChrono.playerTouchStart();
+				}
 				if (((Ring) this.getmStack().peek()).getmWeight() != this.getmWeight())
 					return false;
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
