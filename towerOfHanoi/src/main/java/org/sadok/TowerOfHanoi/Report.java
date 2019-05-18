@@ -194,7 +194,7 @@ public class Report {
             System.out.println("LAAAAA  :  "+path);
             File reportTextFile = new File(path, "reportTest.txt");
             FileWriter filewriter = new FileWriter(reportTextFile,true);
-            filewriter.write("coucou les gars !");
+            filewriter.write(this.textReport);
             filewriter.close();
             System.out.println("fichier ok créer");
         } catch (IOException e) {
@@ -202,6 +202,9 @@ public class Report {
         }
     }
 
+    public void createCSVFileReport(Context context){
+
+    }
 
    /* public void addItemToSheet(final Context context) {
 
