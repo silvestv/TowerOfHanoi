@@ -1,20 +1,23 @@
 package org.sadok.TowerOfHanoi;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.widget.Toast;
+import android.os.Environment;
+import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+/*import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.toolbox.Volley;*/
 
 public class Report {
     private Timer reportTimer;
@@ -185,7 +188,22 @@ public class Report {
         System.out.println(textReport);
     }
 
-    public void addItemToSheet(final Context context) {
+    public void createTextFileReport(Context context){
+       try {
+            File path = context.getExternalFilesDir(Environment.DIRECTORY_DCIM);
+            System.out.println("LAAAAA  :  "+path);
+            File reportTextFile = new File(path, "reportTest.txt");
+            FileWriter filewriter = new FileWriter(reportTextFile,true);
+            filewriter.write("coucou les gars !");
+            filewriter.close();
+            System.out.println("fichier ok créer");
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+
+   /* public void addItemToSheet(final Context context) {
 
         //Temps entre Action
         for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
@@ -264,6 +282,6 @@ public class Report {
         queue.add(stringRequest);
 
 
-    }
+    }*/
 }
 
