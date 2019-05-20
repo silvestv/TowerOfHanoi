@@ -758,9 +758,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			this.theChrono.stop();
 
 			//report édité puis affiché
-			theReport = new Report(theChrono, this);
+			theReport = new Report(theChrono, this, context);
 			theReport.afficheReport();
-			theReport.createTextFileReport(context);
+			theReport.createTextFileReport();
 			//theReport.addItemToSheet(context);
 			finish();
 			//startActivity(getIntent());
