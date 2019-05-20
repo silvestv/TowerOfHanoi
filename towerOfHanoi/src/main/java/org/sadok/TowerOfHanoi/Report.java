@@ -7,6 +7,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -191,9 +193,11 @@ public class Report {
     public void createTextFileReport(){
 
        try {
-
+            Date d = new Date();
+            String dateCreation = new SimpleDateFormat("kk-mm-ss dd/MM/yyyy").format(d);
             File reportTextFile = new File(this.pathToTextFiles, "reportTest_"+this.IDReport+".txt");
             FileWriter filewriter = new FileWriter(reportTextFile,true);
+            filewriter.write("Date de génération du fichier : "+dateCreation+"\n");
             filewriter.write(this.textReport);
             filewriter.close();
             System.out.println("fichier ok créer");
