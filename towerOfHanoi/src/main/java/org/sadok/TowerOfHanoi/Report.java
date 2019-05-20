@@ -73,7 +73,7 @@ public class Report {
         this.absPathCSV = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+"/LesCSVs/";
         this.pathToTextFiles = new File(absPathText);
         this.pathToCSVFiles = new File(absPathCSV);
-        if(!pathToTextFiles.exists()){
+        if(!pathToTextFiles.exists() || !pathToCSVFiles.exists()){
             boolean isCreatedT = pathToTextFiles.mkdirs();
             boolean isCreatedC = pathToCSVFiles.mkdirs();
             if(isCreatedC == false || isCreatedT == false){
