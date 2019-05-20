@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.opencsv.CSVWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,19 +31,18 @@ public class Report {
     private int IDReport;
     private String textReport;
 
+    private int nbCoupMini;
     private boolean perfect_game = false;
 
     private String nb_ring_choosen;
     private String shape_ring_choosen;
     private String feedback_choosen;
-    private String tempsEntreAction = "";
-    private String tempsEntreSucces = "";
-    private String tempsEntreErreur = "";
-    private String tempsEntreSuccesErreur = "";
-    private String tempsEntreErreurSucces = "";
+    private String dimension_choosen;
 
     private File pathToTextFiles;
     private File pathToCSVFiles;
+    private String absPathCSV;
+    private String absPathText;
 
     private static Map<Integer, Report> allReports = new HashMap<>();
 
@@ -54,15 +55,43 @@ public class Report {
         this.nb_ring_choosen = menuChoices.getSelectedItem();
         this.shape_ring_choosen = menuChoices.getSelectedShapeItem();
         this.feedback_choosen = menuChoices.getSelectedFeedBackItem();
+        this.dimension_choosen = menuChoices.getDimension();
 
-        this.pathToTextFiles = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"LesReports");
-        this.pathToCSVFiles = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS+"LesCSVs");
-        //créer l'ID du report
+        if(this.nb_ring_choosen.equals("3")){
+            this.nbCoupMini = 7;
+        } else if(this.nb_ring_choosen.equals("4")){
+            this.nbCoupMini = 15;
+        } else if(this.nb_ring_choosen.equals("5")){
+            this.nbCoupMini = 31;
+        } else if (this.nb_ring_choosen.equals("6")){
+            this.nbCoupMini = 63;
+        } else {
+            System.out.println(this.nb_ring_choosen);
+        }
+
+        this.absPathText = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+"/LesReports/";
+        this.absPathCSV = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+"/LesCSVs/";
+        this.pathToTextFiles = new File(absPathText);
+        this.pathToCSVFiles = new File(absPathCSV);
+        if(!pathToTextFiles.exists()){
+            boolean isCreatedT = pathToTextFiles.mkdirs();
+            boolean isCreatedC = pathToCSVFiles.mkdirs();
+            if(isCreatedC == false || isCreatedT == false){
+                throw new RuntimeException("Défaut de création des dossiers de stockage externe");
+            }
+        }
+
+        //créer l'ID du report en fonction du nombre de fichier déjà existant dans le dossier/evite également d'écraser les fichiers précédens
         this.IDReport = this.pathToTextFiles.list().length+1;
         //créer le textReport et initialise les attributs
         this.createReport();
+        //créer le fichier .txt report
+
+        this.createTextFileReport();
         //range l'instance courante dans une Map static
         this.allReports.put(this.IDReport, this);
+
+        this.dataInCSVFileReport();
 
 
     }
@@ -109,6 +138,7 @@ public class Report {
         s = s+"FeedBack choisi : "+this.feedback_choosen+"\n";
         s = s+"Forme des palets choisis : "+this.shape_ring_choosen+"\n";
         s = s+"Nombre de palets choisis : "+this.nb_ring_choosen+"\n";
+        s = s+"Dimension Choisie : "+this.dimension_choosen+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"VUE D'ENSEMBLE DE LA PARTIE\n";
         for(int i : this.reportTimer.getChronologicActionMap().keySet()){
@@ -117,19 +147,7 @@ public class Report {
         s = s+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"PERFORMANCES TEMPS/COUPS\n";
-        s = s+"Nombre de coups minimum envisageable pour cette partie : ";
-        if(this.nb_ring_choosen.equals("3")){
-            nbCoupMini = 7;
-        } else if(this.nb_ring_choosen.equals("4")){
-            nbCoupMini = 15;
-        } else if(this.nb_ring_choosen.equals("5")){
-            nbCoupMini = 31;
-        } else if (this.nb_ring_choosen.equals("6")){
-            nbCoupMini = 63;
-        } else {
-            System.out.println(this.nb_ring_choosen);
-        }
-        s = s+nbCoupMini+"\n";
+        s = s+"Nombre de coups minimum envisageable pour cette partie : "+this.nbCoupMini+"\n";
         s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbAction()+"\n";
         s = s+"Nombre de succès : "+this.reportTimer.getNbSucess()+"\n";
         s = s+"Nombre d'echec : "+this.reportTimer.getNbError()+"\n\n";
@@ -192,9 +210,10 @@ public class Report {
 
     public void createTextFileReport(){
 
+    Date d = new Date();
+    String dateCreation = new SimpleDateFormat("kk-mm-ss dd/MM/yyyy").format(d);
        try {
-            Date d = new Date();
-            String dateCreation = new SimpleDateFormat("kk-mm-ss dd/MM/yyyy").format(d);
+
             File reportTextFile = new File(this.pathToTextFiles, "reportTest_"+this.IDReport+".txt");
             FileWriter filewriter = new FileWriter(reportTextFile,true);
             filewriter.write("Date de génération du fichier : "+dateCreation+"\n");
@@ -206,8 +225,51 @@ public class Report {
         }
     }
 
-    public void pushCSVFileReport(Context context){
+    public void createCSVReport(){
 
+
+        //Les variables explicatives sont -> nbRing,FeedBack,Dimension,Shape (etude stats)
+        //Les variables quantitative expliquées -> les perf temporel et le nb de coup/succès/erreur (étude stats)
+        String[] headerCSV = {"nbRing", "FeedBack", "Dimension", "Shape", "TotalTime", "RealTotalTime",
+                "InitialThinkingTime","AvgTAction","AvgTSucess","AvgTError","AvgTSu/Er","AvgTEr/Su","nbActions", "nbSucess", "nbErrors"};
+        String[] data1 = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+                ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
+                ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
+                ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+
+        try{
+            File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
+
+            CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+            writer.writeNext(headerCSV);
+            writer.writeNext(data1);
+            writer.close();
+        } catch (IOException e) {
+            Log.e("Exception", "CSV File write failed: " + e.toString());
+        }
+
+    }
+    public void dataInCSVFileReport(){
+        String[] addData = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+                ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
+                ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
+                ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+
+        if(this.pathToCSVFiles.list().length == 0){
+            createCSVReport();
+        } else {
+            try{
+                File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
+
+                CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+                writer.writeNext(addData);
+                writer.close();
+            } catch (IOException e) {
+                Log.e("Exception", "CSV File write failed: " + e.toString());
+            }
+        }
     }
 
 

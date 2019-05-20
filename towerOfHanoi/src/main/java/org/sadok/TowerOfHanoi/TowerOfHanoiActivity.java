@@ -778,4 +778,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		return selectedShapeItem;
 	}
 
+	public static String getDimension(){
+		if(checkboxTrue){
+			return "3D";
+		} else {
+			return "2D";
+		}
+	}
 }
