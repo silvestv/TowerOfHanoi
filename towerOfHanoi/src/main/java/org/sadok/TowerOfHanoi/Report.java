@@ -1,34 +1,43 @@
 package org.sadok.TowerOfHanoi;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.widget.Toast;
+import android.os.Environment;
+import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+/*import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.toolbox.Volley;*/
 
 public class Report {
     private Timer reportTimer;
     private TowerOfHanoiActivity menuChoices;
+    private Context context;
 
     private int IDReport;
-    private static int nb_Reports;
     private String textReport;
 
+    private int nbCoupMini;
     private boolean perfect_game = false;
 
     private String nb_ring_choosen;
     private String shape_ring_choosen;
     private String feedback_choosen;
+    private String dimension_choosen;
     private String tempsEntreAction = "";
     private String tempsEntreSucces = "";
     private String tempsEntreErreur = "";
@@ -36,25 +45,59 @@ public class Report {
     private String tempsEntreErreurSucces = "";
     private int nbCoupMini = 0;
 
+    private File pathToTextFiles;
+    private File pathToCSVFiles;
+    private String absPathCSV;
+    private String absPathText;
 
     private static Map<Integer, Report> allReports = new HashMap<>();
 
-    public Report(Timer reportTimer, TowerOfHanoiActivity menuChoices){
+    public Report(Timer reportTimer, TowerOfHanoiActivity menuChoices, Context context){
         //initialise les variables de classe
         this.reportTimer = reportTimer;
         this.menuChoices = menuChoices;
+        this.context = context;
+
         this.nb_ring_choosen = menuChoices.getSelectedItem();
         this.shape_ring_choosen = menuChoices.getSelectedShapeItem();
         this.feedback_choosen = menuChoices.getSelectedFeedBackItem();
+        this.dimension_choosen = menuChoices.getDimension();
 
-        //créer l'ID du report
-        this.IDReport = this.nb_Reports;
+        if(this.nb_ring_choosen.equals("3")){
+            this.nbCoupMini = 7;
+        } else if(this.nb_ring_choosen.equals("4")){
+            this.nbCoupMini = 15;
+        } else if(this.nb_ring_choosen.equals("5")){
+            this.nbCoupMini = 31;
+        } else if (this.nb_ring_choosen.equals("6")){
+            this.nbCoupMini = 63;
+        } else {
+            System.out.println(this.nb_ring_choosen);
+        }
+
+        this.absPathText = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+"/LesReports/";
+        this.absPathCSV = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+"/LesCSVs/";
+        this.pathToTextFiles = new File(absPathText);
+        this.pathToCSVFiles = new File(absPathCSV);
+        if(!pathToTextFiles.exists() || !pathToCSVFiles.exists()){
+            boolean isCreatedT = pathToTextFiles.mkdirs();
+            boolean isCreatedC = pathToCSVFiles.mkdirs();
+            if(isCreatedC == false || isCreatedT == false){
+                throw new RuntimeException("Défaut de création des dossiers de stockage externe");
+            }
+        }
+
+        //créer l'ID du report en fonction du nombre de fichier déjà existant dans le dossier/evite également d'écraser les fichiers précédens
+        this.IDReport = this.pathToTextFiles.list().length+1;
         //créer le textReport et initialise les attributs
         this.createReport();
+        //créer le fichier .txt report
+
+        this.createTextFileReport();
         //range l'instance courante dans une Map static
         this.allReports.put(this.IDReport, this);
-        //incrémente le nombre de rapports
-        this.nb_Reports++;
+
+        this.dataInCSVFileReport();
 
 
     }
@@ -74,10 +117,6 @@ public class Report {
         return IDReport;
     }
 
-    //retourne le nombre d'instance de cette classe (soit le nombre de rapport total)
-    public static int getNb_Reports() {
-        return nb_Reports;
-    }
 
     //retourne tout les reports de toutes les parties
     public static Map<Integer, Report> getAllReports() {
@@ -96,14 +135,15 @@ public class Report {
     public void createReport(){
         String s = "";
         s = s+"INFORMATIONS GENERALES\n";
-        s = s+"Numéro de report : "+this.getIDReport()+"\n";
-        s = s+"Nom joueur : Joueur "+this.getIDReport()+"\n";
+        s = s+"Numéro de report : "+getIDReport()+"\n";
+        s = s+"Nom joueur : Joueur "+getIDReport()+"\n";
         s = s+"Prénom joueur : "+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"OPTIONS CHOISIES\n";
         s = s+"FeedBack choisi : "+this.feedback_choosen+"\n";
         s = s+"Forme des palets choisis : "+this.shape_ring_choosen+"\n";
         s = s+"Nombre de palets choisis : "+this.nb_ring_choosen+"\n";
+        s = s+"Dimension Choisie : "+this.dimension_choosen+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"VUE D'ENSEMBLE DE LA PARTIE\n";
         for(int i : this.reportTimer.getChronologicActionMap().keySet()){
@@ -112,19 +152,7 @@ public class Report {
         s = s+"\n";
         s = s+"------------------------------------------------------\n";
         s = s+"PERFORMANCES TEMPS/COUPS\n";
-        s = s+"Nombre de coups minimum envisageable pour cette partie : ";
-        if(this.nb_ring_choosen.equals("3")){
-            nbCoupMini = 7;
-        } else if(this.nb_ring_choosen.equals("4")){
-            nbCoupMini = 15;
-        } else if(this.nb_ring_choosen.equals("5")){
-            nbCoupMini = 31;
-        } else if (this.nb_ring_choosen.equals("6")){
-            nbCoupMini = 63;
-        } else {
-            System.out.println(this.nb_ring_choosen);
-        }
-        s = s+nbCoupMini+"\n";
+        s = s+"Nombre de coups minimum envisageable pour cette partie : "+this.nbCoupMini+"\n";
         s = s+"Nombre de coups avant réussite : "+this.reportTimer.getNbAction()+"\n";
         s = s+"Nombre de succès : "+this.reportTimer.getNbSucess()+"\n";
         s = s+"Nombre d'echec : "+this.reportTimer.getNbError()+"\n\n";
@@ -185,7 +213,72 @@ public class Report {
         System.out.println(textReport);
     }
 
-    public void addItemToSheet(final Context context) {
+    public void createTextFileReport(){
+
+    Date d = new Date();
+    String dateCreation = new SimpleDateFormat("kk-mm-ss dd/MM/yyyy").format(d);
+       try {
+
+            File reportTextFile = new File(this.pathToTextFiles, "reportTest_"+this.IDReport+".txt");
+            FileWriter filewriter = new FileWriter(reportTextFile,true);
+            filewriter.write("Date de génération du fichier : "+dateCreation+"\n");
+            filewriter.write(this.textReport);
+            filewriter.close();
+            System.out.println("fichier ok créer");
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    public void createCSVReport(){
+
+
+        //Les variables explicatives sont -> nbRing,FeedBack,Dimension,Shape (etude stats)
+        //Les variables quantitative expliquées -> les perf temporel et le nb de coup/succès/erreur (étude stats)
+        String[] headerCSV = {"nbRing", "FeedBack", "Dimension", "Shape", "TotalTime", "RealTotalTime",
+                "InitialThinkingTime","AvgTAction","AvgTSucess","AvgTError","AvgTSu/Er","AvgTEr/Su","nbActions", "nbSucess", "nbErrors"};
+        String[] data1 = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+                ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
+                ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
+                ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+
+        try{
+            File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
+
+            CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+            writer.writeNext(headerCSV);
+            writer.writeNext(data1);
+            writer.close();
+        } catch (IOException e) {
+            Log.e("Exception", "CSV File write failed: " + e.toString());
+        }
+
+    }
+    public void dataInCSVFileReport(){
+        String[] addData = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+                ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
+                ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
+                ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+
+        if(this.pathToCSVFiles.list().length == 0){
+            createCSVReport();
+        } else {
+            try{
+                File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
+
+                CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+                writer.writeNext(addData);
+                writer.close();
+            } catch (IOException e) {
+                Log.e("Exception", "CSV File write failed: " + e.toString());
+            }
+        }
+    }
+
+
+   public void addItemToSheet(final Context context) {
 
 
 
@@ -246,7 +339,6 @@ public class Report {
                 parmas.put("nbCoupTotal",Integer.toString(reportTimer.getNbAction()));
                 parmas.put("nbError",Integer.toString(reportTimer.getNbError()));
                 parmas.put("nbSucces",Integer.toString(reportTimer.getNbSucess()));
-
                 parmas.put("tempsTotal",Double.toString(reportTimer.getTotalTimeGame()/1000));
                 parmas.put("tempsTotalFirstTouch",Double.toString(reportTimer.getTotalTimeGameSinceFirstTouch()/1000));
                 parmas.put("tempsTotalReflexion",Double.toString(reportTimer.getInitialPlayerThinkingTime()/1000));

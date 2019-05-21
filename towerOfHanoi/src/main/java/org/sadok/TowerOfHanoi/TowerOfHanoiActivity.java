@@ -835,9 +835,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			this.theChrono.stop();
 
 			//report édité puis affiché
-			theReport = new Report(theChrono, this);
+			theReport = new Report(theChrono, this, context);
 			theReport.afficheReport();
-			theReport.addItemToSheet(context);
+			//theReport.addItemToSheet(context);
 			finish();
 			//startActivity(getIntent());
 		}
@@ -854,4 +854,11 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		return selectedShapeItem;
 	}
 
+	public static String getDimension(){
+		if(checkboxTrue){
+			return "3D";
+		} else {
+			return "2D";
+		}
+	}
 }
