@@ -38,6 +38,12 @@ public class Report {
     private String shape_ring_choosen;
     private String feedback_choosen;
     private String dimension_choosen;
+    private String tempsEntreAction = "";
+    private String tempsEntreSucces = "";
+    private String tempsEntreErreur = "";
+    private String tempsEntreSuccesErreur = "";
+    private String tempsEntreErreurSucces = "";
+    private int nbCoupMini = 0;
 
     private File pathToTextFiles;
     private File pathToCSVFiles;
@@ -127,7 +133,6 @@ public class Report {
 
     //première version console simple du report/créé le rapport utiliser dans le constructeur
     public void createReport(){
-        int nbCoupMini = 0;
         String s = "";
         s = s+"INFORMATIONS GENERALES\n";
         s = s+"Numéro de report : "+getIDReport()+"\n";
@@ -273,7 +278,9 @@ public class Report {
     }
 
 
-   /* public void addItemToSheet(final Context context) {
+   public void addItemToSheet(final Context context) {
+
+
 
         //Temps entre Action
         for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
@@ -321,13 +328,20 @@ public class Report {
         ) {
             @Override
             protected Map<String, String> getParams() {
+
                 Map<String, String> parmas = new HashMap<>();
                 //here we pass params
                 parmas.put("action","addItem");
                 parmas.put("feedback",feedback_choosen);
                 parmas.put("formePalets",shape_ring_choosen);
                 parmas.put("nbPalets",nb_ring_choosen);
+                parmas.put("nbCoupMini",String.valueOf(nbCoupMini));
+                parmas.put("nbCoupTotal",Integer.toString(reportTimer.getNbAction()));
+                parmas.put("nbError",Integer.toString(reportTimer.getNbError()));
+                parmas.put("nbSucces",Integer.toString(reportTimer.getNbSucess()));
                 parmas.put("tempsTotal",Double.toString(reportTimer.getTotalTimeGame()/1000));
+                parmas.put("tempsTotalFirstTouch",Double.toString(reportTimer.getTotalTimeGameSinceFirstTouch()/1000));
+                parmas.put("tempsTotalReflexion",Double.toString(reportTimer.getInitialPlayerThinkingTime()/1000));
                 parmas.put("tempsMoyenAction",Double.toString(reportTimer.getAverageTimeAction()/1000));
                 parmas.put("tempsMoyenSucces",Double.toString(reportTimer.getAverageTimeSucess()/1000));
                 parmas.put("tempsMoyenEchecs",Double.toString(reportTimer.getAverageTimeError()/1000));
@@ -352,6 +366,6 @@ public class Report {
         queue.add(stringRequest);
 
 
-    }*/
+    }
 }
 
