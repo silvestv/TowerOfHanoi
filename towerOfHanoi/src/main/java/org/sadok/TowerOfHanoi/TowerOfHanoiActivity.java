@@ -43,7 +43,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private List<Integer> poids = new ArrayList<Integer>() ;
 	private Timer theChrono;
 	private Report theReport;
-
+	private boolean neutre;
 	@Override
 	public EngineOptions onCreateEngineOptions() {
     	final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
@@ -290,7 +290,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					//detecte une action
-					theChrono.clickAction();
+					if (!neutre) {
+						theChrono.clickAction();
+					}
 					checkForCollisionsWithTowers(this);
 					scene.attachChild(this);
 
@@ -325,7 +327,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					//detecte une action
-					theChrono.clickAction();
+					if (!neutre) {
+						theChrono.clickAction();
+					}
 		        	checkForCollisionsWithTowers(this);
 					scene.attachChild(this);
 
@@ -361,7 +365,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 
 					//detecte une action
-					theChrono.clickAction();
+					if (!neutre) {
+						theChrono.clickAction();
+					}
 		            checkForCollisionsWithTowers(this);
 					scene.attachChild(this);
 
@@ -397,7 +403,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 		        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					//detecte une action
-					theChrono.clickAction();
+					if (!neutre) {
+						theChrono.clickAction();
+					}
 		        	checkForCollisionsWithTowers(this);
 					scene.attachChild(this);
 					checkEnding(this);
@@ -430,7 +438,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					//detecte une action
-					theChrono.clickAction();
+					if (!neutre) {
+						theChrono.clickAction();
+					}
 					checkForCollisionsWithTowers(this);
 					scene.attachChild(this);
 					checkEnding(this);
@@ -463,7 +473,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 				if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
 					//detecte une action
-					theChrono.clickAction();
+					if (!neutre) {
+						theChrono.clickAction();
+					}
 					checkForCollisionsWithTowers(this);
 					scene.attachChild(this);
 					checkEnding(this);
@@ -604,6 +616,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	    Sprite tower = null;
 		int indexPoids = poids.indexOf(ring.getmWeight());
 	    if (ring.collidesWith(mTower1) && (mStack1.size() == 0 || ring.getmWeight() < ((Ring) mStack1.peek()).getmWeight())) {
+			neutre = false;
 
 	    	//code executer en cas de succès déclenchement chrono succès
 			//a chaque succès un marqueur temporel est posé quelquesoit le feedBack, c'est la différence entre 2 marqueurs qui nous permettra
@@ -620,6 +633,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			}
 
 		} else if (ring.collidesWith(mTower2) && (mStack2.size() == 0 || ring.getmWeight() < ((Ring) mStack2.peek()).getmWeight())) {
+			neutre = false;
 
 	    	this.theChrono.clickSuccess();
 			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
@@ -633,6 +647,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			}
 
 		} else if (ring.collidesWith(mTower3) && (mStack3.size() == 0 || ring.getmWeight() < ((Ring) mStack3.peek()).getmWeight())) {
+			neutre = false;
 
 			this.theChrono.clickSuccess();
 			System.out.println("Time Between 2 succés (ms/null possible au début) : "+theChrono.getTimeBetweenSuccess());
@@ -663,6 +678,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 				if (selectedFeedBackItem.equals("Totale")) {
 					if (!ring.getmTower().collidesWith(ring)) {
+						neutre = false;
 						runOnUiThread(new Runnable() {
 							public void run() {
 								Context context = getApplicationContext();
@@ -674,8 +690,9 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						});
 						this.theChrono.clickError();
 
+					}else {
+						neutre = true;
 					}
-
 						System.out.println("TOWER " + ring.getmTower().collidesWith(ring));
 					stack = ring.getmStack();
 					tower = ring.getmTower();
@@ -683,6 +700,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				}
 				if (selectedFeedBackItem.equals("Semi")) {
 					if (!ring.getmTower().collidesWith(ring)) {
+						neutre = false;
 						runOnUiThread(new Runnable() {
 							public void run() {
 								Context context = getApplicationContext();
@@ -694,6 +712,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						});
 						this.theChrono.clickError();
 
+					}else {
+						neutre = true;
 					}
 					if (ring.collidesWith(mTower1)) {
 						stack = mStack1;
@@ -701,12 +721,15 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						if (indexPoids != -1) {
 							poids.remove(indexPoids);
 						}
+
 					} else if (ring.collidesWith(mTower2)) {
 						stack = mStack2;
 						tower = mTower2;
 						if (indexPoids != -1) {
 							poids.remove(indexPoids);
 						}
+
+
 					} else if (ring.collidesWith(mTower3)) {
 						stack = mStack3;
 						tower = mTower3;
@@ -719,9 +742,15 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 					} else if (!ring.collidesWith(ring.getmTower())) {
 						stack = ring.getmStack();
 						tower = ring.getmTower();
+
 					}
 				}
 				if (selectedFeedBackItem.equals("Sans")) {
+					if (!ring.getmTower().collidesWith(ring)){
+						neutre = false;
+					}else {
+						neutre = true;
+					}
 					if (ring.collidesWith(mTower1)) {
 						if (indexPoids != -1) {
 							poids.remove(indexPoids);

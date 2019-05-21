@@ -121,7 +121,7 @@ public class Timer {
             if(nb_action != 0){
                 //vérifie l'action précédente effectuée, si cette dernière est un échec alors comptabiliser
                 //une erreur puis un succès
-                if(this.chronologicActionMap.get(this.nb_action-1) == 'E'){
+                if(this.chronologicActionMap.get(this.nb_action-1) != null && this.chronologicActionMap.get(this.nb_action-1) == 'E'){
 
                     this.t_second_between_error_then_sucess = System.currentTimeMillis() - this.triggerError;
                     this.allBetweenErrorThenSucess.add(t_second_between_error_then_sucess);
@@ -153,7 +153,7 @@ public class Timer {
             if(this.nb_action != 0){
                 //vérifie l'action précédente effectuée, si cette dernière et un succès alors comptabiliser
                 //un succès puis une erreur
-                if(this.chronologicActionMap.get(this.nb_action-1) == 'S'){
+                if(this.chronologicActionMap.get(this.nb_action-1) !=null && this.chronologicActionMap.get(this.nb_action-1) == 'S'){
                     this.t_second_between_success_then_error = System.currentTimeMillis() - this.triggerSuccess;
                     this.allBetweenSuccessThenError.add(t_second_between_success_then_error);
                 }

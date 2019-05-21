@@ -62,7 +62,7 @@ public class MenuActivity extends AppCompatActivity {
         //Spinner for Shape
 
         ArrayAdapter<CharSequence> adapterShape = ArrayAdapter.createFromResource(this, R.array.ringsShape, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerShape.setAdapter(adapterShape);
         spinnerShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
