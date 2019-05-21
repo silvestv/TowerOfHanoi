@@ -3,7 +3,17 @@ package org.sadok.TowerOfHanoi;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
@@ -14,15 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/*import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;*/
-
 public class Report {
     private Timer reportTimer;
     private TowerOfHanoiActivity menuChoices;
@@ -31,7 +32,7 @@ public class Report {
     private int IDReport;
     private String textReport;
 
-    private int nbCoupMini;
+    private int nbCoupMini = 0;
     private boolean perfect_game = false;
 
     private String nb_ring_choosen;
@@ -43,7 +44,6 @@ public class Report {
     private String tempsEntreErreur = "";
     private String tempsEntreSuccesErreur = "";
     private String tempsEntreErreurSucces = "";
-    private int nbCoupMini = 0;
 
     private File pathToTextFiles;
     private File pathToCSVFiles;

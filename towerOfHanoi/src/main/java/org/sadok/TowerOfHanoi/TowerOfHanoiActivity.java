@@ -837,7 +837,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			//report édité puis affiché
 			theReport = new Report(theChrono, this, context);
 			theReport.afficheReport();
-			//theReport.addItemToSheet(context);
+			theReport.addItemToSheet(context);
 			finish();
 			//startActivity(getIntent());
 		}
