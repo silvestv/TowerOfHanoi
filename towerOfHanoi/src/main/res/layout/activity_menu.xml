@@ -38,17 +38,15 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="593dp"
-            android:layout_height="395dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
+            android:layout_width="594dp"
+            android:layout_height="236dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.029">
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/textView8"
@@ -85,7 +83,7 @@
             <Spinner
                 android:id="@+id/ringsShape"
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="wrap_content" />
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -93,9 +91,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="15dp"
                 android:text="Vue en 3 dimensions" />
-        </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
 
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="5dp"
+                android:text="Version Emotionnelle" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragEmotional"
+            android:layout_width="397dp"
+            android:layout_height="405dp"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="7dp"
+            tools:layout_editor_absoluteY="251dp"
+            tools:ignore="MissingConstraints"></RelativeLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
