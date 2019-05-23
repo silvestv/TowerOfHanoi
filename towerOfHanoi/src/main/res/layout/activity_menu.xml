@@ -103,14 +103,25 @@
                 android:text="Version Emotionnelle" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/fragEmotional"
-            android:layout_width="397dp"
-            android:layout_height="405dp"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="7dp"
-            tools:layout_editor_absoluteY="251dp"
-            tools:ignore="MissingConstraints"></RelativeLayout>
+        <LinearLayout
+            android:layout_width="586dp"
+            android:layout_height="629dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:id="@+id/fragEmotional"
+                android:layout_width="396dp"
+                android:layout_height="616dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="127dp"></RelativeLayout>
+        </LinearLayout>
 
 
     </android.support.constraint.ConstraintLayout>
