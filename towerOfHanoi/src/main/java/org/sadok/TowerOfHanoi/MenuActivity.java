@@ -39,7 +39,6 @@ public class MenuActivity extends AppCompatActivity {
         final Button start = findViewById(R.id.button);
         final CheckBox checkboxEmotion = (CheckBox) findViewById(R.id.checkBox2);
 
-
         checkboxEmotion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
