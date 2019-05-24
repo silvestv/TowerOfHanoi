@@ -3,6 +3,7 @@ package org.sadok.TowerOfHanoi;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -78,7 +79,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				@Override
 
 				public InputStream open() throws IOException {
-					InputStream ringShape1 = getAssets().open("gfx/RectangleFinal/rect1.png");
+					InputStream ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect1Mouth.png");
 
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
@@ -106,7 +107,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape2 = getAssets().open("gfx/RectangleFinal/rect2.png");
+					InputStream ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect2Mustache.png");
 					if (!checkboxTrue) {
 					if(selectedShapeItem.equals("Circulaire")){
 						ringShape2 = getAssets().open("gfx/RingFinal/ring2.png");
@@ -129,7 +130,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring3 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape3 = getAssets().open("gfx/RectangleFinal/rect3.png");
+					InputStream ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect3Nose.png");
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
 							ringShape3 = getAssets().open("gfx/RingFinal/ring3.png");
@@ -154,7 +155,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring4 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape4 = getAssets().open("gfx/RectangleFinal/rect4.png");
+					InputStream ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect4Eyes.png");
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
 							ringShape4 = getAssets().open("gfx/RingFinal/ring4.png");
@@ -179,7 +180,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring5 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape5 = getAssets().open("gfx/RectangleFinal/rect5.png");
+					InputStream ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect5EyeBrow.png");
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
 							ringShape5 = getAssets().open("gfx/RingFinal/ring5.png");
@@ -204,7 +205,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			ITexture ring6 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape6 = getAssets().open("gfx/RectangleFinal/rect6.png");
+					InputStream ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect6Hat.png");
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
 							ringShape6 = getAssets().open("gfx/RingFinal/ring6.png");
@@ -839,7 +840,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			theReport.afficheReport();
 			theReport.addItemToSheet(context);
 			finish();
-			//startActivity(getIntent());
+			Intent i = new Intent(getBaseContext(), EndingActivity.class);
+			startActivity(i);
 		}
 	}
 	public static String getSelectedFeedBackItem() {

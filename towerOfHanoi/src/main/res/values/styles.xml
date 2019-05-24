@@ -13,6 +13,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <string-array name="ringsNumber">
         <item>3</item>
         <item>4</item>
@@ -30,4 +31,77 @@
         <item>Semi</item>
         <item>Sans</item>
     </string-array>
+
+    <string-array name="r1Emo">
+        <item>Aucun</item>
+        <item>Chapeau</item>
+        <item>Sourcil</item>
+        <item>Yeux</item>
+        <item>Nez</item>
+        <item>Moustache</item>
+        <item>Bouche</item>
+    </string-array>
+
+    <string-array name="r2Emo">
+        <item>Aucun</item>
+        <item>Chapeau</item>
+        <item>Sourcil</item>
+        <item>Yeux</item>
+        <item>Nez</item>
+        <item>Moustache</item>
+        <item>Bouche</item>
+    </string-array>
+
+    <string-array name="r3Emo">
+        <item>Aucun</item>
+        <item>Chapeau</item>
+        <item>Sourcil</item>
+        <item>Yeux</item>
+        <item>Nez</item>
+        <item>Moustache</item>
+        <item>Bouche</item>
+    </string-array>
+
+    <string-array name="r4Emo">
+        <item>Aucun</item>
+        <item>Chapeau</item>
+        <item>Sourcil</item>
+        <item>Yeux</item>
+        <item>Nez</item>
+        <item>Moustache</item>
+        <item>Bouche</item>
+    </string-array>
+
+    <string-array name="r5Emo">
+        <item>Aucun</item>
+        <item>Chapeau</item>
+        <item>Sourcil</item>
+        <item>Yeux</item>
+        <item>Nez</item>
+        <item>Moustache</item>
+        <item>Bouche</item>
+    </string-array>
+
+    <string-array name="r6Emo">
+        <item>Aucun</item>
+        <item>Chapeau</item>
+        <item>Sourcil</item>
+        <item>Yeux</item>
+        <item>Nez</item>
+        <item>Moustache</item>
+        <item>Bouche</item>
+    </string-array>
+
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
 </resources>
