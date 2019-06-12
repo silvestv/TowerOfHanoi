@@ -42,16 +42,15 @@ public class EndingActivity extends SimpleBaseGameActivity {
         return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
     }
     protected void onCreateResources() {
-
+        Intent myIntent = getIntent();
         try {
             // 1 - Set up bitmap textures
+            final String perfect = myIntent.getStringExtra("Game");
 
             ITexture backgroundTexture = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-
-                        return getAssets().open("gfx/parfait.png");
-
+                        return getAssets().open("gfx/Ending.png");
                 }
             });
             ITexture newGame = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {

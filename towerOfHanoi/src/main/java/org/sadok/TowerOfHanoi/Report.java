@@ -19,9 +19,12 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Report {
@@ -33,18 +36,20 @@ public class Report {
     private String textReport;
 
     private int nbCoupMini = 0;
-    private boolean perfect_game = false;
+    public boolean perfect_game = false;
 
     private String nb_ring_choosen;
     private String shape_ring_choosen;
     private String feedback_choosen;
     private String dimension_choosen;
+    private Boolean emoVersion;
     private String tempsEntreAction = "";
+    private List<String> tempsEntreActionArray = new ArrayList<String>();
     private String tempsEntreSucces = "";
     private String tempsEntreErreur = "";
     private String tempsEntreSuccesErreur = "";
     private String tempsEntreErreurSucces = "";
-
+    private String version;
     private File pathToTextFiles;
     private File pathToCSVFiles;
     private String absPathCSV;
@@ -59,6 +64,7 @@ public class Report {
         this.context = context;
 
         this.nb_ring_choosen = menuChoices.getSelectedItem();
+        this.emoVersion = menuChoices.getSelectedVersionItem();
         this.shape_ring_choosen = menuChoices.getSelectedShapeItem();
         this.feedback_choosen = menuChoices.getSelectedFeedBackItem();
         this.dimension_choosen = menuChoices.getDimension();
@@ -144,6 +150,11 @@ public class Report {
         s = s+"Forme des palets choisis : "+this.shape_ring_choosen+"\n";
         s = s+"Nombre de palets choisis : "+this.nb_ring_choosen+"\n";
         s = s+"Dimension Choisie : "+this.dimension_choosen+"\n";
+        if(this.emoVersion){
+            s = s+"Version Choisie : Emotionnel \n";
+        }else{
+            s = s+"Version Choisie : Classique \n";
+        }
         s = s+"------------------------------------------------------\n";
         s = s+"VUE D'ENSEMBLE DE LA PARTIE\n";
         for(int i : this.reportTimer.getChronologicActionMap().keySet()){
@@ -231,22 +242,27 @@ public class Report {
     }
 
     public void createCSVReport(){
-
+        if(this.emoVersion){
+            version = "Emotionnel";
+        }else{
+            version = "Classique";
+        }
 
         //Les variables explicatives sont -> nbRing,FeedBack,Dimension,Shape (etude stats)
         //Les variables quantitative expliquées -> les perf temporel et le nb de coup/succès/erreur (étude stats)
-        String[] headerCSV = {"nbRing", "FeedBack", "Dimension", "Shape", "TotalTime", "RealTotalTime",
-                "InitialThinkingTime","AvgTAction","AvgTSucess","AvgTError","AvgTSu/Er","AvgTEr/Su","nbActions", "nbSucess", "nbErrors"};
-        String[] data1 = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+        String[] headerCSV = {"nbRing", "FeedBack", "Dimension","Version", "Shape", "TotalTime", "RealTotalTime",
+                "InitialThinkingTime","AvgTAction","AvgTSucess","AvgTError","AvgTSu/Er","AvgTEr/Su","nbActions", "nbSucess", "nbErrors", "Temps entre action","Temps entre succes","Temps entre erreur","Temps entre succes puis erreur","Temps entre Errreur puis succes"};
+        String[] data1 = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen,checkVersion(), this.shape_ring_choosen,
                 ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
                 ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
                 ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
-                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError(), this.reportTimer.getAllBetweenAction().toString(), this.reportTimer.getAllBetweenSucess().toString(), this.reportTimer.getAllBetweenError().toString(),
+                this.reportTimer.getAllBetweenSucessThenError().toString(), this.reportTimer.getAllBetweenErrorThenSucess().toString()};
 
         try{
             File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
 
-            CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+            CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),';');
             writer.writeNext(headerCSV);
             writer.writeNext(data1);
             writer.close();
@@ -256,11 +272,13 @@ public class Report {
 
     }
     public void dataInCSVFileReport(){
-        String[] addData = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+
+        String[] addData = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen,checkVersion(), this.shape_ring_choosen,
                 ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
                 ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
                 ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
-                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError(), this.reportTimer.getAllBetweenAction().toString(), this.reportTimer.getAllBetweenSucess().toString(), this.reportTimer.getAllBetweenError().toString(),
+                this.reportTimer.getAllBetweenSucessThenError().toString(), this.reportTimer.getAllBetweenErrorThenSucess().toString()};
 
         if(this.pathToCSVFiles.list().length == 0){
             createCSVReport();
@@ -268,7 +286,7 @@ public class Report {
             try{
                 File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
 
-                CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+                CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),';');
                 writer.writeNext(addData);
                 writer.close();
             } catch (IOException e) {
@@ -276,8 +294,33 @@ public class Report {
             }
         }
     }
+    public void boucleAction(){
+        //Temps entre Action
+        for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
+            tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
+            tempsEntreActionArray.add(tempsEntreAction);
+        }
 
+        //Temps entre Succes
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
+            tempsEntreSucces = tempsEntreSucces+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucess().get(i)/1000)+" s\n";
+        }
 
+        //Temps entre Erreur
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            tempsEntreErreur = tempsEntreErreur+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenError().get(i)/1000)+" s\n";
+        }
+
+        //Temps entre succes puis erreur
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucessThenError().size(); i++){
+            tempsEntreSuccesErreur = tempsEntreSuccesErreur+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucessThenError().get(i)/1000)+" s\n";
+        }
+        //Temps entre erreur puis succes
+
+        for(int i = 0; i<this.reportTimer.getAllBetweenErrorThenSucess().size(); i++){
+            tempsEntreErreurSucces = tempsEntreErreurSucces+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenErrorThenSucess().get(i)/1000)+" s\n";
+        }
+    }
    public void addItemToSheet(final Context context) {
 
 
@@ -285,6 +328,7 @@ public class Report {
         //Temps entre Action
         for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
             tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
+            tempsEntreActionArray.add(tempsEntreAction);
         }
 
         //Temps entre Succes
@@ -334,6 +378,8 @@ public class Report {
                 parmas.put("action","addItem");
                 parmas.put("feedback",feedback_choosen);
                 parmas.put("formePalets",shape_ring_choosen);
+                parmas.put("dimension",dimension_choosen);
+                parmas.put("version",checkVersion());
                 parmas.put("nbPalets",nb_ring_choosen);
                 parmas.put("nbCoupMini",String.valueOf(nbCoupMini));
                 parmas.put("nbCoupTotal",Integer.toString(reportTimer.getNbAction()));
@@ -366,6 +412,14 @@ public class Report {
         queue.add(stringRequest);
 
 
+    }
+    public String checkVersion(){
+        if(this.emoVersion){
+            version = "Emotionnel";
+        }else{
+            version = "Classique";
+        }
+        return version;
     }
 }
 
