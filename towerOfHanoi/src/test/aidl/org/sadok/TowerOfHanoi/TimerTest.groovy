@@ -1,5 +1,4 @@
 package org.sadok.TowerOfHanoi
-
 class TimerTest extends GroovyTestCase {
     private Timer timeT;
     void setUp() {
