@@ -2,7 +2,6 @@ package org.sadok.TowerOfHanoi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,7 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     public static boolean checkboxTrue;
     public static boolean checkboxTrueEmo;
 
-    public Fragment_emotional_menu fragmentEmotion;
+    public static Fragment_emotional_menu fragmentEmotion;
     public FragmentManager manager;
 
 

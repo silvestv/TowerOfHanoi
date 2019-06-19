@@ -38,6 +38,7 @@ import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR5Emo;
 import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR6Emo;
 import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrue;
 import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrueEmo;
+import static org.sadok.TowerOfHanoi.MenuActivity.fragmentEmotion;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedFeedBackItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedBackGround;
@@ -1752,7 +1753,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	public static String getSelectedFeedBackItem() {
 		return selectedFeedBackItem;
 	}
-
+	public static String getSelectedBackground(){return selectedBackGround;}
 	public static String getSelectedItem() {
 		return selectedItem;
 	}
@@ -1774,5 +1775,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		} else {
 			return "2D";
 		}
+	}
+	public static Fragment_emotional_menu getFragmentEmotion(){
+		return fragmentEmotion;
 	}
 }
