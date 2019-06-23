@@ -141,8 +141,11 @@ public class Timer {
         //init
         if(triggerError == 0){
             this.triggerError = System.currentTimeMillis();
-
-        //entre 2 echec
+            if(this.chronologicActionMap.get(this.nb_action-1) !=null && this.chronologicActionMap.get(this.nb_action-1) == 'S'){
+                this.t_second_between_success_then_error = System.currentTimeMillis() - this.triggerSuccess;
+                this.allBetweenSuccessThenError.add(t_second_between_success_then_error);
+            }
+            //entre 2 echec
         } else {
             this.t_second_between_error = System.currentTimeMillis() - this.triggerError;
             this.allBetweenError.add(t_second_between_error);
@@ -164,6 +167,7 @@ public class Timer {
 
         }
     }
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

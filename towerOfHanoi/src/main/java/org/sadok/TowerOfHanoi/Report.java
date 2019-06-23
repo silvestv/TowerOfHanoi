@@ -450,7 +450,7 @@ public class Report {
                 parmas.put("dimension",dimension_choosen);
                 parmas.put("fondJeu", background_choosen);
                 parmas.put("version",checkVersion());
-                parmas.put("visageStructuré", normalEmoStructure.toString());
+                parmas.put("visageStructure", normalEmoStructure.toString());
                 parmas.put("nbPalets",nb_ring_choosen);
                 parmas.put("nbCoupMini",String.valueOf(nbCoupMini));
                 parmas.put("nbCoupTotal",Integer.toString(reportTimer.getNbAction()));
