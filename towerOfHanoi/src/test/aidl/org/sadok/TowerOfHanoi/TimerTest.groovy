@@ -1,8 +1,9 @@
+import static org.junit.Assert.fail
 package org.sadok.TowerOfHanoi
 class TimerTest extends GroovyTestCase {
     private Timer timeT;
     void setUp() {
-       timeT = new Timer();
+        timeT = new Timer();
     }
 
     void tearDown() {
@@ -86,7 +87,7 @@ class TimerTest extends GroovyTestCase {
 
 
     }
-    
+
 
 
     void testClickError() {
