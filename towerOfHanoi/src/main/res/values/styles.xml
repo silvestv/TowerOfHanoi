@@ -40,6 +40,8 @@
         <item>Nez</item>
         <item>Moustache</item>
         <item>Bouche</item>
+        <item>Neutre</item>
+        <item>Neutre Yeux</item>
     </string-array>
 
     <string-array name="r2Emo">
@@ -50,6 +52,8 @@
         <item>Nez</item>
         <item>Moustache</item>
         <item>Bouche</item>
+        <item>Neutre</item>
+        <item>Neutre Yeux</item>
     </string-array>
 
     <string-array name="r3Emo">
@@ -60,6 +64,8 @@
         <item>Nez</item>
         <item>Moustache</item>
         <item>Bouche</item>
+        <item>Neutre</item>
+        <item>Neutre Yeux</item>
     </string-array>
 
     <string-array name="r4Emo">
@@ -70,6 +76,8 @@
         <item>Nez</item>
         <item>Moustache</item>
         <item>Bouche</item>
+        <item>Neutre</item>
+        <item>Neutre Yeux</item>
     </string-array>
 
     <string-array name="r5Emo">
@@ -80,6 +88,8 @@
         <item>Nez</item>
         <item>Moustache</item>
         <item>Bouche</item>
+        <item>Neutre</item>
+        <item>Neutre Yeux</item>
     </string-array>
 
     <string-array name="r6Emo">
@@ -90,6 +100,8 @@
         <item>Nez</item>
         <item>Moustache</item>
         <item>Bouche</item>
+        <item>Neutre</item>
+        <item>Neutre Yeux</item>
     </string-array>
 
 

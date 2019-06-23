@@ -30,11 +30,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR1Emo;
+import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR3Emo;
+import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR2Emo;
+import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR4Emo;
+import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR5Emo;
+import static org.sadok.TowerOfHanoi.Fragment_emotional_menu.getSelectedR6Emo;
 import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrue;
+import static org.sadok.TowerOfHanoi.MenuActivity.checkboxTrueEmo;
+import static org.sadok.TowerOfHanoi.MenuActivity.fragmentEmotion;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedFeedBackItem;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedItem;
+import static org.sadok.TowerOfHanoi.MenuActivity.selectedBackGround;
 import static org.sadok.TowerOfHanoi.MenuActivity.selectedShapeItem;
-
 public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	private static int CAMERA_WIDTH = 1280;
 	private static int CAMERA_HEIGHT = 748;
@@ -62,10 +70,29 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture backgroundTexture = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					if(checkboxTrue) {
-						return getAssets().open("gfx/background2.png");
-					}else{
-						return getAssets().open("gfx/background2.png");
+                	switch (selectedBackGround){
+						case "Fond d'écran n°1":
+							return getAssets().open("gfx/background2.png");
+						case "Fond d'écran n°2":
+							return getAssets().open("gfx/backGround/ResizedBackground/background2.png");
+						case "Fond d'écran n°3":
+							return getAssets().open("gfx/backGround/ResizedBackground/background3.png");
+						case "Fond d'écran n°4":
+							return getAssets().open("gfx/backGround/ResizedBackground/background4.jpg");
+						case "Fond d'écran n°5":
+							return getAssets().open("gfx/backGround/ResizedBackground/background5.jpg");
+						case "Fond d'écran n°6":
+							return getAssets().open("gfx/backGround/ResizedBackground/background6.jpg");
+						case "Fond d'écran n°7":
+							return getAssets().open("gfx/backGround/ResizedBackground/background7.jpg");
+						case "Fond d'écran n°8":
+							return getAssets().open("gfx/backGround/ResizedBackground/background8.jpg");
+						case "Fond d'écran n°9":
+							return getAssets().open("gfx/backGround/ResizedBackground/background9.jpg");
+						case "Fond d'écran n°10":
+							return getAssets().open("gfx/backGround/ResizedBackground/background10.jpg");
+							default: return getAssets().open("gfx/background2.png");
+
 					}
                 }
             });
@@ -79,25 +106,173 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 				@Override
 
 				public InputStream open() throws IOException {
-					InputStream ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect1Mouth.png");
-
-					if (!checkboxTrue) {
-						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape1 = getAssets().open("gfx/RingFinal/ring1.png");
+					InputStream ringShape1 = getAssets().open("gfx/RectangleFinal/rect1.png");
+					if (getSelectedR1Emo() != null && checkboxTrueEmo) {
+						if (getSelectedR1Emo().equals("Nez")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect1Nose.png");
+						} else if (getSelectedR1Emo().equals("Bouche")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect1Mouth.png");
+						} else if (getSelectedR1Emo().equals("Sourcil")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect1EyeBrow.png");
+						} else if (getSelectedR1Emo().equals("Chapeau")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect1Hat.png");
+						} else if (getSelectedR1Emo().equals("Moustache")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect1Mustache.png");
+						} else if (getSelectedR1Emo().equals("Yeux")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect1Eyes.png");
+						}else if (getSelectedR1Emo().equals("Neutre")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/Neutre/rect1.png");
 						}
+						else if (getSelectedR1Emo().equals("Neutre Yeux")) {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/Emotion/NeutreEyes/rect1.png");
+						}
+						else {
+							ringShape1 = getAssets().open("gfx/RectangleFinal/rect1.png");
+						}
+					}
+					if (!checkboxTrue) {
+
+						if (selectedShapeItem.equals("Circulaire")) {
+							if (getSelectedR1Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR1Emo().equals("Nez")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Nose/ring1Nose.png");
+								} else if (getSelectedR1Emo().equals("Bouche")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Mouth/ring1Mouth.png");
+								} else if (getSelectedR1Emo().equals("Sourcil")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Eyebrow/ring1EyeBrow.png");
+								} else if (getSelectedR1Emo().equals("Chapeau")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Hat/ring1Hat.png");
+								} else if (getSelectedR1Emo().equals("Moustache")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Mustache/ring1Mustache.png");
+								} else if (getSelectedR1Emo().equals("Yeux")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Eyes/ring1Eyes.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/Neutre/ring1.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre Yeux")) {
+									ringShape1 = getAssets().open("gfx/RingFinal/Emotion/NeutreEyes/ring1.png");
+								}
+								else {
+									ringShape1 = getAssets().open("gfx/RingFinal/ring1.png");
+								}
+							}
+							else {
+								ringShape1 = getAssets().open("gfx/RingFinal/ring1.png");
+							}
+						}
+
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape1 = getAssets().open("gfx/PyramideFinal/Pyram1.png");
+							if (getSelectedR1Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR1Emo().equals("Nez")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Nose/pyram1Nose.png");
+								} else if (getSelectedR1Emo().equals("Bouche")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Mouth/pyram1Mouth.png");
+								} else if (getSelectedR1Emo().equals("Sourcil")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Eyebrow/pyram1EyeBrow.png");
+								} else if (getSelectedR1Emo().equals("Chapeau")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Hat/pyram1Hat.png");
+								} else if (getSelectedR1Emo().equals("Moustache")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Mustache/pyram1Mustache.png");
+								} else if (getSelectedR1Emo().equals("Yeux")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Eyes/pyram1Eyes.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/Neutre/Pyram1.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre Yeux")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Emotion/NeutreEyes/Pyram1.png");
+								}else {
+									ringShape1 = getAssets().open("gfx/PyramideFinal/Pyram1.png");
+								}
+							}
+							else {
+								ringShape1 = getAssets().open("gfx/PyramideFinal/Pyram1.png");
+							}
 						}
 
 					}else {
 						if (selectedShapeItem.equals("Rectangulaire")) {
-							ringShape1 = getAssets().open("gfx/rectFinal3d/rect1.png");
+							if (getSelectedR1Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR1Emo().equals("Nez")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Nose/rect1Nose.png");
+								} else if (getSelectedR1Emo().equals("Bouche")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Mouth/rect1Mouth.png");
+								} else if (getSelectedR1Emo().equals("Sourcil")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Eyebrow/rect1EyeBrow.png");
+								} else if (getSelectedR1Emo().equals("Chapeau")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Hat/rect1Hat.png");
+								} else if (getSelectedR1Emo().equals("Moustache")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Mustache/rect1Mustache.png");
+								} else if (getSelectedR1Emo().equals("Yeux")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Eyes/rect1Eyes.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/Neutre/rect1.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre Yeux")) {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/Emotion/NeutreEyes/rect1.png");
+								}else {
+									ringShape1 = getAssets().open("gfx/rectFinal3d/rect1.png");
+								}
+							}else {
+								ringShape1 = getAssets().open("gfx/rectFinal3d/rect1.png");
+							}
 						}
 						if(selectedShapeItem.equals("Pyramidale")){
-							ringShape1 = getAssets().open("gfx/PyramideFinal3d/pyram1.png");
+							if (getSelectedR1Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR1Emo().equals("Nez")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Nose/pyram1Nose.png");
+								} else if (getSelectedR1Emo().equals("Bouche")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mouth/pyram1Mouth.png");
+								} else if (getSelectedR1Emo().equals("Sourcil")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyebrow/pyram1EyeBrow.png");
+								} else if (getSelectedR1Emo().equals("Chapeau")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Hat/pyram1Hat.png");
+								} else if (getSelectedR1Emo().equals("Moustache")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mustache/pyram1Mustache.png");
+								}
+								else if (getSelectedR1Emo().equals("Yeux")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyes/pyram1Eyes.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/Neutre/pyram1.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre Yeux")) {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/Emotion/NeutreEyes/pyram1.png");
+								}else {
+									ringShape1 = getAssets().open("gfx/PyramideFinal3d/pyram1.png");
+								}
+							}else {
+								ringShape1 = getAssets().open("gfx/PyramideFinal3d/pyram1.png");
+							}
 						}
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape1 = getAssets().open("gfx/ringFinal3d/ring1.png");
+							if (getSelectedR1Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR1Emo().equals("Nez")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Nose/ring1Nose.png");
+								} else if (getSelectedR1Emo().equals("Bouche")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Mouth/ring1Mouth.png");
+								} else if (getSelectedR1Emo().equals("Sourcil")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Eyebrow/ring1EyeBrow.png");
+								} else if (getSelectedR1Emo().equals("Chapeau")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Hat/ring1Hat.png");
+								} else if (getSelectedR1Emo().equals("Moustache")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Mustache/ring1Mustache.png");
+								} else if (getSelectedR1Emo().equals("Yeux")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Eyes/ring1Eyes.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/Neutre/ring1.png");
+								}
+								else if (getSelectedR1Emo().equals("Neutre Yeux")) {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/Emotion/NeutreEyes/ring1.png");
+								}else {
+									ringShape1 = getAssets().open("gfx/ringFinal3d/ring1.png");
+								}
+							}else {
+								ringShape1 = getAssets().open("gfx/ringFinal3d/ring1.png");
+							}
 						}
 
 					}
@@ -107,21 +282,170 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			ITexture ring2 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect2Mustache.png");
+					InputStream ringShape2 = getAssets().open("gfx/RectangleFinal/rect2.png");
+					if (getSelectedR2Emo() != null && checkboxTrueEmo) {
+						if (getSelectedR2Emo().equals("Nez")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect2Nose.png");
+						} else if (getSelectedR2Emo().equals("Bouche")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect2Mouth.png");
+						} else if (getSelectedR2Emo().equals("Sourcil")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect2EyeBrow.png");
+						} else if (getSelectedR2Emo().equals("Chapeau")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect2Hat.png");
+						} else if (getSelectedR2Emo().equals("Moustache")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect2Mustache.png");
+						} else if (getSelectedR2Emo().equals("Yeux")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect2Eyes.png");
+						}
+						else if (getSelectedR2Emo().equals("Neutre")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/Neutre/rect2.png");
+						}
+						else if (getSelectedR2Emo().equals("Neutre Yeux")) {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/Emotion/NeutreEyes/rect2.png");
+						}else {
+							ringShape2 = getAssets().open("gfx/RectangleFinal/rect2.png");
+						}
+					}
 					if (!checkboxTrue) {
 					if(selectedShapeItem.equals("Circulaire")){
-						ringShape2 = getAssets().open("gfx/RingFinal/ring2.png");
+						if (getSelectedR2Emo() != null && checkboxTrueEmo) {
+							if (getSelectedR2Emo().equals("Nez")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Nose/ring2Nose.png");
+							} else if (getSelectedR2Emo().equals("Bouche")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Mouth/ring2Mouth.png");
+							} else if (getSelectedR2Emo().equals("Sourcil")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Eyebrow/ring2EyeBrow.png");
+							} else if (getSelectedR2Emo().equals("Chapeau")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Hat/ring2Hat.png");
+							} else if (getSelectedR2Emo().equals("Moustache")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Mustache/ring2Mustache.png");
+							} else if (getSelectedR2Emo().equals("Yeux")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Eyes/ring2Eyes.png");
+							}
+							else if (getSelectedR2Emo().equals("Neutre")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/Neutre/ring2.png");
+							}
+							else if (getSelectedR2Emo().equals("Neutre Yeux")) {
+								ringShape2 = getAssets().open("gfx/RingFinal/Emotion/NeutreEyes/ring2.png");
+							}else {
+								ringShape2 = getAssets().open("gfx/RingFinal/ring2.png");
+							}
+						}
+						else {
+							ringShape2 = getAssets().open("gfx/RingFinal/ring2.png");
+						}
 					}
 
 					if(selectedShapeItem.equals("Pyramidale")){
-						ringShape2 = getAssets().open("gfx/PyramideFinal/Pyram2.png");
+						if (getSelectedR2Emo() != null && checkboxTrueEmo) {
+							if (getSelectedR2Emo().equals("Nez")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Nose/pyram2Nose.png");
+							} else if (getSelectedR2Emo().equals("Bouche")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Mouth/pyram2Mouth.png");
+							} else if (getSelectedR2Emo().equals("Sourcil")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Eyebrow/pyram2EyeBrow.png");
+							} else if (getSelectedR2Emo().equals("Chapeau")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Hat/pyram2Hat.png");
+							} else if (getSelectedR2Emo().equals("Moustache")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Mustache/pyram2Mustache.png");
+							} else if (getSelectedR2Emo().equals("Yeux")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Eyes/pyram2Eyes.png");
+							}
+							else if (getSelectedR2Emo().equals("Neutre")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/Neutre/Pyram2.png");
+							}
+							else if (getSelectedR2Emo().equals("Neutre Yeux")) {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Emotion/NeutreEyes/Pyram2.png");
+							}else {
+								ringShape2 = getAssets().open("gfx/PyramideFinal/Pyram2.png");
+							}
+						}
+						else {
+							ringShape2 = getAssets().open("gfx/PyramideFinal/Pyram2.png");
+						}
 					}
 					}else {
+						if (selectedShapeItem.equals("Circulaire")) {
+							if (getSelectedR2Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR2Emo().equals("Nez")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Nose/ring2Nose.png");
+								} else if (getSelectedR2Emo().equals("Bouche")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Mouth/ring2Mouth.png");
+								} else if (getSelectedR2Emo().equals("Sourcil")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Eyebrow/ring2EyeBrow.png");
+								} else if (getSelectedR2Emo().equals("Chapeau")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Hat/ring2Hat.png");
+								} else if (getSelectedR2Emo().equals("Moustache")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Mustache/ring2Mustache.png");
+								} else if (getSelectedR2Emo().equals("Yeux")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Eyes/ring2Eyes.png");
+								}
+								else if (getSelectedR2Emo().equals("Neutre")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/Neutre/ring2.png");
+								}
+								else if (getSelectedR2Emo().equals("Neutre Yeux")) {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/Emotion/NeutreEyes/ring2.png");
+								}else {
+									ringShape2 = getAssets().open("gfx/ringFinal3d/ring2.png");
+								}
+							}else {
+								ringShape2 = getAssets().open("gfx/ringFinal3d/ring2.png");
+							}
+						}
 						if (selectedShapeItem.equals("Rectangulaire")) {
-							ringShape2 = getAssets().open("gfx/rectFinal3d/rect2.png");
+							if (getSelectedR2Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR2Emo().equals("Nez")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Nose/rect2Nose.png");
+								} else if (getSelectedR2Emo().equals("Bouche")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Mouth/rect2Mouth.png");
+								} else if (getSelectedR2Emo().equals("Sourcil")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Eyebrow/rect2EyeBrow.png");
+								} else if (getSelectedR2Emo().equals("Chapeau")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Hat/rect2Hat.png");
+								} else if (getSelectedR2Emo().equals("Moustache")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Mustache/rect2Mustache.png");
+								} else if (getSelectedR2Emo().equals("Yeux")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Eyes/rect2Eyes.png");
+								}
+								else if (getSelectedR2Emo().equals("Neutre")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/Neutre/rect2.png");
+								}
+								else if (getSelectedR2Emo().equals("Neutre Yeux")) {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/Emotion/NeutreEyes/rect2.png");
+								}else {
+									ringShape2 = getAssets().open("gfx/rectFinal3d/rect2.png");
+								}
+							}else {
+								ringShape2 = getAssets().open("gfx/rectFinal3d/rect2.png");
+							}
 						}
 						if(selectedShapeItem.equals("Pyramidale")){
-							ringShape2 = getAssets().open("gfx/PyramideFinal3d/pyram2.png");
+							if (getSelectedR2Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR2Emo().equals("Nez")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Nose/pyram2Nose.png");
+								} else if (getSelectedR2Emo().equals("Bouche")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mouth/pyram2Mouth.png");
+								} else if (getSelectedR2Emo().equals("Sourcil")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyebrow/pyram2EyeBrow.png");
+								} else if (getSelectedR2Emo().equals("Chapeau")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Hat/pyram2Hat.png");
+								} else if (getSelectedR2Emo().equals("Moustache")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mustache/pyram2Mustache.png");
+								} else if (getSelectedR2Emo().equals("Yeux")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyes/pyram2Eyes.png");
+								}
+								else if (getSelectedR2Emo().equals("Neutre")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/Neutre/pyram2.png");
+								}
+								else if (getSelectedR2Emo().equals("Neutre Yeux")) {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/Emotion/NeutreEyes/pyram2.png");
+								}
+								else {
+									ringShape2 = getAssets().open("gfx/PyramideFinal3d/pyram2.png");
+								}
+							}else {
+								ringShape2 = getAssets().open("gfx/PyramideFinal3d/pyram2.png");
+							}
 						}
 					}
 					return ringShape2;
@@ -130,23 +454,168 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring3 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect3Nose.png");
+					InputStream ringShape3 = getAssets().open("gfx/RectangleFinal/rect3.png");
+					if (getSelectedR3Emo() != null && checkboxTrueEmo) {
+						if (getSelectedR3Emo().equals("Nez")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect3Nose.png");
+						} else if (getSelectedR3Emo().equals("Bouche")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect3Mouth.png");
+						} else if (getSelectedR3Emo().equals("Sourcil")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect3EyeBrow.png");
+						} else if (getSelectedR3Emo().equals("Chapeau")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect3Hat.png");
+						} else if (getSelectedR3Emo().equals("Moustache")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect3Mustache.png");
+						} else if (getSelectedR3Emo().equals("Yeux")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect3Eyes.png");
+						}
+						else if (getSelectedR3Emo().equals("Neutre")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/Neutre/rect3.png");
+						}
+						else if (getSelectedR3Emo().equals("Neutre Yeux")) {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/Emotion/NeutreEyes/rect3.png");
+						}else {
+							ringShape3 = getAssets().open("gfx/RectangleFinal/rect3.png");
+						}
+					}
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape3 = getAssets().open("gfx/RingFinal/ring3.png");
+							if (getSelectedR3Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR3Emo().equals("Nez")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Nose/ring3Nose.png");
+								} else if (getSelectedR3Emo().equals("Bouche")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Mouth/ring3Mouth.png");
+								} else if (getSelectedR3Emo().equals("Sourcil")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Eyebrow/ring3EyeBrow.png");
+								} else if (getSelectedR3Emo().equals("Chapeau")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Hat/ring3Hat.png");
+								} else if (getSelectedR3Emo().equals("Moustache")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Mustache/ring3Mustache.png");
+								} else if (getSelectedR3Emo().equals("Yeux")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Eyes/ring3Eyes.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/Neutre/ring3.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre Yeux")) {
+									ringShape3 = getAssets().open("gfx/RingFinal/Emotion/NeutreEyes/ring3.png");
+								}else {
+									ringShape3 = getAssets().open("gfx/RingFinal/ring3.png");
+								}
+							}
+							else {
+								ringShape3 = getAssets().open("gfx/RingFinal/ring3.png");
+							}
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape3 = getAssets().open("gfx/PyramideFinal/Pyram3.png");
+							if (getSelectedR3Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR3Emo().equals("Nez")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Nose/pyram3Nose.png");
+								} else if (getSelectedR3Emo().equals("Bouche")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Mouth/pyram3Mouth.png");
+								} else if (getSelectedR3Emo().equals("Sourcil")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Eyebrow/pyram3EyeBrow.png");
+								} else if (getSelectedR3Emo().equals("Chapeau")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Hat/pyram3Hat.png");
+								} else if (getSelectedR3Emo().equals("Moustache")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Mustache/pyram3Mustache.png");
+								} else if (getSelectedR3Emo().equals("Yeux")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Eyes/pyram3Eyes.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/Neutre/Pyram3.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre Yeux")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Emotion/NeutreEyes/Pyram3.png");
+								}else {
+									ringShape3 = getAssets().open("gfx/PyramideFinal/Pyram3.png");
+								}
+							}
+							else {
+								ringShape3 = getAssets().open("gfx/PyramideFinal/Pyram3.png");
+							}
 						}
 					}else {
 						if (selectedShapeItem.equals("Rectangulaire")) {
-							ringShape3 = getAssets().open("gfx/rectFinal3d/rect3.png");
+							if (getSelectedR3Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR3Emo().equals("Nez")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Nose/rect3Nose.png");
+								} else if (getSelectedR3Emo().equals("Bouche")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Mouth/rect3Mouth.png");
+								} else if (getSelectedR3Emo().equals("Sourcil")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Eyebrow/rect3EyeBrow.png");
+								} else if (getSelectedR3Emo().equals("Chapeau")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Hat/rect3Hat.png");
+								} else if (getSelectedR3Emo().equals("Moustache")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Mustache/rect3Mustache.png");
+								} else if (getSelectedR3Emo().equals("Yeux")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Eyes/rect3Eyes.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/Neutre/rect3.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre Yeux")) {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/Emotion/NeutreEyes/rect3.png");
+								}else {
+									ringShape3 = getAssets().open("gfx/rectFinal3d/rect3.png");
+								}
+							}else {
+								ringShape3 = getAssets().open("gfx/rectFinal3d/rect3.png");
+							}
 						}
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape3 = getAssets().open("gfx/ringFinal3d/ring3.png");
+							if (getSelectedR3Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR3Emo().equals("Nez")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Nose/ring3Nose.png");
+								} else if (getSelectedR3Emo().equals("Bouche")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Mouth/ring3Mouth.png");
+								} else if (getSelectedR3Emo().equals("Sourcil")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Eyebrow/ring3EyeBrow.png");
+								} else if (getSelectedR3Emo().equals("Chapeau")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Hat/ring3Hat.png");
+								} else if (getSelectedR3Emo().equals("Moustache")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Mustache/ring3Mustache.png");
+								} else if (getSelectedR3Emo().equals("Yeux")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Eyes/ring3Eyes.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/Neutre/ring3.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre Yeux")) {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/Emotion/NeutreEyes/ring3.png");
+								}else {
+									ringShape3 = getAssets().open("gfx/ringFinal3d/ring3.png");
+								}
+							}else {
+								ringShape3 = getAssets().open("gfx/ringFinal3d/ring3.png");
+							}
 						}
 						if(selectedShapeItem.equals("Pyramidale")){
-							ringShape3 = getAssets().open("gfx/PyramideFinal3d/pyram3.png");
+							if (getSelectedR3Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR3Emo().equals("Nez")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Nose/pyram3Nose.png");
+								} else if (getSelectedR3Emo().equals("Bouche")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mouth/pyram3Mouth.png");
+								} else if (getSelectedR3Emo().equals("Sourcil")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyebrow/pyram3EyeBrow.png");
+								} else if (getSelectedR3Emo().equals("Chapeau")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Hat/pyram3Hat.png");
+								} else if (getSelectedR3Emo().equals("Moustache")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mustache/pyram3Mustache.png");
+								} else if (getSelectedR3Emo().equals("Yeux")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyes/pyram3Eyes.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/Neutre/pyram3.png");
+								}
+								else if (getSelectedR3Emo().equals("Neutre Yeux")) {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/Emotion/NeutreEyes/pyram3.png");
+								}else {
+									ringShape3 = getAssets().open("gfx/PyramideFinal3d/pyram3.png");
+								}
+							}else {
+								ringShape3 = getAssets().open("gfx/PyramideFinal3d/pyram3.png");
+							}
 						}
 					}
 					return ringShape3;
@@ -155,23 +624,168 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring4 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect4Eyes.png");
+					InputStream ringShape4 = getAssets().open("gfx/RectangleFinal/rect4.png");
+					if (getSelectedR4Emo() != null && checkboxTrueEmo) {
+						if (getSelectedR4Emo().equals("Nez")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect4Nose.png");
+						} else if (getSelectedR4Emo().equals("Bouche")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect4Mouth.png");
+						} else if (getSelectedR4Emo().equals("Sourcil")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect4EyeBrow.png");
+						} else if (getSelectedR4Emo().equals("Chapeau")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect4Hat.png");
+						} else if (getSelectedR4Emo().equals("Moustache")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect4Mustache.png");
+						} else if (getSelectedR4Emo().equals("Yeux")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect4Eyes.png");
+						}
+						else if (getSelectedR4Emo().equals("Neutre")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/Neutre/rect4.png");
+						}
+						else if (getSelectedR4Emo().equals("Neutre Yeux")) {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/Emotion/NeutreEyes/rect4.png");
+						}else {
+							ringShape4 = getAssets().open("gfx/RectangleFinal/rect4.png");
+						}
+					}
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape4 = getAssets().open("gfx/RingFinal/ring4.png");
+							if (getSelectedR4Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR4Emo().equals("Nez")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Nose/ring4Nose.png");
+								} else if (getSelectedR4Emo().equals("Bouche")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Mouth/ring4Mouth.png");
+								} else if (getSelectedR4Emo().equals("Sourcil")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Eyebrow/ring4EyeBrow.png");
+								} else if (getSelectedR4Emo().equals("Chapeau")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Hat/ring4Hat.png");
+								} else if (getSelectedR4Emo().equals("Moustache")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Mustache/ring4Mustache.png");
+								} else if (getSelectedR4Emo().equals("Yeux")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Eyes/ring4Eyes.png");
+								}
+								else if (getSelectedR4Emo().equals("Neutre")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/Neutre/ring4.png");
+								}
+								else if (getSelectedR4Emo().equals("Neutre Yeux")) {
+									ringShape4 = getAssets().open("gfx/RingFinal/Emotion/NeutreEyes/ring4.png");
+								}else {
+									ringShape4 = getAssets().open("gfx/RingFinal/ring4.png");
+								}
+							}
+							else {
+								ringShape4 = getAssets().open("gfx/RingFinal/ring4.png");
+							}
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape4 = getAssets().open("gfx/PyramideFinal/Pyram4.png");
+							if (getSelectedR4Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR4Emo().equals("Nez")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Nose/pyram4Nose.png");
+								} else if (getSelectedR4Emo().equals("Bouche")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Mouth/pyram4Mouth.png");
+								} else if (getSelectedR4Emo().equals("Sourcil")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Eyebrow/pyram4EyeBrow.png");
+								} else if (getSelectedR4Emo().equals("Chapeau")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Hat/pyram4Hat.png");
+								} else if (getSelectedR4Emo().equals("Moustache")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Mustache/pyram4Mustache.png");
+								} else if (getSelectedR4Emo().equals("Yeux")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Eyes/pyram4Eyes.png");
+								}
+								else if (getSelectedR4Emo().equals("Neutre")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/Neutre/Pyram4.png");
+								}
+								else if (getSelectedR4Emo().equals("Neutre Yeux")) {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Emotion/NeutreEyes/Pyram4.png");
+								}else {
+									ringShape4 = getAssets().open("gfx/PyramideFinal/Pyram4.png");
+								}
+							}
+							else {
+								ringShape4 = getAssets().open("gfx/PyramideFinal/Pyram4.png");
+							}
 						}
 					} else {
 							if (selectedShapeItem.equals("Circulaire")) {
-								ringShape4 = getAssets().open("gfx/ringFinal3d/ring4.png");
+								if (getSelectedR4Emo() != null && checkboxTrueEmo) {
+									if (getSelectedR4Emo().equals("Nez")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Nose/ring4Nose.png");
+									} else if (getSelectedR4Emo().equals("Bouche")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Mouth/ring4Mouth.png");
+									} else if (getSelectedR4Emo().equals("Sourcil")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Eyebrow/ring4EyeBrow.png");
+									} else if (getSelectedR4Emo().equals("Chapeau")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Hat/ring4Hat.png");
+									} else if (getSelectedR4Emo().equals("Moustache")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Mustache/ring4Mustache.png");
+									} else if (getSelectedR4Emo().equals("Yeux")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Eyes/ring4Eyes.png");
+									}
+									else if (getSelectedR4Emo().equals("Neutre")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/Neutre/ring4.png");
+									}
+									else if (getSelectedR4Emo().equals("Neutre Yeux")) {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/Emotion/NeutreEyes/ring4.png");
+									}else {
+										ringShape4 = getAssets().open("gfx/ringFinal3d/ring4.png");
+									}
+								}else {
+									ringShape4 = getAssets().open("gfx/ringFinal3d/ring4.png");
+								}
 							}
 							if (selectedShapeItem.equals("Rectangulaire")) {
-							ringShape4 = getAssets().open("gfx/rectFinal3d/rect4.png");
+								if (getSelectedR4Emo() != null && checkboxTrueEmo) {
+									if (getSelectedR4Emo().equals("Nez")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Nose/rect4Nose.png");
+									} else if (getSelectedR4Emo().equals("Bouche")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Mouth/rect4Mouth.png");
+									} else if (getSelectedR4Emo().equals("Sourcil")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Eyebrow/rect4EyeBrow.png");
+									} else if (getSelectedR4Emo().equals("Chapeau")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Hat/rect4Hat.png");
+									} else if (getSelectedR4Emo().equals("Moustache")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Mustache/rect4Mustache.png");
+									} else if (getSelectedR4Emo().equals("Yeux")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Eyes/rect4Eyes.png");
+									}
+									else if (getSelectedR4Emo().equals("Neutre")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/Neutre/rect4.png");
+									}
+									else if (getSelectedR4Emo().equals("Neutre Yeux")) {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/Emotion/NeutreEyes/rect4.png");
+									}else {
+										ringShape4 = getAssets().open("gfx/rectFinal3d/rect4.png");
+									}
+								}else {
+									ringShape4 = getAssets().open("gfx/rectFinal3d/rect4.png");
+								}
 						}
 							if (selectedShapeItem.equals("Pyramidale")) {
-								ringShape4 = getAssets().open("gfx/PyramideFinal3d/pyram4.png");
+								if (getSelectedR4Emo() != null && checkboxTrueEmo) {
+									if (getSelectedR4Emo().equals("Nez")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Nose/pyram4Nose.png");
+									} else if (getSelectedR4Emo().equals("Bouche")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mouth/pyram4Mouth.png");
+									} else if (getSelectedR4Emo().equals("Sourcil")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyebrow/pyram4EyeBrow.png");
+									} else if (getSelectedR4Emo().equals("Chapeau")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Hat/pyram4Hat.png");
+									} else if (getSelectedR4Emo().equals("Moustache")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mustache/pyram4Mustache.png");
+									} else if (getSelectedR4Emo().equals("Yeux")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyes/pyram4Eyes.png");
+									}
+									else if (getSelectedR4Emo().equals("Neutre")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/Neutre/pyram4.png");
+									}
+									else if (getSelectedR4Emo().equals("Neutre Yeux")) {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/Emotion/NeutreEyes/pyram4.png");
+									}else {
+										ringShape4 = getAssets().open("gfx/PyramideFinal3d/pyram4.png");
+									}
+								}else {
+									ringShape4 = getAssets().open("gfx/PyramideFinal3d/pyram4.png");
+								}
 							}
 						}
 					return ringShape4;
@@ -180,23 +794,167 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
             ITexture ring5 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
                 @Override
                 public InputStream open() throws IOException {
-					InputStream ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect5EyeBrow.png");
+					InputStream ringShape5 = getAssets().open("gfx/RectangleFinal/rect5.png");
+					if (getSelectedR5Emo() != null && checkboxTrueEmo) {
+						if (getSelectedR5Emo().equals("Nez")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect5Nose.png");
+						} else if (getSelectedR5Emo().equals("Bouche")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect5Mouth.png");
+						} else if (getSelectedR5Emo().equals("Sourcil")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect5EyeBrow.png");
+						} else if (getSelectedR5Emo().equals("Chapeau")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect5Hat.png");
+						} else if (getSelectedR5Emo().equals("Moustache")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect5Mustache.png");
+						} else if (getSelectedR5Emo().equals("Yeux")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect5Eyes.png");
+						}
+						else if (getSelectedR5Emo().equals("Neutre")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/Neutre/rect5.png");
+						}
+						else if (getSelectedR5Emo().equals("Neutre Yeux")) {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/Emotion/NeutreEyes/rect5.png");
+						}else {
+							ringShape5 = getAssets().open("gfx/RectangleFinal/rect5.png");
+						}
+					}
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape5 = getAssets().open("gfx/RingFinal/ring5.png");
-						}
+							if (getSelectedR5Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR5Emo().equals("Nez")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Nose/ring5Nose.png");
+								} else if (getSelectedR5Emo().equals("Bouche")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Mouth/ring5Mouth.png");
+								} else if (getSelectedR5Emo().equals("Sourcil")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Eyebrow/ring5EyeBrow.png");
+								} else if (getSelectedR5Emo().equals("Chapeau")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Hat/ring5Hat.png");
+								} else if (getSelectedR5Emo().equals("Moustache")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Mustache/ring5Mustache.png");
+								} else if (getSelectedR5Emo().equals("Yeux")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Eyes/ring5Eyes.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/Neutre/ring5.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre Yeux")) {
+									ringShape5 = getAssets().open("gfx/RingFinal/Emotion/NeutreEyes/ring5.png");
+								}else {
+									ringShape5 = getAssets().open("gfx/RingFinal/ring5.png");
+								}
+							}
+							else {
+								ringShape5 = getAssets().open("gfx/RingFinal/ring5.png");
+							}						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape5 = getAssets().open("gfx/PyramideFinal/Pyram5.png");
+							if (getSelectedR5Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR5Emo().equals("Nez")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Nose/pyram5Nose.png");
+								} else if (getSelectedR5Emo().equals("Bouche")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Mouth/pyram5Mouth.png");
+								} else if (getSelectedR5Emo().equals("Sourcil")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Eyebrow/pyram5EyeBrow.png");
+								} else if (getSelectedR5Emo().equals("Chapeau")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Hat/pyram5Hat.png");
+								} else if (getSelectedR5Emo().equals("Moustache")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Mustache/pyram5Mustache.png");
+								} else if (getSelectedR5Emo().equals("Yeux")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Eyes/pyram5Eyes.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/Neutre/Pyram5.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre Yeux")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Emotion/NeutreEyes/Pyram5.png");
+								}else {
+									ringShape5 = getAssets().open("gfx/PyramideFinal/Pyram5.png");
+								}
+							}
+							else {
+								ringShape5 = getAssets().open("gfx/PyramideFinal/Pyram5.png");
+							}
 						}
 					}else {
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape5 = getAssets().open("gfx/ringFinal3d/ring5.png");
+							if (getSelectedR5Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR5Emo().equals("Nez")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Nose/ring5Nose.png");
+								} else if (getSelectedR5Emo().equals("Bouche")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Mouth/ring5Mouth.png");
+								} else if (getSelectedR5Emo().equals("Sourcil")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Eyebrow/ring5EyeBrow.png");
+								} else if (getSelectedR5Emo().equals("Chapeau")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Hat/ring5Hat.png");
+								} else if (getSelectedR5Emo().equals("Moustache")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Mustache/ring5Mustache.png");
+								} else if (getSelectedR5Emo().equals("Yeux")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Eyes/ring5Eyes.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/Neutre/ring5.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre Yeux")) {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/Emotion/NeutreEyes/ring5.png");
+								}else {
+									ringShape5 = getAssets().open("gfx/ringFinal3d/ring5.png");
+								}
+							}else {
+								ringShape5 = getAssets().open("gfx/ringFinal3d/ring5.png");
+							}
 						}
 						if (selectedShapeItem.equals("Rectangulaire")) {
-							ringShape5 = getAssets().open("gfx/rectFinal3d/rect5.png");
+							if (getSelectedR5Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR5Emo().equals("Nez")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Nose/rect5Nose.png");
+								} else if (getSelectedR5Emo().equals("Bouche")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Mouth/rect5Mouth.png");
+								} else if (getSelectedR5Emo().equals("Sourcil")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Eyebrow/rect5EyeBrow.png");
+								} else if (getSelectedR5Emo().equals("Chapeau")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Hat/rect5Hat.png");
+								} else if (getSelectedR5Emo().equals("Moustache")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Mustache/rect5Mustache.png");
+								} else if (getSelectedR5Emo().equals("Yeux")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Eyes/rect5Eyes.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/Neutre/rect5.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre Yeux")) {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/Emotion/NeutreEyes/rect5.png");
+								}else {
+									ringShape5 = getAssets().open("gfx/rectFinal3d/rect5.png");
+								}
+							}else {
+								ringShape5 = getAssets().open("gfx/rectFinal3d/rect5.png");
+							}
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape5 = getAssets().open("gfx/PyramideFinal3d/pyram5.png");
+							if (getSelectedR5Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR5Emo().equals("Nez")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Nose/pyram5Nose.png");
+								} else if (getSelectedR5Emo().equals("Bouche")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mouth/pyram5Mouth.png");
+								} else if (getSelectedR5Emo().equals("Sourcil")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyebrow/pyram5EyeBrow.png");
+								} else if (getSelectedR5Emo().equals("Chapeau")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Hat/pyram5Hat.png");
+								} else if (getSelectedR5Emo().equals("Moustache")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mustache/pyram5Mustache.png");
+								} else if (getSelectedR5Emo().equals("Yeux")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyes/pyram5Eyes.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/Neutre/pyram5.png");
+								}
+								else if (getSelectedR5Emo().equals("Neutre Yeux")) {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/Emotion/NeutreEyes/pyram5.png");
+								}else {
+									ringShape5 = getAssets().open("gfx/PyramideFinal3d/pyram5.png");
+								}
+							}else {
+								ringShape5 = getAssets().open("gfx/PyramideFinal3d/pyram5.png");
+							}
 						}
 					}
 					return ringShape5;
@@ -205,23 +963,169 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			ITexture ring6 = new BitmapTexture(this.getTextureManager(), new IInputStreamOpener() {
 				@Override
 				public InputStream open() throws IOException {
-					InputStream ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect6Hat.png");
+					InputStream ringShape6 = getAssets().open("gfx/RectangleFinal/rect6.png");
+					if (getSelectedR6Emo() != null && checkboxTrueEmo) {
+						if (getSelectedR6Emo().equals("Nez")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Nose/rect6Nose.png");
+						} else if (getSelectedR6Emo().equals("Bouche")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Mouth/rect6Mouth.png");
+						} else if (getSelectedR6Emo().equals("Sourcil")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Eyebrow/rect6EyeBrow.png");
+						} else if (getSelectedR6Emo().equals("Chapeau")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Hat/rect6Hat.png");
+						} else if (getSelectedR6Emo().equals("Moustache")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Mustache/rect6Mustache.png");
+						}
+						else if (getSelectedR6Emo().equals("Yeux")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Eyes/rect6Eyes.png");
+						}else if (getSelectedR6Emo().equals("Neutre")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/Neutre/rect6.png");
+						}
+						else if (getSelectedR6Emo().equals("Neutre Yeux")) {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/Emotion/NeutreEyes/rect6.png");
+						} else {
+							ringShape6 = getAssets().open("gfx/RectangleFinal/rect6.png");
+						}
+					}
 					if (!checkboxTrue) {
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape6 = getAssets().open("gfx/RingFinal/ring6.png");
+							if (getSelectedR6Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR6Emo().equals("Nez")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Nose/ring6Nose.png");
+								} else if (getSelectedR6Emo().equals("Bouche")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Mouth/ring6Mouth.png");
+								} else if (getSelectedR6Emo().equals("Sourcil")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Eyebrow/ring6.png");
+								} else if (getSelectedR6Emo().equals("Chapeau")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Hat/ring6Hat.png");
+								} else if (getSelectedR6Emo().equals("Moustache")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Mustache/ring6Mustache.png");
+								} else if (getSelectedR6Emo().equals("Yeux")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Eyes/ring6Eyes.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/Neutre/ring6.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre Yeux")) {
+									ringShape6 = getAssets().open("gfx/RingFinal/Emotion/NeutreEyes/ring6.png");
+								}else {
+									ringShape6 = getAssets().open("gfx/RingFinal/ring6.png");
+								}
+							}
+							else {
+								ringShape6 = getAssets().open("gfx/RingFinal/ring6.png");
+							}
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape6 = getAssets().open("gfx/PyramideFinal/Pyram6.png");
+							if (getSelectedR6Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR6Emo().equals("Nez")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Nose/pyram6Nose.png");
+								} else if (getSelectedR6Emo().equals("Bouche")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Mouth/pyram6Mouth.png");
+								} else if (getSelectedR6Emo().equals("Sourcil")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Eyebrow/pyram6EyeBrow.png");
+								} else if (getSelectedR6Emo().equals("Chapeau")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Hat/pyram6Hat.png");
+								} else if (getSelectedR6Emo().equals("Moustache")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Mustache/pyram6Mustache.png");
+								} else if (getSelectedR6Emo().equals("Yeux")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Eyes/pyram6Eyes.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/Neutre/Pyram6.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre Yeux")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Emotion/NeutreEyes/Pyram6.png");
+								}else {
+									ringShape6 = getAssets().open("gfx/PyramideFinal/Pyram6.png");
+								}
+							}
+							else {
+								ringShape6 = getAssets().open("gfx/PyramideFinal/Pyram6.png");
+							}
 						}
 					}else {
 						if (selectedShapeItem.equals("Circulaire")) {
-							ringShape6 = getAssets().open("gfx/ringFinal3d/ring6.png");
+							if (getSelectedR6Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR6Emo().equals("Nez")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Nose/ring6Nose.png");
+								} else if (getSelectedR6Emo().equals("Bouche")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Mouth/ring6Mouth.png");
+								} else if (getSelectedR6Emo().equals("Sourcil")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Eyebrow/ring6.png");
+								} else if (getSelectedR6Emo().equals("Chapeau")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Hat/ring6Hat.png");
+								} else if (getSelectedR6Emo().equals("Moustache")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Mustache/ring6Mustache.png");
+								} else if (getSelectedR6Emo().equals("Yeux")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Eyes/ring6Eyes.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/Neutre/ring6.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre Yeux")) {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/Emotion/NeutreEyes/ring6.png");
+								}else {
+									ringShape6 = getAssets().open("gfx/ringFinal3d/ring6.png");
+								}
+							}else {
+								ringShape6 = getAssets().open("gfx/ringFinal3d/ring6.png");
+							}
 						}
 						if (selectedShapeItem.equals("Rectangulaire")) {
-							ringShape6 = getAssets().open("gfx/rectFinal3d/rect6.png");
+							if (getSelectedR6Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR6Emo().equals("Nez")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Nose/rect6Nose.png");
+								} else if (getSelectedR6Emo().equals("Bouche")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Mouth/rect6Mouth.png");
+								} else if (getSelectedR6Emo().equals("Sourcil")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Eyebrow/rect6EyeBrow.png");
+								} else if (getSelectedR6Emo().equals("Chapeau")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Hat/rect6Hat.png");
+								} else if (getSelectedR6Emo().equals("Moustache")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Mustache/rect6Mustache.png");
+								} else if (getSelectedR6Emo().equals("Yeux")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Eyes/rect6Eyes.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/Neutre/rect6.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre Yeux")) {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/Emotion/NeutreEyes/rect6.png");
+								}else {
+									ringShape6 = getAssets().open("gfx/rectFinal3d/rect6.png");
+								}
+							}else {
+								ringShape6 = getAssets().open("gfx/rectFinal3d/rect6.png");
+							}
+							
 						}
 						if (selectedShapeItem.equals("Pyramidale")) {
-							ringShape6 = getAssets().open("gfx/PyramideFinal3d/pyram6.png");
+							if (getSelectedR6Emo() != null && checkboxTrueEmo) {
+								if (getSelectedR6Emo().equals("Nez")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Nose/pyram6Nose.png");
+								} else if (getSelectedR6Emo().equals("Bouche")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mouth/pyram6Mouth.png");
+								} else if (getSelectedR6Emo().equals("Sourcil")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyebrow/pyram6EyeBrow.png");
+								} else if (getSelectedR6Emo().equals("Chapeau")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Hat/pyram6Hat.png");
+								} else if (getSelectedR6Emo().equals("Moustache")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Mustache/pyram6Mustache.png");
+								} else if (getSelectedR6Emo().equals("Yeux")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Eyes/pyram6Eyes.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/Neutre/pyram6.png");
+								}
+								else if (getSelectedR6Emo().equals("Neutre Yeux")) {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/Emotion/NeutreEyes/pyram6.png");
+								}else {
+									ringShape6 = getAssets().open("gfx/PyramideFinal3d/pyram6.png");
+								}
+							}else {
+								ringShape6 = getAssets().open("gfx/PyramideFinal3d/pyram6.png");
+							}
 						}
 					}
 					return ringShape6;
@@ -386,7 +1290,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			if(selectedShapeItem.equals("Pyramidale")){
 				DmRing4 = mRing4.getHeight() - 5;
 			}else {
-				DmRing4 = mRing4.getHeight() - 10;
+				DmRing4 = mRing4.getHeight()/1.3f;
 			}
 		}else {
 			DmRing4 = mRing4.getHeight();
@@ -421,7 +1325,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			if(selectedShapeItem.equals("Pyramidale")){
 				DmRing5 = mRing5.getHeight() - 5;
 			}else {
-				DmRing5 = mRing5.getHeight() - 10;
+				DmRing5 = mRing5.getHeight()/1.3f;
 			}
 		}else {
 			DmRing5 = mRing5.getHeight();
@@ -456,7 +1360,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			if(selectedShapeItem.equals("Pyramidale")){
 				DmRing6 = mRing6.getHeight() -2;
 			}else {
-				DmRing6 = mRing6.getHeight() - 10;
+				DmRing6 = mRing6.getHeight()/1.3f;
 			}
 		}else {
 			DmRing6 = mRing6.getHeight();
@@ -675,7 +1579,6 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 
 				System.out.println("Time Between 2 erreur (ms/null possible au début) : " + theChrono.getTimeBetweenError());
 
-				System.out.println("INTERDIT");
 
 				if (selectedFeedBackItem.equals("Totale")) {
 					if (!ring.getmTower().collidesWith(ring)) {
@@ -683,7 +1586,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								Context context = getApplicationContext();
-								final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit", Toast.LENGTH_LONG);
+								final Toast toast = Toast.makeText(context, "NON!\nMouvement interdit", Toast.LENGTH_LONG);
 								toast.setGravity(Gravity.CENTER, 0, 0);
 								toast.show();
 
@@ -705,7 +1608,7 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								Context context = getApplicationContext();
-								final Toast toast = Toast.makeText(context, "ATTENTION!\nMouvement interdit", Toast.LENGTH_LONG);
+								final Toast toast = Toast.makeText(context, "NON!\nMouvement interdit", Toast.LENGTH_LONG);
 								toast.setGravity(Gravity.CENTER, 0, 0);
 								toast.show();
 
@@ -825,6 +1728,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 	    ring.setmTower(tower);
 	}
 	private void checkEnding(Ring ring){
+
+
 		Stack stack = ring.getmStack();
 		Context context = getApplicationContext();
 		int selectedItemParsed = Integer.parseInt(selectedItem);
@@ -842,14 +1747,22 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 			finish();
 			Intent i = new Intent(getBaseContext(), EndingActivity.class);
 			startActivity(i);
+
 		}
 	}
 	public static String getSelectedFeedBackItem() {
 		return selectedFeedBackItem;
 	}
-
+	public static String getSelectedBackground(){return selectedBackGround;}
 	public static String getSelectedItem() {
 		return selectedItem;
+	}
+	public static boolean getSelectedVersionItem(){
+		if(checkboxTrueEmo) {
+			return checkboxTrueEmo;
+		}else{
+			return false;
+		}
 	}
 
 	public static String getSelectedShapeItem() {
@@ -862,5 +1775,8 @@ public class TowerOfHanoiActivity extends SimpleBaseGameActivity {
 		} else {
 			return "2D";
 		}
+	}
+	public static Fragment_emotional_menu getFragmentEmotion(){
+		return fragmentEmotion;
 	}
 }

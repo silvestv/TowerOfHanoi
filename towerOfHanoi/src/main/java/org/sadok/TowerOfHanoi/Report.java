@@ -20,8 +20,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Report {
@@ -33,18 +35,23 @@ public class Report {
     private String textReport;
 
     private int nbCoupMini = 0;
-    private boolean perfect_game = false;
+    public boolean perfect_game = false;
 
     private String nb_ring_choosen;
     private String shape_ring_choosen;
     private String feedback_choosen;
     private String dimension_choosen;
+    private String background_choosen;
+    private Boolean emoVersion;
+    private Boolean normalEmoStructure = false;
+    private String normalEmoStructureExp = "";
     private String tempsEntreAction = "";
+    private List<String> tempsEntreActionArray = new ArrayList<String>();
     private String tempsEntreSucces = "";
     private String tempsEntreErreur = "";
     private String tempsEntreSuccesErreur = "";
     private String tempsEntreErreurSucces = "";
-
+    private String version;
     private File pathToTextFiles;
     private File pathToCSVFiles;
     private String absPathCSV;
@@ -59,9 +66,13 @@ public class Report {
         this.context = context;
 
         this.nb_ring_choosen = menuChoices.getSelectedItem();
+        this.emoVersion = menuChoices.getSelectedVersionItem();
+        setNormalEmotionStructureExp();
+        this.normalEmoStructure = isNormalEmotionalStructure();
         this.shape_ring_choosen = menuChoices.getSelectedShapeItem();
         this.feedback_choosen = menuChoices.getSelectedFeedBackItem();
         this.dimension_choosen = menuChoices.getDimension();
+        this.background_choosen = menuChoices.getSelectedBackground();
 
         if(this.nb_ring_choosen.equals("3")){
             this.nbCoupMini = 7;
@@ -131,6 +142,62 @@ public class Report {
         return this.perfect_game;
     }
 
+    public void setNormalEmotionStructureExp(){
+        if(emoVersion){
+            if (nb_ring_choosen.equals("3")) {
+                this.normalEmoStructureExp = "Ordre normal visage : Bouche-Nez-Yeux";
+            }else if(nb_ring_choosen.equals("4")){
+                this.normalEmoStructureExp = "Ordre normal visage : Bouche-Moustache-Nez-Yeux";
+            } else if(nb_ring_choosen.equals("5")){
+                this.normalEmoStructureExp = "Ordre normal visage: Bouche-Moustache-Nez-Yeux-Sourcil";
+            } else if(nb_ring_choosen.equals("6")){
+                this.normalEmoStructureExp = "Ordre normal visage: Bouche-Moustache-Nez-Yeux-Sourcil-Chapeau";
+            }
+        }
+    }
+    public boolean isNormalEmotionalStructure(){
+        if(emoVersion){
+            if(nb_ring_choosen.equals("3")){
+                System.out.println("olololo");
+                if(menuChoices.getFragmentEmotion().getSelectedR1Emo().equals("Bouche") &&
+                        menuChoices.getFragmentEmotion().getSelectedR2Emo().equals("Nez") &&
+                        menuChoices.getFragmentEmotion().getSelectedR3Emo().equals("Yeux")){
+                    System.out.println("YESSS");
+                    this.normalEmoStructure = true;
+                }
+            } else if(nb_ring_choosen.equals("4")){
+                if(menuChoices.getFragmentEmotion().getSelectedR1Emo().equals("Bouche") &&
+                        menuChoices.getFragmentEmotion().getSelectedR2Emo().equals("Moustache") &&
+                        menuChoices.getFragmentEmotion().getSelectedR3Emo().equals("Nez") &&
+                        menuChoices.getFragmentEmotion().getSelectedR4Emo().equals("Yeux")){
+
+                    this.normalEmoStructure = true;
+                }
+            } else if(nb_ring_choosen.equals("5")){
+                if(menuChoices.getFragmentEmotion().getSelectedR1Emo().equals("Bouche") &&
+                        menuChoices.getFragmentEmotion().getSelectedR2Emo().equals("Moustache") &&
+                        menuChoices.getFragmentEmotion().getSelectedR3Emo().equals("Nez") &&
+                        menuChoices.getFragmentEmotion().getSelectedR4Emo().equals("Yeux") &&
+                        menuChoices.getFragmentEmotion().getSelectedR5Emo().equals("Sourcil")){
+
+                   this.normalEmoStructure = true;
+                }
+
+            } else if(nb_ring_choosen.equals("6")){
+                if(menuChoices.getFragmentEmotion().getSelectedR1Emo().equals("Bouche") &&
+                        menuChoices.getFragmentEmotion().getSelectedR2Emo().equals("Moustache") &&
+                        menuChoices.getFragmentEmotion().getSelectedR3Emo().equals("Nez") &&
+                        menuChoices.getFragmentEmotion().getSelectedR4Emo().equals("Yeux") &&
+                        menuChoices.getFragmentEmotion().getSelectedR5Emo().equals("Sourcil") &&
+                        menuChoices.getFragmentEmotion().getSelectedR6Emo().equals("Chapeau")){
+
+                    this.normalEmoStructure = true;
+                }
+            }
+        }
+        return normalEmoStructure;
+    }
+
     //première version console simple du report/créé le rapport utiliser dans le constructeur
     public void createReport(){
         String s = "";
@@ -144,6 +211,19 @@ public class Report {
         s = s+"Forme des palets choisis : "+this.shape_ring_choosen+"\n";
         s = s+"Nombre de palets choisis : "+this.nb_ring_choosen+"\n";
         s = s+"Dimension Choisie : "+this.dimension_choosen+"\n";
+        s = s+"Fond de jeu choisi : "+this.background_choosen+"\n";
+        if(this.emoVersion){
+            s = s+"Version Choisie : Emotionnel \n";
+            System.out.println("LAAAAAAAA77"+this.normalEmoStructureExp+"\n");
+            s = s+this.normalEmoStructureExp+"\n";
+            if(this.normalEmoStructure){
+                s = s+"Ordre visage choisi : Ordonné/normal \n";
+            } else {
+                s = s+"Ordre visage choisi : Désordonné/anormal \n";
+            }
+        }else{
+            s = s+"Version Choisie : Classique \n";
+        }
         s = s+"------------------------------------------------------\n";
         s = s+"VUE D'ENSEMBLE DE LA PARTIE\n";
         for(int i : this.reportTimer.getChronologicActionMap().keySet()){
@@ -157,7 +237,7 @@ public class Report {
         s = s+"Nombre de succès : "+this.reportTimer.getNbSucess()+"\n";
         s = s+"Nombre d'echec : "+this.reportTimer.getNbError()+"\n\n";
         s = s+"Rapport de performance (Nombre de coup réel / Nombre de coup minimum) : "+this.reportTimer.getNbAction()+"/"+nbCoupMini+"\n";
-        if(this.reportTimer.getNbAction()/nbCoupMini == 1){
+        if(this.reportTimer.getNbAction() == nbCoupMini){
             this.perfect_game = true;
         }
         s = s+"Temps total partie (systeme) : "+this.reportTimer.getTotalTimeGame()+" ms\n";
@@ -216,7 +296,7 @@ public class Report {
     public void createTextFileReport(){
 
     Date d = new Date();
-    String dateCreation = new SimpleDateFormat("kk-mm-ss dd/MM/yyyy").format(d);
+    String dateCreation = new SimpleDateFormat("kk:mm:ss dd/MM/yyyy").format(d);
        try {
 
             File reportTextFile = new File(this.pathToTextFiles, "reportTest_"+this.IDReport+".txt");
@@ -231,22 +311,27 @@ public class Report {
     }
 
     public void createCSVReport(){
-
+        if(this.emoVersion){
+            version = "Emotionnel";
+        }else{
+            version = "Classique";
+        }
 
         //Les variables explicatives sont -> nbRing,FeedBack,Dimension,Shape (etude stats)
         //Les variables quantitative expliquées -> les perf temporel et le nb de coup/succès/erreur (étude stats)
-        String[] headerCSV = {"nbRing", "FeedBack", "Dimension", "Shape", "TotalTime", "RealTotalTime",
-                "InitialThinkingTime","AvgTAction","AvgTSucess","AvgTError","AvgTSu/Er","AvgTEr/Su","nbActions", "nbSucess", "nbErrors"};
-        String[] data1 = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+        String[] headerCSV = {"nbRing", "FeedBack", "Dimension","SelectedBackground","Version", "StructuredFace","Shape", "TotalTime", "RealTotalTime",
+                "InitialThinkingTime","AvgTAction","AvgTSucess","AvgTError","AvgTSu/Er","AvgTEr/Su","nbActions", "nbSucess", "nbErrors", "Temps entre action","Temps entre succes","Temps entre erreur","Temps entre succes puis erreur","Temps entre Errreur puis succes"};
+        String[] data1 = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen,this.background_choosen,checkVersion(),this.normalEmoStructure.toString(),this.shape_ring_choosen,
                 ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
                 ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
                 ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
-                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError(), this.reportTimer.getAllBetweenAction().toString(), this.reportTimer.getAllBetweenSucess().toString(), this.reportTimer.getAllBetweenError().toString(),
+                this.reportTimer.getAllBetweenSucessThenError().toString(), this.reportTimer.getAllBetweenErrorThenSucess().toString()};
 
         try{
             File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
 
-            CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+            CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),';');
             writer.writeNext(headerCSV);
             writer.writeNext(data1);
             writer.close();
@@ -256,11 +341,13 @@ public class Report {
 
     }
     public void dataInCSVFileReport(){
-        String[] addData = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen, this.shape_ring_choosen,
+
+        String[] addData = {this.nb_ring_choosen, this.feedback_choosen, this.dimension_choosen,this.background_choosen,checkVersion(),this.normalEmoStructure.toString(), this.shape_ring_choosen,
                 ""+reportTimer.getTotalTimeGame(), ""+reportTimer.getTotalTimeGameSinceFirstTouch(),""+reportTimer.getInitialPlayerThinkingTime(),
                 ""+reportTimer.getAverageTimeAction(),""+reportTimer.getAverageTimeSucess(), ""+reportTimer.getAverageTimeError(),
                 ""+reportTimer.getAverageTimeSucessThenError(),""+reportTimer.getAverageTimeErrorThenSucess(), ""+reportTimer.getNbAction(),
-                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError()};
+                ""+reportTimer.getNbSucess(), ""+reportTimer.getNbError(), this.reportTimer.getAllBetweenAction().toString(), this.reportTimer.getAllBetweenSucess().toString(), this.reportTimer.getAllBetweenError().toString(),
+                this.reportTimer.getAllBetweenSucessThenError().toString(), this.reportTimer.getAllBetweenErrorThenSucess().toString()};
 
         if(this.pathToCSVFiles.list().length == 0){
             createCSVReport();
@@ -268,7 +355,7 @@ public class Report {
             try{
                 File reportCSVFile = new File(this.pathToCSVFiles, "reportCSV.csv");
 
-                CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),',');
+                CSVWriter writer = new CSVWriter(new FileWriter(reportCSVFile, true),';');
                 writer.writeNext(addData);
                 writer.close();
             } catch (IOException e) {
@@ -276,8 +363,33 @@ public class Report {
             }
         }
     }
+    public void boucleAction(){
+        //Temps entre Action
+        for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
+            tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
+            tempsEntreActionArray.add(tempsEntreAction);
+        }
 
+        //Temps entre Succes
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucess().size(); i++){
+            tempsEntreSucces = tempsEntreSucces+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucess().get(i)/1000)+" s\n";
+        }
 
+        //Temps entre Erreur
+        for(int i = 0; i<this.reportTimer.getAllBetweenError().size(); i++){
+            tempsEntreErreur = tempsEntreErreur+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenError().get(i)/1000)+" s\n";
+        }
+
+        //Temps entre succes puis erreur
+        for(int i = 0; i<this.reportTimer.getAllBetweenSucessThenError().size(); i++){
+            tempsEntreSuccesErreur = tempsEntreSuccesErreur+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenSucessThenError().get(i)/1000)+" s\n";
+        }
+        //Temps entre erreur puis succes
+
+        for(int i = 0; i<this.reportTimer.getAllBetweenErrorThenSucess().size(); i++){
+            tempsEntreErreurSucces = tempsEntreErreurSucces+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenErrorThenSucess().get(i)/1000)+" s\n";
+        }
+    }
    public void addItemToSheet(final Context context) {
 
 
@@ -285,6 +397,7 @@ public class Report {
         //Temps entre Action
         for(int i = 0; i<this.reportTimer.getAllBetweenAction().size(); i++){
             tempsEntreAction = tempsEntreAction+""+(i)+" - "+(i+1)+" : "+(this.reportTimer.getAllBetweenAction().get(i)/1000)+" s\n";
+            tempsEntreActionArray.add(tempsEntreAction);
         }
 
         //Temps entre Succes
@@ -334,6 +447,10 @@ public class Report {
                 parmas.put("action","addItem");
                 parmas.put("feedback",feedback_choosen);
                 parmas.put("formePalets",shape_ring_choosen);
+                parmas.put("dimension",dimension_choosen);
+                parmas.put("fondJeu", background_choosen);
+                parmas.put("version",checkVersion());
+                parmas.put("visageStructuré", normalEmoStructure.toString());
                 parmas.put("nbPalets",nb_ring_choosen);
                 parmas.put("nbCoupMini",String.valueOf(nbCoupMini));
                 parmas.put("nbCoupTotal",Integer.toString(reportTimer.getNbAction()));
@@ -366,6 +483,14 @@ public class Report {
         queue.add(stringRequest);
 
 
+    }
+    public String checkVersion(){
+        if(this.emoVersion){
+            version = "Emotionnel";
+        }else{
+            version = "Classique";
+        }
+        return version;
     }
 }
 
